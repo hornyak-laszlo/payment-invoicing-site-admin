@@ -1,4 +1,10 @@
+const strapiBaseUrl = process.env.API_URL || 'https://payment-invoicing-site.herokuapp.com/'
+
 export default {
+  env: {
+    strapiBaseUrl,
+  },
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'payment-invoicing-site-admin',
@@ -29,17 +35,25 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build'
+    '@nuxt/typescript-build',
+    '@nuxtjs/composition-api/module'
   ],
 
-  // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
-    // https://go.nuxtjs.dev/axios
+    '@nuxtjs/strapi',
+    '@nuxtjs/auth-next',
     '@nuxtjs/axios'
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
+  auth: {
+    local: {}
+  },
+
   axios: {},
+
+  strapi: {
+    url: strapiBaseUrl
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
