@@ -1,29 +1,26 @@
 <template>
   <div>
     <h1>Hello World!</h1>
-    <pre>{{page}}</pre>
+    <p v-if="loading">
+      Loading products...
+    </p>
+    <pre v-else>{{ products }}</pre>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, useContext, useFetch, useMeta } from '@nuxtjs/composition-api'
-
-export default defineComponent({
-  setup () {
-    const { $strapi } = useContext()
-    const page = ref([]) // page.value
-
-    useFetch(async () => {
-      const products = await $strapi.find('products')
-      page.value = products
-    })
-
+<script>
+export default {
+  name: 'HomePage',
+  data () {
     return {
-      page
+      loading: true,
+      products: []
     }
+  },
+  async mounted () {
+    this.loading = true
+    this.products = await this.$strapi.find('products')
+    this.loading = false
   }
-})
+}
 </script>
-
-<style>
-</style>
