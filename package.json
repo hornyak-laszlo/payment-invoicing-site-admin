@@ -15,8 +15,13 @@
     "@nuxtjs/pwa": "^3.3.5",
     "@nuxtjs/strapi": "^0.3.1",
     "core-js": "^3.9.1",
+    "chart.js": "^2.9.3",
+    "dayjs": "^1.8.33",
+    "lodash": "^4.17.20",
+    "numeral": "^2.0.6",
     "nuxt": "^2.15.3",
-    "nuxt-buefy": "^0.4.4"
+    "nuxt-buefy": "^0.3.31",
+    "vue-chartjs": "^3.5.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.0",
@@ -24,6 +29,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^7.22.0",
     "eslint-plugin-nuxt": "^2.0.0",
-    "eslint-plugin-vue": "^7.7.0"
+    "eslint-plugin-vue": "^7.7.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^10.1.1"
   }
 }

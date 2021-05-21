@@ -2,7 +2,7 @@ const strapiBaseUrl = process.env.API_URL || 'https://payment-invoicing-site.her
 
 export default {
   env: {
-    strapiBaseUrl,
+    strapiBaseUrl
   },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -14,20 +14,39 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'dns-prefetch', href: 'https://fonts.gstatic.com' },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href: 'https://fonts.googleapis.com/css?family=Nunito'
+      },
+      {
+        rel: 'stylesheet',
+        type: 'text/css',
+        href:
+          'https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css'
+      }
     ]
   },
 
+  /*
+   ** Customize the progress-bar color
+   */
+  loading: { color: '#fff' },
+
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    './assets/scss/main.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    { src: '~/plugins/after-each.js', mode: 'client' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -39,7 +58,7 @@ export default {
   modules: [
     '@nuxtjs/strapi',
     // https://go.nuxtjs.dev/buefy
-    'nuxt-buefy',
+    ['nuxt-buefy', { materialDesignIcons: false }],
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
@@ -62,5 +81,17 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    /*
+     ** You can extend webpack config here
+     */
+    extend (config, ctx) {
+      if (!config.externals) {
+        config.externals = {}
+      }
+
+      // Remove moment.js from chart.js
+      // https://www.chartjs.org/docs/latest/getting-started/integration.html#bundlers-webpack-rollup-etc
+      config.externals.moment = 'moment'
+    }
   }
 }
