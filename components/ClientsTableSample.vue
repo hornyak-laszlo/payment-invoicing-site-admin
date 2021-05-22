@@ -92,7 +92,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 import ModalBox from '@/components/common/ModalBox'
 
 export default {
@@ -128,27 +127,22 @@ export default {
       return null
     }
   },
-  mounted () {
+  async mounted () {
     if (this.dataUrl) {
       this.isLoading = true
-      axios
-        .get(this.dataUrl)
-        .then((r) => {
-          this.isLoading = false
-          if (r.data && r.data.data) {
-            if (r.data.data.length > this.perPage) {
-              this.paginated = true
-            }
-            this.clients = r.data.data
-          }
+      try {
+        this.clients = await this.$strapi.find(this.dataUrl)
+        this.isLoading = false
+        if (this.clients.length > this.perPage) {
+          this.paginated = true
+        }
+      } catch (err) {
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: `Error: ${err.message}`,
+          type: 'is-danger'
         })
-        .catch((e) => {
-          this.isLoading = false
-          this.$buefy.toast.open({
-            message: `Error: ${e.message}`,
-            type: 'is-danger'
-          })
-        })
+      }
     }
   },
   methods: {
