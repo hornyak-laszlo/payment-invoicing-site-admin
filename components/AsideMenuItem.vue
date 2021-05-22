@@ -65,8 +65,6 @@ export default {
   },
   methods: {
     menuClick () {
-      this.$emit('menu-click', this.item)
-
       if (this.hasDropdown) {
         this.isDropdownActive = !this.isDropdownActive
       }

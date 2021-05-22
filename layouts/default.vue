@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav-bar />
-    <aside-menu :menu="menu" @menu-click="menuClick" />
+    <aside-menu :menu="menu" />
     <nuxt />
     <footer-bar />
   </div>
@@ -23,6 +23,56 @@ export default {
   computed: {
     menu () {
       return [
+        'Értékesítés',
+        [
+          {
+            to: '/forms',
+            label: 'Űrlapok',
+            icon: 'table'
+          },
+          {
+            to: '/products',
+            label: 'Termékek',
+            icon: 'table'
+          },
+          {
+            to: '/purchases',
+            label: 'Vásárlások',
+            icon: 'table'
+          },
+          {
+            to: '/customers',
+            label: 'Vásárlók',
+            icon: 'table'
+          }
+        ],
+        'Leadek',
+        [
+          {
+            to: '/contact-forms',
+            label: 'Űrlapok',
+            icon: 'table'
+          },
+          {
+            to: '/contacts',
+            label: 'Kontaktok',
+            icon: 'table'
+          }
+        ],
+        'Integrációk',
+        [
+          {
+            to: '/invoicing',
+            label: 'Számlázó integráció',
+            icon: 'table'
+          },
+          {
+            to: '/payment',
+            label: 'Fizetés integráció',
+            icon: 'table'
+          }
+        ]
+        /*
         'General',
         [
           {
@@ -69,20 +119,8 @@ export default {
               }
             ]
           }
-        ],
-        'About',
-        [
-          {
-            href: 'https://admin-null-nuxt.justboil.me',
-            label: 'Premium Demo',
-            icon: 'credit-card'
-          },
-          {
-            href: 'https://justboil.me/bulma-admin-template/null-nuxt',
-            label: 'About',
-            icon: 'help-circle'
-          }
         ]
+        */
       ]
     }
   },
@@ -98,13 +136,6 @@ export default {
     document.documentElement.classList.add('has-aside-mobile-transition')
     document.documentElement.classList.add('has-navbar-fixed-top')
     document.documentElement.classList.add('has-aside-expanded')
-  },
-  methods: {
-    menuClick (item) {
-      if (item.action && item.action === 'dark-mode-toggle') {
-        this.$store.commit('darkModeToggle')
-      }
-    }
   }
 }
 </script>

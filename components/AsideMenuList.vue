@@ -4,7 +4,6 @@
       v-for="(item, index) in menu"
       :key="index"
       :item="item"
-      @menu-click="menuClick"
     />
   </ul>
 </template>
@@ -25,11 +24,6 @@ export default {
     menu: {
       type: Array,
       default: () => []
-    }
-  },
-  methods: {
-    menuClick (item) {
-      this.$emit('menu-click', item)
     }
   }
 }
