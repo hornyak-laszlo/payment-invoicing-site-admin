@@ -29,8 +29,8 @@
 
 <script>
 import { mapState } from 'vuex'
-import FilePicker from '@/components/FilePicker'
-import CardComponent from '@/components/CardComponent'
+import FilePicker from '@/components/form/FilePicker'
+import CardComponent from '@/components/common/CardComponent'
 
 export default {
   name: 'ProfileUpdateForm',

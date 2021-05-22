@@ -119,14 +119,13 @@
 <script>
 import axios from 'axios'
 import dayjs from 'dayjs'
-import find from 'lodash/find'
-import TitleBar from '@/components/TitleBar'
-import HeroBar from '@/components/HeroBar'
-import Tiles from '@/components/Tiles'
-import CardComponent from '@/components/CardComponent'
-import FilePicker from '@/components/FilePicker'
+import TitleBar from '@/components/common/TitleBar'
+import HeroBar from '@/components/common/HeroBar'
+import Tiles from '@/components/common/Tiles'
+import CardComponent from '@/components/common/CardComponent'
+import FilePicker from '@/components/form/FilePicker'
 import UserAvatar from '@/components/UserAvatar'
-import Notification from '@/components/Notification'
+import Notification from '@/components/common/Notification'
 
 export default {
   name: 'ClientForm',
@@ -214,10 +213,7 @@ export default {
         axios
           .get(`${this.$router.options.base}data-sources/clients.json`)
           .then((r) => {
-            const item = find(
-              r.data.data,
-              item => item.id === parseInt(this.$route.params.id)
-            )
+            const item = r.data.data.find(item => item.id === parseInt(this.$route.params.id))
 
             if (item) {
               this.isProfileExists = true

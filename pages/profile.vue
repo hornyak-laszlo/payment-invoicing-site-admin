@@ -29,12 +29,12 @@
 
 <script>
 import { mapState } from 'vuex'
-import CardComponent from '@/components/CardComponent'
-import TitleBar from '@/components/TitleBar'
-import HeroBar from '@/components/HeroBar'
+import CardComponent from '@/components/common/CardComponent'
+import TitleBar from '@/components/common/TitleBar'
+import HeroBar from '@/components/common/HeroBar'
 import ProfileUpdateForm from '@/components/ProfileUpdateForm'
 import PasswordUpdateForm from '@/components/PasswordUpdateForm'
-import Tiles from '@/components/Tiles'
+import Tiles from '@/components/common/Tiles'
 import UserAvatar from '@/components/UserAvatar'
 export default {
   name: 'Profile',

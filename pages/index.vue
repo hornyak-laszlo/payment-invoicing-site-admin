@@ -60,11 +60,11 @@
 <script>
 // @ is an alias to /src
 import * as chartConfig from '@/components/Charts/chart.config'
-import TitleBar from '@/components/TitleBar'
-import HeroBar from '@/components/HeroBar'
-import Tiles from '@/components/Tiles'
-import CardWidget from '@/components/CardWidget'
-import CardComponent from '@/components/CardComponent'
+import TitleBar from '@/components/common/TitleBar'
+import HeroBar from '@/components/common/HeroBar'
+import Tiles from '@/components/common/Tiles'
+import CardWidget from '@/components/common/CardWidget'
+import CardComponent from '@/components/common/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
 import ClientsTableSample from '@/components/ClientsTableSample'
 export default {

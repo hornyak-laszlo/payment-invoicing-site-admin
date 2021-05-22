@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import CardComponent from '@/components/CardComponent'
+import CardComponent from '@/components/common/CardComponent'
 export default {
   name: 'PasswordUpdateForm',
   components: {
