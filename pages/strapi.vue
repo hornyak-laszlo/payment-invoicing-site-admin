@@ -18,9 +18,15 @@ export default {
     }
   },
   async mounted () {
-    this.loading = true
-    this.products = await this.$strapi.find('products')
-    this.loading = false
+    await this.$nextTick(async () => {
+      this.$nuxt.$loading.start()
+
+      this.loading = true
+      this.products = await this.$strapi.find('products')
+      this.loading = false
+
+      setTimeout(() => this.$nuxt.$loading.finish(), 0)
+    })
   }
 }
 </script>
