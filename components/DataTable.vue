@@ -14,43 +14,27 @@
       :per-page="perPage"
       :striped="true"
       :hoverable="true"
-      default-sort="name"
+      default-sort="id"
       :data="clients"
     >
       <template slot-scope="props">
-        <b-table-column class="has-no-head-mobile is-image-cell">
-          <div class="image">
-            <img :src="props.row.avatar" class="is-rounded">
-          </div>
+        <b-table-column label="Id" field="id" sortable>
+          {{ props.row.id }}
         </b-table-column>
-        <b-table-column label="Name" field="name" sortable>
-          {{ props.row.name }}
+        <b-table-column v-for="field in fields" :key="field.field" :label="field.title" :field="field.field" sortable>
+          {{ props.row[field.field] }}
         </b-table-column>
-        <b-table-column label="Company" field="company" sortable>
-          {{ props.row.company }}
-        </b-table-column>
-        <b-table-column label="City" field="city" sortable>
-          {{ props.row.city }}
-        </b-table-column>
-        <b-table-column
-          class="is-progress-col"
-          label="Progress"
-          field="progress"
-          sortable
-        >
-          <progress
-            class="progress is-small is-primary"
-            :value="props.row.progress"
-            max="100"
-          >
-            {{ props.row.progress }}
-          </progress>
-        </b-table-column>
-        <b-table-column label="Created">
+        <b-table-column label="Létrehozva">
           <small
             class="has-text-grey is-abbr-like"
-            :title="props.row.created"
-          >{{ props.row.created }}</small>
+            :title="props.row.created_at"
+          >{{ props.row.created_at }}</small>
+        </b-table-column>
+        <b-table-column label="Módosítva">
+          <small
+            class="has-text-grey is-abbr-like"
+            :title="props.row.updated_at"
+          >{{ props.row.updated_at }}</small>
         </b-table-column>
         <b-table-column custom-key="actions" class="is-actions-cell">
           <div class="buttons is-right">
@@ -77,13 +61,13 @@
             <p>
               <b-icon icon="dots-horizontal" size="is-large" />
             </p>
-            <p>Fetching data...</p>
+            <p>Adatok betöltése...</p>
           </template>
           <template v-else>
             <p>
               <b-icon icon="emoticon-sad" size="is-large" />
             </p>
-            <p>Nothing's here&hellip;</p>
+            <p>Nem található adat&hellip;</p>
           </template>
         </div>
       </section>
@@ -95,12 +79,16 @@
 import ModalBox from '@/components/common/ModalBox'
 
 export default {
-  name: 'ClientsTableSample',
+  name: 'DataTable',
   components: { ModalBox },
   props: {
-    dataUrl: {
+    collection: {
       type: String,
       default: null
+    },
+    fields: {
+      type: Array,
+      default: () => []
     },
     checkable: {
       type: Boolean,
@@ -128,18 +116,19 @@ export default {
     }
   },
   async mounted () {
-    if (this.dataUrl) {
+    if (this.collection) {
       this.isLoading = true
       try {
-        this.clients = await this.$strapi.find(this.dataUrl)
+        this.clients = await this.$strapi.find(this.collection)
         this.isLoading = false
         if (this.clients.length > this.perPage) {
           this.paginated = true
         }
       } catch (err) {
+        console.error(err.message)
         this.isLoading = false
         this.$buefy.toast.open({
-          message: `Error: ${err.message}`,
+          message: 'Nem sikerült betölteni az adatokat',
           type: 'is-danger'
         })
       }
@@ -153,7 +142,7 @@ export default {
     trashConfirm () {
       this.isModalActive = false
       this.$buefy.snackbar.open({
-        message: 'Confirmed',
+        message: 'Sikeresen törölve',
         queue: false
       })
     },

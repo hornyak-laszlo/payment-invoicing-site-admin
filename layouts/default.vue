@@ -26,7 +26,7 @@ export default {
         'Értékesítés',
         [
           {
-            to: '/forms',
+            to: '/purchase-forms',
             label: 'Űrlapok',
             icon: 'table'
           },
@@ -70,6 +70,29 @@ export default {
             to: '/payment',
             label: 'Fizetés integráció',
             icon: 'table'
+          }
+        ],
+        'Demo',
+        [
+          {
+            to: '/demo/forms',
+            label: 'Form demo',
+            icon: 'square-edit-outline'
+          },
+          {
+            to: '/demo/client',
+            label: 'Létrehozás form',
+            icon: 'square-edit-outline'
+          },
+          {
+            to: '/demo/client/48',
+            label: 'Szerkesztés form',
+            icon: 'square-edit-outline'
+          },
+          {
+            to: '/profile',
+            label: 'Profil',
+            icon: 'account-circle'
           }
         ]
         /*

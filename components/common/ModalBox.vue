@@ -3,21 +3,21 @@
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">
-          Confirm action
+          Törlés megerősítése
         </p>
       </header>
       <section class="modal-card-body">
         <p>
-          This will permanently delete <b>{{ trashObjectName }}</b>
+          Biztosan törölni szeretnéd a <b>{{ trashObjectName }}</b> adatot?
         </p>
-        <p>Action can not be undone.</p>
+        <p>A műveletet nem lehet visszavonni.</p>
       </section>
       <footer class="modal-card-foot">
         <button class="button" type="button" @click="cancel">
-          Cancel
+          Mégse
         </button>
         <button class="button is-danger" @click="confirm">
-          Delete
+          Törlés
         </button>
       </footer>
     </div>

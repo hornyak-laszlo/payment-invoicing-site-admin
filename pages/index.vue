@@ -49,9 +49,9 @@
       </card-component>
 
       <card-component title="Clients" class="has-table has-mobile-sort-spaced">
-        <clients-table-sample
+        <!--clients-table-sample
           :data-url="`${$router.options.base}data-sources/clients.json`"
-        />
+        /-->
       </card-component>
     </section>
   </div>
@@ -66,11 +66,11 @@ import Tiles from '@/components/common/Tiles'
 import CardWidget from '@/components/common/CardWidget'
 import CardComponent from '@/components/common/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
-import ClientsTableSample from '@/components/ClientsTableSample'
+// import ClientsTableSample from '@/components/ClientsTableSample'
 export default {
   name: 'Home',
   components: {
-    ClientsTableSample,
+    // ClientsTableSample,
     LineChart,
     CardComponent,
     CardWidget,

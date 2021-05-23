@@ -1,19 +1,20 @@
 <template>
   <div>
     <hero-bar>
-      Termékek
+      Kontakt űrlapok
       <nuxt-link slot="right" to="/client" class="button">
-        Termék hozzáadása
+        Űrlap hozzáadása
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
         class="has-table"
-        title="Termékek"
+        title="Kontakt űrlapok"
         icon="account-multiple"
       >
-        <clients-table-sample
-          :data-url="`products`"
+        <data-table
+          :fields="fields"
+          :collection="collection"
           :checkable="true"
         />
       </card-component>
@@ -25,26 +26,34 @@
 // @ is an alias to /src
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
-import ClientsTableSample from '@/components/ClientsTableSample'
+import DataTable from '@/components/DataTable'
 export default {
-  name: 'Home',
+  name: 'ContactForms',
   components: {
     HeroBar,
-    ClientsTableSample,
+    DataTable,
     CardComponent
   },
   data () {
     return {
+      collection: 'contact-forms',
+      fields: [{
+        field: 'name',
+        title: 'Név'
+      }, {
+        field: 'contactLink',
+        title: 'Link'
+      }]
     }
   },
   head () {
     return {
-      title: 'Termékek'
+      title: 'Kontakt űrlapok'
     }
   },
   computed: {
     titleStack () {
-      return ['Értékesítés', 'Termékek']
+      return ['Leadek', 'Űrlapok']
     }
   },
   mounted () {

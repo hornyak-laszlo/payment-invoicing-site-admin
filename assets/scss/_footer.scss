@@ -1,5 +1,9 @@
 footer.footer {
+  position: fixed;
+  bottom: 0;
   border-top: $light-border;
+  height: $footer-logo-height + 0.5rem;
+  width: 100%;
 
   .logo {
     a {
