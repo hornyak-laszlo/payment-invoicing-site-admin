@@ -7,6 +7,8 @@
       @cancel="trashCancel"
     />
     <b-table
+      :sticky-header="true"
+      :height="tableHeight"
       :checked-rows.sync="checkedRows"
       :checkable="checkable"
       :loading="isLoading"
@@ -97,6 +99,7 @@ export default {
   },
   data () {
     return {
+      windowHeight: 300,
       isModalActive: false,
       trashObject: null,
       clients: [],
@@ -107,6 +110,15 @@ export default {
     }
   },
   computed: {
+    tableHeight () {
+      const header = 52
+      const sectionHeader = 85
+      const tablePadding = 24 + 48
+      const border = 2
+      const tableHeader = 49
+      const tableFooter = 72
+      return this.windowHeight - (header + sectionHeader + tablePadding + tableHeader + tableFooter + border)
+    },
     trashObjectName () {
       if (this.trashObject) {
         return this.trashObject.name
@@ -116,6 +128,8 @@ export default {
     }
   },
   async mounted () {
+    window.addEventListener('resize', this.onResize)
+    this.onResize()
     if (this.collection) {
       this.isLoading = true
       try {
@@ -134,7 +148,13 @@ export default {
       }
     }
   },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.onResize)
+  },
   methods: {
+    onResize () {
+      this.windowHeight = window.innerHeight
+    },
     trashModal (trashObject) {
       this.trashObject = trashObject
       this.isModalActive = true
