@@ -1,2 +1,5 @@
-/* Buefy has Bulma included. So we import just that */
-@import "~buefy/src/scss/buefy-build";
+// Import bulma styles
+@import "~bulma";
+
+// Import buefy styles
+@import "~buefy/src/scss/buefy";

@@ -20,12 +20,6 @@ export default {
         rel: 'stylesheet',
         type: 'text/css',
         href: 'https://fonts.googleapis.com/css?family=Nunito'
-      },
-      {
-        rel: 'stylesheet',
-        type: 'text/css',
-        href:
-          'https://cdn.materialdesignicons.com/4.9.95/css/materialdesignicons.min.css'
       }
     ]
   },
@@ -40,7 +34,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
-    './assets/scss/main.scss'
+    '@/assets/scss/main.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -61,7 +55,7 @@ export default {
   modules: [
     '@nuxtjs/strapi',
     // https://go.nuxtjs.dev/buefy
-    ['nuxt-buefy', { materialDesignIcons: false }],
+    ['nuxt-buefy', { css: false }],
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa

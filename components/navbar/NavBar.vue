@@ -42,7 +42,7 @@
               <span>My Profile</span>
             </nuxt-link>
             <a class="navbar-item">
-              <b-icon icon="settings" custom-size="default" />
+              <b-icon icon="cog" custom-size="default" />
               <span>Settings</span>
             </a>
             <hr class="navbar-divider">
