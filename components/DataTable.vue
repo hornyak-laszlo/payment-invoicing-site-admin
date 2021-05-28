@@ -17,7 +17,7 @@
       :striped="true"
       :hoverable="true"
       default-sort="id"
-      :data="clients"
+      :data="data"
     >
       <template slot-scope="props">
         <b-table-column label="Id" field="id" sortable>
@@ -40,11 +40,12 @@
         </b-table-column>
         <b-table-column custom-key="actions" class="is-actions-cell">
           <div class="buttons is-right">
-            <button
+            <nuxt-link
+              :to="`/${collection}/edit/${props.row.id}`"
               class="button is-small is-primary"
             >
               <b-icon icon="account-edit" size="is-small" />
-            </button>
+            </nuxt-link>
             <button
               class="button is-small is-danger"
               type="button"
@@ -101,7 +102,7 @@ export default {
       windowHeight: 300,
       isModalActive: false,
       trashObject: null,
-      clients: [],
+      data: [],
       isLoading: false,
       paginated: false,
       perPage: 10,
@@ -129,27 +130,30 @@ export default {
   async mounted () {
     window.addEventListener('resize', this.onResize)
     this.onResize()
-    if (this.collection) {
-      this.isLoading = true
-      try {
-        this.clients = await this.$strapi.find(this.collection)
-        this.isLoading = false
-        if (this.clients.length > this.perPage) {
-          this.paginated = true
-        }
-      } catch (err) {
-        this.isLoading = false
-        this.$buefy.toast.open({
-          message: 'Nem sikerült betölteni az adatokat',
-          type: 'is-danger'
-        })
-      }
-    }
+    await this.loadData()
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.onResize)
   },
   methods: {
+    async loadData () {
+      if (this.collection) {
+        this.isLoading = true
+        try {
+          this.data = await this.$strapi.find(this.collection)
+          this.isLoading = false
+          if (this.data.length > this.perPage) {
+            this.paginated = true
+          }
+        } catch (err) {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: 'Nem sikerült betölteni az adatokat',
+            type: 'is-danger'
+          })
+        }
+      }
+    },
     onResize () {
       this.windowHeight = window.innerHeight
     },
@@ -157,7 +161,9 @@ export default {
       this.trashObject = trashObject
       this.isModalActive = true
     },
-    trashConfirm () {
+    async trashConfirm () {
+      await this.$strapi.delete(this.collection, this.trashObject.id)
+      await this.loadData()
       this.isModalActive = false
       this.$buefy.snackbar.open({
         message: 'Sikeresen törölve',

@@ -2,7 +2,7 @@
   <div>
     <hero-bar>
       Kontakt űrlapok
-      <nuxt-link slot="right" to="/client" class="button">
+      <nuxt-link slot="right" to="/contact-forms/create" class="button">
         Űrlap hozzáadása
       </nuxt-link>
     </hero-bar>
