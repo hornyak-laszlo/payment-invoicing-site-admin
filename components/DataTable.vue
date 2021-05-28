@@ -40,12 +40,11 @@
         </b-table-column>
         <b-table-column custom-key="actions" class="is-actions-cell">
           <div class="buttons is-right">
-            <nuxt-link
-              :to="{ name: 'client-id', params: { id: props.row.id } }"
+            <button
               class="button is-small is-primary"
             >
               <b-icon icon="account-edit" size="is-small" />
-            </nuxt-link>
+            </button>
             <button
               class="button is-small is-danger"
               type="button"
@@ -139,7 +138,6 @@ export default {
           this.paginated = true
         }
       } catch (err) {
-        console.error(err.message)
         this.isLoading = false
         this.$buefy.toast.open({
           message: 'Nem sikerült betölteni az adatokat',
