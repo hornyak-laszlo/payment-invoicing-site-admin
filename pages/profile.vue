@@ -1,62 +1,86 @@
 <template>
   <div>
-    <title-bar :title-stack="titleStack" />
     <hero-bar>
-      Profile
-      <nuxt-link slot="right" to="/" class="button">
-        Dashboard
-      </nuxt-link>
+      Profil
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
-        <profile-update-form class="tile is-child" />
-        <card-component title="Profile" icon="account" class="tile is-child">
-          <user-avatar class="image has-max-width is-aligned-center" />
-          <hr>
-          <b-field label="Name">
-            <b-input :value="userName" custom-class="is-static" readonly />
+        <card-component title="Profil" icon="account" class="tile is-child">
+          <b-field label="Felhasználónév">
+            <b-input :value="username" custom-class="is-static" readonly />
           </b-field>
-          <hr>
-          <b-field label="E-mail">
-            <b-input :value="userEmail" custom-class="is-static" readonly />
+          <b-field label="Email cím">
+            <b-input :value="email" custom-class="is-static" readonly />
+          </b-field>
+          <b-field label="Jogosultság">
+            <b-input :value="role" custom-class="is-static" readonly />
+          </b-field>
+        </card-component>
+        <card-component title="Cég" icon="account" class="tile is-child">
+          <b-field label="Név">
+            <b-input :value="company.name" custom-class="is-static" readonly />
+          </b-field>
+          <b-field label="Adószám">
+            <b-input :value="company.taxNumber" custom-class="is-static" readonly />
           </b-field>
         </card-component>
       </tiles>
-      <password-update-form />
     </section>
   </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import CardComponent from '@/components/common/CardComponent'
-import TitleBar from '@/components/common/TitleBar'
 import HeroBar from '@/components/common/HeroBar'
-import ProfileUpdateForm from '@/components/ProfileUpdateForm'
-import PasswordUpdateForm from '@/components/PasswordUpdateForm'
 import Tiles from '@/components/common/Tiles'
-import UserAvatar from '@/components/UserAvatar'
+
 export default {
   name: 'Profile',
   components: {
-    UserAvatar,
     Tiles,
-    PasswordUpdateForm,
-    ProfileUpdateForm,
     HeroBar,
-    TitleBar,
     CardComponent
+  },
+  data () {
+    return {
+      company: {
+        name: '',
+        taxNumber: ''
+      }
+    }
   },
   head () {
     return {
-      title: 'Profile — Admin Null Nuxt.js Bulma'
+      title: 'Profil'
     }
   },
   computed: {
-    titleStack () {
-      return ['Admin', 'Profile']
+    username () {
+      return this.$strapi.user ? this.$strapi.user.username : ''
     },
-    ...mapState(['userName', 'userEmail'])
+    email () {
+      return this.$strapi.user ? this.$strapi.user.email : ''
+    },
+    role () {
+      return this.$strapi.user ? this.$strapi.user.role.name : ''
+    }
+  },
+  async mounted () {
+    try {
+      if (this.$strapi.user) {
+        const companyId = (typeof this.$strapi.user.company === 'number') ? this.$strapi.user.company : this.$strapi.user.company.id
+        const company = await this.$strapi.findOne('companies', companyId)
+        this.company = {
+          name: company.name,
+          taxNumber: company.taxNumber
+        }
+      }
+    } catch (err) {
+      this.$buefy.toast.open({
+        message: 'Nem sikerült betölteni a cég adatait',
+        type: 'is-danger'
+      })
+    }
   }
 }
 </script>
