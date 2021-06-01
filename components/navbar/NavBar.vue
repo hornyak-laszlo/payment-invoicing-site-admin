@@ -29,7 +29,7 @@
         <nav-bar-menu class="has-divider has-user-avatar">
           <user-avatar />
           <div class="is-user-name">
-            <span>{{ user.username }}</span>
+            <span>{{ username }}</span>
           </div>
 
           <div slot="dropdown" class="navbar-dropdown">
@@ -86,8 +86,8 @@ export default {
     }
   },
   computed: {
-    user () {
-      return this.$strapi.user
+    username () {
+      return this.$strapi.user ? this.$strapi.user.username : ''
     },
     menuNavBarToggleIcon () {
       return this.isMenuNavBarActive ? 'close' : 'dots-vertical'
@@ -101,8 +101,7 @@ export default {
     ...mapState([
       'isNavBarVisible',
       'isAsideMobileExpanded',
-      'isDarkModeActive',
-      'userName'
+      'isDarkModeActive'
     ])
   },
   methods: {
