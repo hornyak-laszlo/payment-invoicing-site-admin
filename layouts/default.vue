@@ -20,6 +20,7 @@ export default {
     AsideMenu,
     NavBar
   },
+  middleware: 'auth',
   computed: {
     menu () {
       return [

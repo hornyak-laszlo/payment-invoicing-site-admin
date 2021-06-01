@@ -29,7 +29,7 @@
         <nav-bar-menu class="has-divider has-user-avatar">
           <user-avatar />
           <div class="is-user-name">
-            <span>{{ userName }}</span>
+            <span>{{ user.username }}</span>
           </div>
 
           <div slot="dropdown" class="navbar-dropdown">
@@ -39,16 +39,12 @@
               exact-active-class="is-active"
             >
               <b-icon icon="account" custom-size="default" />
-              <span>My Profile</span>
+              <span>Profil</span>
             </nuxt-link>
-            <a class="navbar-item">
-              <b-icon icon="cog" custom-size="default" />
-              <span>Settings</span>
-            </a>
             <hr class="navbar-divider">
-            <a class="navbar-item">
+            <a class="navbar-item" @click="logout">
               <b-icon icon="logout" custom-size="default" />
-              <span>Log Out</span>
+              <span>Kijelentkezés</span>
             </a>
           </div>
         </nav-bar-menu>
@@ -62,11 +58,11 @@
         </a>
         <a
           class="navbar-item is-desktop-icon-only"
-          title="Log out"
+          title="Kijelentkezés"
           @click="logout"
         >
           <b-icon icon="logout" custom-size="default" />
-          <span>Log out</span>
+          <span>Kijelentkezés</span>
         </a>
       </div>
     </div>
@@ -90,6 +86,9 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$strapi.user
+    },
     menuNavBarToggleIcon () {
       return this.isMenuNavBarActive ? 'close' : 'dots-vertical'
     },
@@ -116,11 +115,17 @@ export default {
     darkModeToggle () {
       this.$store.commit('darkModeToggle')
     },
-    logout () {
-      this.$buefy.snackbar.open({
-        message: 'Log out clicked',
-        queue: false
-      })
+    async logout () {
+      try {
+        await this.$strapi.logout()
+        this.$router.push('/login')
+      } catch (err) {
+        this.$buefy.snackbar.open({
+          message: 'Kijelentkezés sikertelen',
+          type: 'is-danger',
+          queue: false
+        })
+      }
     }
   }
 }
