@@ -25,44 +25,14 @@
   }
 }
 
-.button.is-static {
-  background-color: transparent;
+.switch input[type=checkbox]+.check:before {
+  box-shadow: none;
 }
 
-.switch {
-  &:hover, &:focus {
-    input[type=checkbox] + .check {
-      background: transparent;
-    }
-  }
-
+.switch, .b-checkbox.checkbox {
   input[type=checkbox] {
-    &:checked + .check {
-      border-color: $primary;
-      &:before {
-        background: $white;
-        border: 0;
-      }
-    }
-    + .check {
-      background: transparent;
-      border: $checkbox-border;
-
-      &:before {
-        background: transparent;
-        border: $checkbox-border;
-        box-shadow: none;
-      }
-    }
-  }
-}
-
-.switch, .b-checkbox.checkbox, .b-radio.radio {
-  input[type=checkbox], input[type=radio] {
-    &:focus, &:focus:checked, &:active {
-      + .check {
-        box-shadow: none!important;
-      }
+    &:focus + .check, &:focus:checked + .check {
+      box-shadow: none!important;
     }
   }
 }
@@ -70,20 +40,5 @@
 .b-checkbox.checkbox input[type=checkbox], .b-radio.radio input[type=radio] {
   &+.check {
     border: $checkbox-border;
-  }
-}
-
-.b-slider {
-  .b-slider-track {
-    background: transparent;
-    border: 1px solid $base-color;
-  }
-
-  @each $state-class, $state-color, $state-text in $state-colors {
-    &.is-#{$state-class} {
-      .b-slider-track {
-        border: 1px solid $state-color;
-      }
-    }
   }
 }

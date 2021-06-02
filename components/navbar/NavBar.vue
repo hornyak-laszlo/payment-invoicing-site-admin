@@ -47,14 +47,6 @@
             </a>
           </div>
         </nav-bar-menu>
-        <!--a
-          class="navbar-item has-divider is-desktop-icon-only"
-          title="Dark mode"
-          @click="darkModeToggle"
-        >
-          <b-icon :icon="darkModeToggleIcon" pack="fas" custom-size="default" />
-          <span>Dark mode</span>
-        </a-->
         <a
           class="navbar-item is-desktop-icon-only"
           title="Kijelentkezés"
@@ -92,13 +84,9 @@ export default {
     menuToggleMobileIcon () {
       return this.isAsideMobileExpanded ? 'backburger' : 'forwardburger'
     },
-    // darkModeToggleIcon () {
-    //   return this.isDarkModeActive ? 'white-balance-sunny' : 'weather-night'
-    // },
     ...mapState([
       'isNavBarVisible',
       'isAsideMobileExpanded'
-      // 'isDarkModeActive'
     ])
   },
   methods: {
@@ -108,9 +96,6 @@ export default {
     menuNavBarToggle () {
       this.isMenuNavBarActive = !this.isMenuNavBarActive
     },
-    /* darkModeToggle () {
-      this.$store.commit('darkModeToggle')
-    }, */
     async logout () {
       try {
         await this.$strapi.logout()

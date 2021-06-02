@@ -55,7 +55,6 @@ aside.aside {
     height: $navbar-height;
     padding-left: $default-padding * .5;
     flex: 1;
-    box-shadow: 0 1px $base-color-light;
 
     .icon {
       margin-right: $default-padding * .5;
@@ -64,13 +63,6 @@ aside.aside {
 
   .menu-list {
     li {
-      &.is-active {
-        box-shadow: 0 1px $base-color-light;
-        >a {
-          box-shadow: 0 1px $base-color-light;
-        }
-      }
-
       a {
         &.has-dropdown-icon {
           position: relative;
@@ -86,7 +78,7 @@ aside.aside {
       ul {
         display: none;
         border-left: 0;
-        background-color: $aside-dropdown-background-color;
+        background-color: darken($base-color, 2.5%);
         padding-left: 0;
         margin: 0 0 $default-padding * .5;
 

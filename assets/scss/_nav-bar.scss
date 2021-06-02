@@ -76,10 +76,8 @@ nav.navbar {
         }
 
         &.has-dropdown {
-          border-bottom: $light-border;
-
           >.navbar-link {
-            border-bottom: $light-border;
+            background-color: $white-ter;
             .icon:last-child {
               display: none;
             }
