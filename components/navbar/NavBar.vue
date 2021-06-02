@@ -5,7 +5,7 @@
         class="navbar-item is-hidden-desktop"
         @click.prevent="menuToggleMobile"
       >
-        <b-icon :icon="menuToggleMobileIcon" />
+        <b-icon :icon="menuToggleMobileIcon" pack="fas" />
       </a>
       <!--div class="navbar-item no-left-space-touch">
         <div class="control">
@@ -18,7 +18,7 @@
         class="navbar-item navbar-item-menu-toggle is-hidden-desktop"
         @click.prevent="menuNavBarToggle"
       >
-        <b-icon :icon="menuNavBarToggleIcon" custom-size="default" />
+        <b-icon :icon="menuNavBarToggleIcon" pack="fas" custom-size="default" />
       </a>
     </div>
     <div
@@ -38,12 +38,12 @@
               class="navbar-item"
               exact-active-class="is-active"
             >
-              <b-icon icon="account" custom-size="default" />
+              <b-icon pack="fas" icon="account" custom-size="default" />
               <span>Profil</span>
             </nuxt-link>
             <hr class="navbar-divider">
             <a class="navbar-item" @click="logout">
-              <b-icon icon="logout" custom-size="default" />
+              <b-icon pack="fas" icon="logout" custom-size="default" />
               <span>Kijelentkezés</span>
             </a>
           </div>
@@ -53,7 +53,7 @@
           title="Dark mode"
           @click="darkModeToggle"
         >
-          <b-icon :icon="darkModeToggleIcon" custom-size="default" />
+          <b-icon :icon="darkModeToggleIcon" pack="fas" custom-size="default" />
           <span>Dark mode</span>
         </a>
         <a
@@ -61,7 +61,7 @@
           title="Kijelentkezés"
           @click="logout"
         >
-          <b-icon icon="logout" custom-size="default" />
+          <b-icon pack="fas" icon="logout" custom-size="default" />
           <span>Kijelentkezés</span>
         </a>
       </div>

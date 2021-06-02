@@ -24,55 +24,84 @@ export default {
   computed: {
     menu () {
       return [
-        'Értékesítés',
+        'Ügyfelek',
         [
           {
-            to: '/purchase-forms',
-            label: 'Űrlapok',
-            icon: 'table'
-          },
-          {
-            to: '/products',
-            label: 'Termékek',
-            icon: 'table'
-          },
-          {
-            to: '/purchases',
-            label: 'Vásárlások',
-            icon: 'table'
+            to: '/contacts',
+            label: 'Kontaktok',
+            icon: 'user'
           },
           {
             to: '/customers',
             label: 'Vásárlók',
-            icon: 'table'
+            icon: 'user-tag'
+          },
+          {
+            to: '/purchases',
+            label: 'Vásárlások',
+            icon: 'shopping-basket'
           }
         ],
-        'Leadek',
+        'Szerkesztés',
         [
           {
-            to: '/contact-forms',
+            to: '/products',
+            label: 'Termékek',
+            icon: 'tags'
+          },
+          {
+            to: '/forms',
             label: 'Űrlapok',
-            icon: 'table'
-          },
-          {
-            to: '/contacts',
-            label: 'Kontaktok',
-            icon: 'table'
+            icon: 'columns'
           }
         ],
-        'Integrációk',
+        'Beállítások',
         [
           {
-            to: '/invoicing',
-            label: 'Számlázó integráció',
-            icon: 'table'
+            label: 'Integrációk',
+            subLabel: 'Submenus Example',
+            icon: 'key',
+            menu: [
+              {
+                to: '/invoicing',
+                label: 'Billingo',
+                icon: 'file-invoice'
+              },
+              {
+                to: '/invoicing',
+                label: 'Szamlazz.hu',
+                icon: 'file-invoice'
+              },
+              {
+                to: '/payment',
+                label: 'SimplePay',
+                icon: 'money-check-alt'
+              },
+              {
+                to: '/payment',
+                label: 'Stripe',
+                pack: 'fab',
+                icon: 'cc-stripe'
+              }
+            ]
           },
           {
-            to: '/payment',
-            label: 'Fizetés integráció',
-            icon: 'table'
+            to: '/documents',
+            label: 'Jogi dokumentumok',
+            icon: 'gavel'
+          },
+          {
+            to: '/profile',
+            label: 'Profil',
+            icon: 'id-card'
+          },
+          {
+            to: '/company',
+            label: 'Cégadatok',
+            icon: 'building'
           }
-        ],
+        ]
+        /*,
         'Demo',
         [
           {
@@ -89,14 +118,8 @@ export default {
             to: '/demo/client/48',
             label: 'Szerkesztés form',
             icon: 'square-edit-outline'
-          },
-          {
-            to: '/profile',
-            label: 'Profil',
-            icon: 'account-circle'
           }
         ]
-        /*
         'General',
         [
           {
@@ -129,17 +152,19 @@ export default {
             icon: 'account-circle'
           },
           {
-            label: 'Submenus',
+            label: 'Integrációk',
             subLabel: 'Submenus Example',
-            icon: 'view-list',
+            icon: 'key',
             menu: [
               {
-                href: '#void',
-                label: 'Sub-item One'
+                to: '/profile',
+                label: 'Sub-item One',
+                icon: ''
               },
               {
-                href: '#void',
-                label: 'Sub-item Two'
+                to: '/profile',
+                label: 'Sub-item Two',
+                icon: ''
               }
             ]
           }

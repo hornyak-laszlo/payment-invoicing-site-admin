@@ -12,13 +12,14 @@
         v-if="item.icon"
         :icon="item.icon"
         :class="{ 'has-update-mark': item.updateMark }"
+        :pack="item.pack || 'fas'"
         custom-size="default"
       />
       <span v-if="item.label" :class="{ 'menu-item-label': !!item.icon }">{{
         item.label
       }}</span>
       <div v-if="hasDropdown" class="dropdown-icon">
-        <b-icon :icon="dropdownIcon" custom-size="default" />
+        <b-icon :icon="dropdownIcon" pack="fas" custom-size="default" />
       </div>
     </component>
     <aside-menu-list

@@ -18,7 +18,7 @@
               target="_blank"
               class="button is-light"
             >
-              <b-icon icon="credit-card" custom-size="default" />
+              <b-icon pack="fas" icon="credit-card" custom-size="default" />
               <span>Premium Demo</span>
             </a>
           </div>

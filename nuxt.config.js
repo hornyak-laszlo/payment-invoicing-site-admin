@@ -20,6 +20,10 @@ export default {
         rel: 'stylesheet',
         type: 'text/css',
         href: 'https://fonts.googleapis.com/css?family=Nunito'
+      },
+      {
+        rel: 'stylesheet',
+        href: 'https://use.fontawesome.com/releases/v5.2.0/css/all.css'
       }
     ]
   },
@@ -55,7 +59,7 @@ export default {
   modules: [
     '@nuxtjs/strapi',
     // https://go.nuxtjs.dev/buefy
-    ['nuxt-buefy', { css: false }],
+    ['nuxt-buefy', { css: false, materialDesignIcons: false }],
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
