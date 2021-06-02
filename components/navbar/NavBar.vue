@@ -5,7 +5,7 @@
         class="navbar-item is-hidden-desktop"
         @click.prevent="menuToggleMobile"
       >
-        <b-icon :icon="menuToggleMobileIcon" pack="fas" />
+        <b-icon :icon="menuToggleMobileIcon" pack="mdi" />
       </a>
       <!--div class="navbar-item no-left-space-touch">
         <div class="control">
@@ -18,7 +18,7 @@
         class="navbar-item navbar-item-menu-toggle is-hidden-desktop"
         @click.prevent="menuNavBarToggle"
       >
-        <b-icon :icon="menuNavBarToggleIcon" pack="fas" custom-size="default" />
+        <b-icon :icon="menuNavBarToggleIcon" pack="mdi" custom-size="default" />
       </a>
     </div>
     <div

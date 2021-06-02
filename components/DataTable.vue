@@ -44,14 +44,14 @@
               :to="`/${collection}/edit/${props.row.id}`"
               class="button is-small is-primary"
             >
-              <b-icon pack="fas" icon="account-edit" size="is-small" />
+              <b-icon pack="fas" icon="edit" size="is-small" />
             </nuxt-link>
             <button
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
             >
-              <b-icon pack="fas" icon="trash-can" size="is-small" />
+              <b-icon pack="fas" icon="trash-alt" size="is-small" />
             </button>
           </div>
         </b-table-column>
@@ -61,13 +61,13 @@
         <div class="content has-text-grey has-text-centered">
           <template v-if="isLoading">
             <p>
-              <b-icon pack="fas" icon="dots-horizontal" size="is-large" />
+              <b-icon pack="fas" icon="ellipsis-h" size="is-large" />
             </p>
             <p>Adatok betöltése...</p>
           </template>
           <template v-else>
             <p>
-              <b-icon pack="fas" icon="emoticon-sad" size="is-large" />
+              <b-icon pack="fas" icon="frown" size="is-large" />
             </p>
             <p>Nem található adat&hellip;</p>
           </template>

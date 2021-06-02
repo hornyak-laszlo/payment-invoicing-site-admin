@@ -59,7 +59,7 @@ export default {
   modules: [
     '@nuxtjs/strapi',
     // https://go.nuxtjs.dev/buefy
-    ['nuxt-buefy', { css: false, materialDesignIcons: false }],
+    ['nuxt-buefy', { css: false }],
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa

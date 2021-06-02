@@ -1,6 +1,5 @@
 <template>
   <div>
-    <title-bar :title-stack="titleStack" />
     <hero-bar>
       Forms
       <nuxt-link slot="right" to="/" class="button">
@@ -15,6 +14,7 @@
               <b-input
                 v-model="form.name"
                 icon="account"
+                pack="mdi"
                 placeholder="Name"
                 name="name"
                 required
@@ -24,6 +24,7 @@
               <b-input
                 v-model="form.email"
                 icon="email"
+                pack="mdi"
                 type="email"
                 placeholder="E-mail"
                 name="email"
@@ -126,7 +127,6 @@
 
 <script>
 import mapValues from 'lodash/mapValues'
-import TitleBar from '@/components/common/TitleBar'
 import CardComponent from '@/components/common/CardComponent'
 import CheckboxPicker from '@/components/form/CheckboxPicker'
 import RadioPicker from '@/components/form/RadioPicker'
@@ -139,8 +139,7 @@ export default {
     FilePicker,
     RadioPicker,
     CheckboxPicker,
-    CardComponent,
-    TitleBar
+    CardComponent
   },
   data () {
     return {

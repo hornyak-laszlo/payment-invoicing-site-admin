@@ -1,6 +1,5 @@
 <template>
   <div>
-    <title-bar :title-stack="titleStack" />
     <hero-bar>
       {{ heroTitle }}
       <nuxt-link slot="right" :to="heroRouterLinkTo" class="button">
@@ -54,6 +53,7 @@
                 v-model="form.created_date"
                 placeholder="Click to select..."
                 icon="calendar-today"
+                pack="mdi"
                 @input="input"
               />
             </b-field>
@@ -119,7 +119,6 @@
 <script>
 import axios from 'axios'
 import dayjs from 'dayjs'
-import TitleBar from '@/components/common/TitleBar'
 import HeroBar from '@/components/common/HeroBar'
 import Tiles from '@/components/common/Tiles'
 import CardComponent from '@/components/common/CardComponent'
@@ -135,7 +134,6 @@ export default {
     CardComponent,
     Tiles,
     HeroBar,
-    TitleBar,
     Notification
   },
   data () {

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <title-bar :title-stack="titleStack" />
     <hero-bar :has-right-visible="false">
       Dashboard
     </hero-bar>
@@ -60,7 +59,6 @@
 <script>
 // @ is an alias to /src
 import * as chartConfig from '@/components/Charts/chart.config'
-import TitleBar from '@/components/common/TitleBar'
 import HeroBar from '@/components/common/HeroBar'
 import Tiles from '@/components/common/Tiles'
 import CardWidget from '@/components/common/CardWidget'
@@ -75,8 +73,7 @@ export default {
     CardComponent,
     CardWidget,
     Tiles,
-    HeroBar,
-    TitleBar
+    HeroBar
   },
   data () {
     return {
