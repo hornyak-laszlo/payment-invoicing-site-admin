@@ -12,10 +12,10 @@ export const state = () => ({
 
   /* Aside */
   isAsideVisible: true,
-  isAsideMobileExpanded: false,
+  isAsideMobileExpanded: false
 
   /* Dark mode */
-  isDarkModeActive: false
+  // isDarkModeActive: false
 })
 
 export const mutations = {

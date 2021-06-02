@@ -101,84 +101,8 @@ export default {
             icon: 'building'
           }
         ]
-        /*,
-        'Demo',
-        [
-          {
-            to: '/demo/forms',
-            label: 'Form demo',
-            icon: 'square-edit-outline'
-          },
-          {
-            to: '/demo/client',
-            label: 'Létrehozás form',
-            icon: 'square-edit-outline'
-          },
-          {
-            to: '/demo/client/48',
-            label: 'Szerkesztés form',
-            icon: 'square-edit-outline'
-          }
-        ]
-        'General',
-        [
-          {
-            to: '/',
-            icon: 'desktop-mac',
-            label: 'Dashboard'
-          }
-        ],
-        'Examples',
-        [
-          {
-            action: 'dark-mode-toggle',
-            label: 'Dark / White',
-            icon: 'weather-night'
-          },
-          {
-            to: '/tables',
-            label: 'Tables',
-            icon: 'table',
-            updateMark: true
-          },
-          {
-            to: '/forms',
-            label: 'Forms',
-            icon: 'square-edit-outline'
-          },
-          {
-            to: '/profile',
-            label: 'Profile',
-            icon: 'account-circle'
-          },
-          {
-            label: 'Integrációk',
-            subLabel: 'Submenus Example',
-            icon: 'key',
-            menu: [
-              {
-                to: '/profile',
-                label: 'Sub-item One',
-                icon: ''
-              },
-              {
-                to: '/profile',
-                label: 'Sub-item Two',
-                icon: ''
-              }
-            ]
-          }
-        ]
-        */
       ]
     }
-  },
-  created () {
-    this.$store.commit('user', {
-      name: 'John Doe',
-      email: 'john@example.com',
-      avatar: 'https://avatars.dicebear.com/v2/gridy/John-Doe.svg'
-    })
   },
   mounted () {
     document.documentElement.classList.add('has-aside-left')

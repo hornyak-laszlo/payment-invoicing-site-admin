@@ -27,7 +27,6 @@
     >
       <div class="navbar-end">
         <nav-bar-menu class="has-divider has-user-avatar">
-          <user-avatar />
           <div class="is-user-name">
             <span>{{ username }}</span>
           </div>
@@ -38,30 +37,30 @@
               class="navbar-item"
               exact-active-class="is-active"
             >
-              <b-icon pack="fas" icon="account" custom-size="default" />
+              <b-icon pack="fas" icon="id-card" custom-size="default" />
               <span>Profil</span>
             </nuxt-link>
             <hr class="navbar-divider">
             <a class="navbar-item" @click="logout">
-              <b-icon pack="fas" icon="logout" custom-size="default" />
+              <b-icon pack="fas" icon="sign-out-alt" custom-size="default" />
               <span>Kijelentkezés</span>
             </a>
           </div>
         </nav-bar-menu>
-        <a
+        <!--a
           class="navbar-item has-divider is-desktop-icon-only"
           title="Dark mode"
           @click="darkModeToggle"
         >
           <b-icon :icon="darkModeToggleIcon" pack="fas" custom-size="default" />
           <span>Dark mode</span>
-        </a>
+        </a-->
         <a
           class="navbar-item is-desktop-icon-only"
           title="Kijelentkezés"
           @click="logout"
         >
-          <b-icon pack="fas" icon="logout" custom-size="default" />
+          <b-icon pack="fas" icon="sign-out-alt" custom-size="default" />
           <span>Kijelentkezés</span>
         </a>
       </div>
@@ -72,12 +71,10 @@
 <script>
 import { mapState } from 'vuex'
 import NavBarMenu from '@/components/navbar/NavBarMenu'
-import UserAvatar from '@/components/UserAvatar'
 
 export default {
   name: 'NavBar',
   components: {
-    UserAvatar,
     NavBarMenu
   },
   data () {
@@ -95,13 +92,13 @@ export default {
     menuToggleMobileIcon () {
       return this.isAsideMobileExpanded ? 'backburger' : 'forwardburger'
     },
-    darkModeToggleIcon () {
-      return this.isDarkModeActive ? 'white-balance-sunny' : 'weather-night'
-    },
+    // darkModeToggleIcon () {
+    //   return this.isDarkModeActive ? 'white-balance-sunny' : 'weather-night'
+    // },
     ...mapState([
       'isNavBarVisible',
-      'isAsideMobileExpanded',
-      'isDarkModeActive'
+      'isAsideMobileExpanded'
+      // 'isDarkModeActive'
     ])
   },
   methods: {
@@ -111,9 +108,9 @@ export default {
     menuNavBarToggle () {
       this.isMenuNavBarActive = !this.isMenuNavBarActive
     },
-    darkModeToggle () {
+    /* darkModeToggle () {
       this.$store.commit('darkModeToggle')
-    },
+    }, */
     async logout () {
       try {
         await this.$strapi.logout()
