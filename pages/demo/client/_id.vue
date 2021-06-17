@@ -151,17 +151,6 @@ export default {
     }
   },
   computed: {
-    titleStack () {
-      let lastCrumb
-
-      if (this.isProfileExists) {
-        lastCrumb = this.form.name
-      } else {
-        lastCrumb = 'New client'
-      }
-
-      return ['Admin', 'Clients', lastCrumb]
-    },
     heroTitle () {
       if (this.isProfileExists) {
         return this.form.name

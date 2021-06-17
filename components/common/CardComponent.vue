@@ -2,7 +2,7 @@
   <div class="card">
     <header v-if="title" class="card-header">
       <p class="card-header-title">
-        <b-icon v-if="icon" :icon="icon" pack="mdi" custom-size="default" />
+        <b-icon v-if="icon" :icon="icon" pack="fas" custom-size="default" />
         {{ title }}
       </p>
       <a

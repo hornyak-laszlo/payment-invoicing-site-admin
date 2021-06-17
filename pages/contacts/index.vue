@@ -7,7 +7,7 @@
       <card-component
         class="has-table"
         title="Kontaktok"
-        icon="account-multiple"
+        icon="user"
       >
         <data-table
           :fields="fields"
@@ -49,9 +49,6 @@ export default {
     }
   },
   computed: {
-    titleStack () {
-      return ['Leadek', 'Kontaktok']
-    }
   },
   mounted () {
   },

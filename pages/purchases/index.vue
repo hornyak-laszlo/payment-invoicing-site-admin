@@ -7,7 +7,7 @@
       <card-component
         class="has-table"
         title="Vásárlások"
-        icon="account-multiple"
+        icon="shopping-basket"
       >
         <data-table
           :fields="fields"
@@ -58,9 +58,6 @@ export default {
     }
   },
   computed: {
-    titleStack () {
-      return ['Értékesítés', 'Vásárlások']
-    }
   },
   mounted () {
   },

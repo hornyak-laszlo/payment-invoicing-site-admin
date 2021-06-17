@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Kontakt űrlapok
+      Űrlapok
       <nuxt-link slot="right" to="/contact-forms/create" class="button">
         Űrlap hozzáadása
       </nuxt-link>
@@ -9,8 +9,8 @@
     <section class="section is-main-section">
       <card-component
         class="has-table"
-        title="Kontakt űrlapok"
-        icon="account-multiple"
+        title="Űrlapok"
+        icon="columns"
       >
         <data-table
           :fields="fields"
@@ -48,13 +48,10 @@ export default {
   },
   head () {
     return {
-      title: 'Kontakt űrlapok'
+      title: 'Űrlapok'
     }
   },
   computed: {
-    titleStack () {
-      return ['Leadek', 'Űrlapok']
-    }
   },
   mounted () {
   },

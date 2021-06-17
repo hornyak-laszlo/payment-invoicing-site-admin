@@ -52,9 +52,6 @@ export default {
     }
   },
   computed: {
-    titleStack () {
-      return ['Értékesítés', 'Űrlapok']
-    }
   },
   mounted () {
   },

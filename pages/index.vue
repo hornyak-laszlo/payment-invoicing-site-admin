@@ -32,7 +32,7 @@
 
       <card-component
         title="Performance"
-        icon="finance"
+        icon="wallet"
         header-icon="reload"
         @header-icon-click="fillChartData"
       >
@@ -89,9 +89,6 @@ export default {
     }
   },
   computed: {
-    titleStack () {
-      return ['Admin', 'Dashboard']
-    }
   },
   mounted () {
     this.fillChartData()

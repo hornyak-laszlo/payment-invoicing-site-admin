@@ -1,13 +1,13 @@
 <template>
   <div>
     <hero-bar>
-      Kontaktok
+      Vásárlók
     </hero-bar>
     <section class="section is-main-section">
       <card-component
         class="has-table"
-        title="Kontaktok"
-        icon="account-multiple"
+        title="Vásárlók"
+        icon="user-tag"
       >
         <data-table
           :fields="fields"
@@ -55,9 +55,6 @@ export default {
     }
   },
   computed: {
-    titleStack () {
-      return ['Leadek', 'Kontaktok']
-    }
   },
   mounted () {
   },

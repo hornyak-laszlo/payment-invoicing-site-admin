@@ -5,7 +5,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
-        <card-component title="Profil" icon="account" class="tile is-child">
+        <card-component title="Profil" icon="id-card" class="tile is-child">
           <b-field label="Felhasználónév">
             <b-input :value="username" custom-class="is-static" readonly />
           </b-field>
@@ -16,7 +16,7 @@
             <b-input :value="role" custom-class="is-static" readonly />
           </b-field>
         </card-component>
-        <card-component title="Cég" icon="account" class="tile is-child">
+        <card-component title="Cég" icon="building" class="tile is-child">
           <b-field label="Név">
             <b-input :value="company.name" custom-class="is-static" readonly />
           </b-field>

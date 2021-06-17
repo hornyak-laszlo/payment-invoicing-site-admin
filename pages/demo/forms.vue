@@ -167,9 +167,6 @@ export default {
     }
   },
   computed: {
-    titleStack () {
-      return ['Admin', 'Forms']
-    }
   },
   methods: {
     submit () {},

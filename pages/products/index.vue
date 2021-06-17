@@ -10,7 +10,7 @@
       <card-component
         class="has-table"
         title="Termékek"
-        icon="account-multiple"
+        icon="tags"
       >
         <data-table
           :fields="fields"
@@ -55,9 +55,6 @@ export default {
     }
   },
   computed: {
-    titleStack () {
-      return ['Értékesítés', 'Termékek']
-    }
   },
   mounted () {
   },
