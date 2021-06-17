@@ -2,7 +2,7 @@
   <div>
     <hero-bar>
       Űrlapok
-      <nuxt-link slot="right" to="/contact-forms/create" class="button">
+      <nuxt-link slot="right" to="/forms/create" class="button">
         Űrlap hozzáadása
       </nuxt-link>
     </hero-bar>
@@ -12,9 +12,7 @@
         title="Űrlapok"
         icon="columns"
       >
-        <data-table
-          :fields="fields"
-          :collection="collection"
+        <form-data-table
           :checkable="true"
         />
       </card-component>
@@ -26,24 +24,16 @@
 // @ is an alias to /src
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
-import DataTable from '@/components/DataTable'
+import FormDataTable from '@/components/FormDataTable'
 export default {
-  name: 'ContactForms',
+  name: 'Forms',
   components: {
     HeroBar,
-    DataTable,
+    FormDataTable,
     CardComponent
   },
   data () {
     return {
-      collection: 'contact-forms',
-      fields: [{
-        field: 'name',
-        title: 'Név'
-      }, {
-        field: 'contactLink',
-        title: 'Link'
-      }]
     }
   },
   head () {

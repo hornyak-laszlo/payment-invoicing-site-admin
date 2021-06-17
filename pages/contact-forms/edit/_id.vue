@@ -6,7 +6,7 @@
     <section class="section is-main-section">
       <card-component
         :title="`Űrlap - ID: ${contactForm.id}`"
-        icon="account-edit"
+        icon="columns"
         class="tile is-child"
       >
         <form @submit.prevent="submit">
@@ -38,7 +38,7 @@
               Mentés
             </b-button>
             <nuxt-link
-              to="/contact-forms"
+              to="/forms"
               class="button is-secondary"
             >
               Vissza

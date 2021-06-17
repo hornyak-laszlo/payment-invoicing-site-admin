@@ -6,7 +6,7 @@
     <section class="section is-main-section">
       <card-component
         title="Új űrlap"
-        icon="account-edit"
+        icon="columns"
         class="tile is-child"
       >
         <form @submit.prevent="submit">
@@ -38,7 +38,7 @@
               Létrehozás
             </b-button>
             <nuxt-link
-              to="/contact-forms"
+              to="/forms"
               class="button is-secondary"
             >
               Vissza
@@ -55,7 +55,7 @@ import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
-  name: 'ContactFormCreate',
+  name: 'FormCreate',
   components: {
     CardComponent,
     HeroBar
@@ -68,13 +68,13 @@ export default {
   },
   head () {
     return {
-      title: 'Kontakt űrlap hozzáadása'
+      title: 'Űrlap hozzáadása'
     }
   },
   methods: {
     getClearFormObject () {
       return {
-        id: '',
+        type: 'contact-forms',
         name: '',
         contactLink: '',
         successfulContactLink: ''
@@ -83,9 +83,9 @@ export default {
     async submit () {
       try {
         this.isLoading = true
-        // NOTE: Temporarely
-        this.contactForm.privacyPolicyLink = 'https://strapi.io/privacy'
-        await this.$strapi.create('contact-forms', this.contactForm)
+        if (this.contactForm.type === 'contact-forms') {
+          await this.$strapi.create('contact-forms', this.contactForm)
+        }
 
         this.contactForm = this.getClearFormObject()
         this.isLoading = false
