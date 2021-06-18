@@ -35,6 +35,9 @@ export default {
     return {
       collection: 'customers',
       fields: [{
+        field: 'companyName',
+        title: 'Cégnév'
+      }, {
         field: 'firstName',
         title: 'Vezetéknév'
       }, {
@@ -46,6 +49,9 @@ export default {
       }, {
         field: 'phoneNumber',
         title: 'Telefon'
+      }, {
+        field: 'sumOfPurchase',
+        title: 'Vásárlói érték'
       }]
     }
   },

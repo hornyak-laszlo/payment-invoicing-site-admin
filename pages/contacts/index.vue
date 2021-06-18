@@ -35,11 +35,20 @@ export default {
     return {
       collection: 'contacts',
       fields: [{
-        field: 'customer',
-        title: 'Ügyfél'
+        field: 'companyName',
+        title: 'Cégnév'
       }, {
-        field: 'isNewsletterSubscribed',
-        title: 'Hírlevél'
+        field: 'firstName',
+        title: 'Vezetéknév'
+      }, {
+        field: 'lastName',
+        title: 'Keresztnév'
+      }, {
+        field: 'email',
+        title: 'Email cím'
+      }, {
+        field: 'phoneNumber',
+        title: 'Telefonszám'
       }]
     }
   },

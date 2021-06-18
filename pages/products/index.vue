@@ -43,9 +43,6 @@ export default {
       }, {
         field: 'grossPrice',
         title: 'Bruttó ár'
-      }, {
-        field: 'taxRate',
-        title: 'Adó %'
       }]
     }
   },

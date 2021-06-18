@@ -35,20 +35,17 @@ export default {
     return {
       collection: 'purchases',
       fields: [{
-        field: 'customer',
-        title: 'Ügyfél'
+        field: 'firstName',
+        title: 'Vezetéknév'
       }, {
-        field: 'deliveryAddress',
-        title: 'Szállítási cím'
-      }, {
-        field: 'invoiceAddress',
-        title: 'Számlázási cím'
+        field: 'lastName',
+        title: 'Keresztnév'
       }, {
         field: 'paymentMethod',
         title: 'Fizetési mód'
       }, {
-        field: 'isNewsletterSubscribed',
-        title: 'Hírlevél'
+        field: 'sumOfPurchase',
+        title: 'Vásárlás értéke'
       }]
     }
   },
