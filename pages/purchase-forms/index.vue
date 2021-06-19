@@ -41,7 +41,7 @@ export default {
         field: 'name',
         title: 'Név'
       }, {
-        field: 'orderLink',
+        field: 'link',
         title: 'Link'
       }]
     }

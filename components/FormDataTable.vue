@@ -98,11 +98,8 @@ export default {
         field: 'type',
         title: 'Típus'
       }, {
-        field: 'orderLink',
-        title: 'Rendelés link'
-      }, {
-        field: 'contactLink',
-        title: 'Kontakt link'
+        field: 'link',
+        title: 'Link'
       }],
       windowHeight: 300,
       isModalActive: false,

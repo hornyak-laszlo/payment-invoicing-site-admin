@@ -18,13 +18,13 @@
           </b-field>
           <b-field label="Link" message="Link ahol elérhető lesz az űrlap" horizontal>
             <b-input
-              v-model="contactForm.contactLink"
+              v-model="contactForm.link"
               required
             />
           </b-field>
           <b-field label="Sikeres link" message="Sikeres kapcsolatfevétel linkje" horizontal>
             <b-input
-              v-model="contactForm.successfulContactLink"
+              v-model="contactForm.successLink"
               required
             />
           </b-field>
@@ -79,8 +79,8 @@ export default {
       return {
         id: '',
         name: '',
-        contactLink: '',
-        successfulContactLink: ''
+        link: '',
+        successLink: ''
       }
     },
     async getData () {
