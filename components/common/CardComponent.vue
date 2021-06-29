@@ -2,7 +2,7 @@
   <div class="card">
     <header v-if="title" class="card-header">
       <p class="card-header-title">
-        <b-icon v-if="icon" :icon="icon" pack="fas" custom-size="default" />
+        <b-icon v-if="icon" :icon="icon" :pack="iconPack" custom-size="default" />
         {{ title }}
       </p>
       <a
@@ -32,6 +32,10 @@ export default {
     icon: {
       type: String,
       default: null
+    },
+    iconPack: {
+      type: String,
+      default: 'fas'
     },
     headerIcon: {
       type: String,

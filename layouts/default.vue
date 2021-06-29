@@ -58,32 +58,9 @@ export default {
         'Beállítások',
         [
           {
+            to: '/integrations',
             label: 'Integrációk',
-            subLabel: 'Submenus Example',
-            icon: 'key',
-            menu: [
-              {
-                to: '/invoicing',
-                label: 'Billingo',
-                icon: 'file-invoice'
-              },
-              {
-                to: '/invoicing',
-                label: 'Szamlazz.hu',
-                icon: 'file-invoice'
-              },
-              {
-                to: '/payment',
-                label: 'SimplePay',
-                icon: 'money-check-alt'
-              },
-              {
-                to: '/payment',
-                label: 'Stripe',
-                pack: 'fab',
-                icon: 'cc-stripe'
-              }
-            ]
+            icon: 'key'
           },
           {
             to: '/documents',
