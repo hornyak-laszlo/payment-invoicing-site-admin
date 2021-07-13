@@ -1,8 +1,8 @@
+/* eslint-disable semi */
+/* eslint-disable comma-dangle */
 <template>
   <div>
-    <hero-bar>
-      Profil
-    </hero-bar>
+    <hero-bar> Profil </hero-bar>
     <section class="section is-main-section">
       <tiles>
         <card-component title="Profil" icon="id-card" class="tile is-child">
@@ -17,41 +17,52 @@
           </b-field>
         </card-component>
       </tiles>
+      <tiles>
+        <card-component title="Jelszó" icon="id-card" class="tile is-child">
+          <form>
+            <b-field label="Új jelszó">
+              <b-input type="password" />
+            </b-field>
+            <b-field label="Jelszó megerősítése">
+              <b-input type="password" />
+            </b-field>
+          </form>
+        </card-component>
+      </tiles>
     </section>
   </div>
 </template>
 
 <script>
-import CardComponent from '@/components/common/CardComponent'
-import HeroBar from '@/components/common/HeroBar'
-import Tiles from '@/components/common/Tiles'
+import CardComponent from "@/components/common/CardComponent";
+import HeroBar from "@/components/common/HeroBar";
+import Tiles from "@/components/common/Tiles";
 
 export default {
-  name: 'Profile',
+  name: "Profile",
   components: {
     Tiles,
     HeroBar,
-    CardComponent
+    CardComponent,
   },
-  data () {
-    return {
-    }
+  data() {
+    return {};
   },
-  head () {
+  head() {
     return {
-      title: 'Profil'
-    }
+      title: "Profil",
+    };
   },
   computed: {
-    username () {
-      return this.$strapi.user ? this.$strapi.user.username : ''
+    username() {
+      return this.$strapi.user ? this.$strapi.user.username : "";
     },
-    email () {
-      return this.$strapi.user ? this.$strapi.user.email : ''
+    email() {
+      return this.$strapi.user ? this.$strapi.user.email : "";
     },
-    role () {
-      return this.$strapi.user ? this.$strapi.user.role.name : ''
-    }
-  }
-}
+    role() {
+      return this.$strapi.user ? this.$strapi.user.role.name : "";
+    },
+  },
+};
 </script>
