@@ -18,7 +18,11 @@
         </card-component>
       </tiles>
       <tiles>
-        <card-component title="Jelszó" icon="id-card" class="tile is-child">
+        <card-component
+          title="Új Jelszó Beállítása"
+          icon="key"
+          class="tile is-child"
+        >
           <form>
             <b-field label="Új jelszó">
               <b-input type="password" />
@@ -26,6 +30,7 @@
             <b-field label="Jelszó megerősítése">
               <b-input type="password" />
             </b-field>
+            <b-button type="is-success is-light"> Beállítás </b-button>
           </form>
         </card-component>
       </tiles>
