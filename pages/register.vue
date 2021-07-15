@@ -31,6 +31,24 @@
               required
             />
           </b-field>
+          <b-field label="Jelszó megerősítése">
+            <b-input
+              v-model="password2"
+              type="password"
+              required
+            />
+          </b-field>
+          <hr>
+          <b-field :style="{fontSize: '1rem'}">
+            <b-checkbox v-model="aszf">
+              Elfogadom az ÁSZF-et
+            </b-checkbox>
+          </b-field>
+          <b-field :style="{fontSize: '1rem'}">
+            <b-checkbox v-model="adatvedelem">
+              Hozzájárulok adataim kezeléséhez
+            </b-checkbox>
+          </b-field>
           <hr>
           <div class="field">
             <div class="field-body">
@@ -65,7 +83,11 @@ export default {
       isLoading: false,
       email: '',
       password: '',
-      username: ''
+      password2: '',
+      username: '',
+      adatvedelem: false,
+      aszf: false,
+      formValid: false
     }
   },
   head () {
@@ -74,28 +96,38 @@ export default {
     }
   },
   methods: {
+    check () {
+      if (this.password === this.password2 && this.adatvedelem && this.aszf) {
+        this.formValid = true
+      } else {
+        alert('Minden mező kitöltése kötelező')
+      }
+    },
     async submit () {
-      this.isLoading = true
-      try {
-        await this.$strapi.register({
-          email: this.email,
-          password: this.password,
-          username: this.username
-        })
-        this.isLoading = false
+      this.check()
+      if (this.formValid) {
+        this.isLoading = true
+        try {
+          await this.$strapi.register({
+            email: this.email,
+            password: this.password,
+            username: this.username
+          })
+          this.isLoading = false
 
-        this.$router.push('/login')
-      } catch (err) {
-        this.isLoading = false
+          this.$router.push('/login')
+        } catch (err) {
+          this.isLoading = false
 
-        const error = (err && err.message) ? err.message : ''
-        const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
+          const error = (err && err.message) ? err.message : ''
+          const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
 
-        this.$buefy.toast.open({
-          message,
-          type: 'is-danger',
-          queue: false
-        })
+          this.$buefy.toast.open({
+            message,
+            type: 'is-danger',
+            queue: false
+          })
+        }
       }
     }
   }
