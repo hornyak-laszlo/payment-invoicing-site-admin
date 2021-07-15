@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <header v-if="title" class="card-header">
-      <p class="card-header-title">
+      <p v-if="showHeader" class="card-header-title">
         <b-icon v-if="icon" :icon="icon" :pack="iconPack" custom-size="default" />
         {{ title }}
       </p>
@@ -25,6 +25,10 @@
 export default {
   name: 'CardComponent',
   props: {
+    showHeader: {
+      type: Boolean,
+      default: false
+    },
     title: {
       type: String,
       default: null

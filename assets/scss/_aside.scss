@@ -18,6 +18,11 @@
   aside.aside.is-expanded {
     width: $aside-width;
 
+    .icon {
+      width: 2rem;
+      margin-left: 0.6rem;
+    }
+
     .menu-list {
       @include icon-with-update-mark($aside-icon-width);
 

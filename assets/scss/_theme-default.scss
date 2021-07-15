@@ -89,7 +89,7 @@ $modal-card-foot-background-color: $white-ter;
 $notification-padding: $default-padding * .75 $default-padding;
 
 /* Footer: Bulma override */
-$footer-background-color: $white;
+$footer-background-color: $body-background-color;
 $footer-padding: $default-padding * .33 $default-padding;
 
 /* Footer: specifics */

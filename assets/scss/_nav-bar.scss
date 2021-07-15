@@ -48,6 +48,7 @@ nav.navbar {
   nav.navbar {
     display: flex;
     padding-right: 0;
+    background-color: $body-background-color;
 
     .navbar-brand {
       flex: 1;
@@ -99,6 +100,7 @@ nav.navbar {
 
 @include desktop {
   nav.navbar {
+    background-color: $body-background-color;
     .navbar-item {
       padding-right: $navbar-item-h-padding;
       padding-left: $navbar-item-h-padding;
