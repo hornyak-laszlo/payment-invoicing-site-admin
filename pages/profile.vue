@@ -1,5 +1,4 @@
-/* eslint-disable semi */
-/* eslint-disable comma-dangle */
+
 <template>
   <div>
     <hero-bar> Profil </hero-bar>
