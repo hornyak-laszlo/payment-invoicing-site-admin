@@ -12,7 +12,7 @@
         <form @submit.prevent="submit">
           <b-field label="Felhasználó név">
             <b-input
-              v-model="email"
+              v-model="username"
               type="text"
               required
             />
@@ -64,12 +64,39 @@ export default {
     return {
       isLoading: false,
       email: '',
-      password: ''
+      password: '',
+      username: ''
     }
   },
   head () {
     return {
       title: 'Regisztráció'
+    }
+  },
+  methods: {
+    async submit () {
+      this.isLoading = true
+      try {
+        await this.$strapi.register({
+          email: this.email,
+          password: this.password,
+          username: this.username
+        })
+        this.isLoading = false
+
+        this.$router.push('/login')
+      } catch (err) {
+        this.isLoading = false
+
+        const error = (err && err.message) ? err.message : ''
+        const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
+
+        this.$buefy.toast.open({
+          message,
+          type: 'is-danger',
+          queue: false
+        })
+      }
     }
   }
 }
