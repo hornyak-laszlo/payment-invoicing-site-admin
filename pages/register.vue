@@ -24,6 +24,12 @@
               required
             />
           </b-field>
+          <p
+            v-if="!emailValid"
+            :style="{fontSize: '1rem', color: 'red'}"
+          >
+            Érvényes email címet kell megadni!
+          </p>
           <b-field label="Jelszó">
             <b-input
               v-model="password"
@@ -38,6 +44,12 @@
               required
             />
           </b-field>
+          <p
+            v-if="!pwValid"
+            :style="{fontSize: '1rem', color: 'red'}"
+          >
+            A két jelszónak meg kell egyeznie!
+          </p>
           <hr>
           <b-field :style="{fontSize: '1rem'}">
             <b-checkbox v-model="aszf">
@@ -49,6 +61,12 @@
               Hozzájárulok adataim kezeléséhez
             </b-checkbox>
           </b-field>
+          <p
+            v-if="!formValid"
+            :style="{fontSize: '1rem', color: 'red'}"
+          >
+            Az aszf-et és az adatvédelmit is el kell fogadni!
+          </p>
           <hr>
           <div class="field">
             <div class="field-body">
@@ -57,6 +75,7 @@
                   type="submit"
                   class="button is-primary is-fullwidth"
                   :class="{'is-loading': isLoading}"
+                  :disabled="!sendValid"
                 >
                   Regisztráció
                 </button>
@@ -86,8 +105,9 @@ export default {
       password2: '',
       username: '',
       adatvedelem: false,
-      aszf: false,
-      formValid: false
+      aszf: false
+      /* formValid: false
+       pwValid: false */
     }
   },
   head () {
@@ -95,17 +115,37 @@ export default {
       title: 'Regisztráció'
     }
   },
-  methods: {
-    check () {
-      if (this.password === this.password2 && this.adatvedelem && this.aszf) {
-        this.formValid = true
+  computed: {
+    pwValid () {
+      if (this.password.length > 0 && this.password === this.password2) {
+        return true
       } else {
-        alert('Minden mező kitöltése kötelező')
+        return false
       }
     },
+    formValid () {
+      if (this.adatvedelem && this.aszf) {
+        return true
+      } else {
+        return false
+      }
+    },
+    emailValid () {
+      const reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i
+      return reg.test(this.email)
+    },
+    sendValid () {
+      if (this.emailValid && this.formValid && this.pwValid) {
+        return true
+      } else {
+        return false
+      }
+    }
+  },
+  methods: {
+
     async submit () {
-      this.check()
-      if (this.formValid) {
+      if (this.formValid && this.pwValid) {
         this.isLoading = true
         try {
           await this.$strapi.register({
