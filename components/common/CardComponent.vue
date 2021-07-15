@@ -1,8 +1,20 @@
 <template>
   <div class="card">
-    <header v-if="title" class="card-header">
-      <p v-if="showHeader" class="card-header-title">
-        <b-icon v-if="icon" :icon="icon" :pack="iconPack" custom-size="default" />
+    <header
+      v-if="title"
+      class="card-header"
+    >
+      <p
+        class="card-header-title"
+        :style="{fontSize: '1rem'}"
+      >
+        <b-icon
+          v-if="icon"
+          :icon="icon"
+          :pack="iconPack"
+          custom-size="default"
+          :style="{marginRight: '1rem'}"
+        />
         {{ title }}
       </p>
       <a
@@ -12,7 +24,11 @@
         aria-label="more options"
         @click.prevent="headerIconClick"
       >
-        <b-icon :icon="headerIcon" pack="mdi" custom-size="default" />
+        <b-icon
+          :icon="headerIcon"
+          pack="mdi"
+          custom-size="default"
+        />
       </a>
     </header>
     <div class="card-content">
