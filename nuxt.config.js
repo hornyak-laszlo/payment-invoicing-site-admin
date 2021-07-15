@@ -15,11 +15,10 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'dns-prefetch', href: 'https://fonts.gstatic.com' },
       {
         rel: 'stylesheet',
         type: 'text/css',
-        href: 'https://fonts.googleapis.com/css?family=Nunito'
+        href: 'https://www.cdnfonts.com/milliard.font'
       },
       {
         rel: 'stylesheet',

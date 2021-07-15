@@ -12,7 +12,6 @@
         <data-table
           :fields="fields"
           :collection="collection"
-          :checkable="true"
         />
       </card-component>
     </section>

@@ -49,8 +49,8 @@ aside.aside {
     display: flex;
     flex-direction: row;
     width: 100%;
-    background-color: $aside-tools-background-color;
-    color: $aside-tools-color;
+    background-color: $aside-background-color;
+    color: $title-bar-active-color;
     line-height: $navbar-height;
     height: $navbar-height;
     padding-left: $default-padding * .5;
@@ -64,6 +64,7 @@ aside.aside {
   .menu-list {
     li {
       a {
+        color: $title-bar-active-color;
         &.has-dropdown-icon {
           position: relative;
           padding-right: $aside-icon-width;
@@ -74,11 +75,17 @@ aside.aside {
             right: 0;
           }
         }
+        &.is-active {
+          background-color: $body-background-color;
+        }
+        &:hover {
+          background-color: $body-background-color;
+        }
       }
       ul {
         display: none;
         border-left: 0;
-        background-color: darken($base-color, 2.5%);
+        background-color: $body-background-color;
         padding-left: 0;
         margin: 0 0 $default-padding * .5;
 

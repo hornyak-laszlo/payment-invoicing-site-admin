@@ -6,15 +6,15 @@ $size-base: 1rem;
 $default-padding: $size-base * 1.5;
 
 /* Default font */
-$family-sans-serif: "Nunito", sans-serif;
+$family-sans-serif: "Milliard", sans-serif;
 
 /* Base color */
 $base-color: #2e323a;
 $base-color-light: rgba(24, 28, 33, .06);
 
 /* General overrides */
-$primary: $turquoise;
-$body-background-color: #f8f8f8;
+$primary: #374785;
+$body-background-color: #f4f3f6;
 $link: $blue;
 $link-visited: $purple;
 $light-border: 1px solid $base-color-light;
@@ -44,7 +44,7 @@ $aside-mobile-width: $size-base * 15;
 $aside-icon-width: $size-base * 3;
 $aside-submenu-font-size: $size-base * .95;
 $aside-box-shadow: none;
-$aside-background-color: $base-color;
+$aside-background-color: $white;
 $aside-tools-background-color: darken($aside-background-color, 10%);
 $aside-tools-color: $white;
 
@@ -53,7 +53,7 @@ $title-bar-color: $grey;
 $title-bar-active-color: $black-ter;
 
 /* Hero Bar: specifics */
-$hero-bar-background: $white;
+$hero-bar-background: $body-background-color;
 
 /* Card: Bulma override */
 $card-shadow: none;

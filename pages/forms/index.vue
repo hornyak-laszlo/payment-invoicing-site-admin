@@ -12,9 +12,7 @@
         title="Űrlapok"
         icon="columns"
       >
-        <form-data-table
-          :checkable="true"
-        />
+        <form-data-table />
       </card-component>
     </section>
   </div>
