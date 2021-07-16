@@ -57,7 +57,17 @@
                 type="password"
               />
             </b-field>
-            <b-button type="is-primary is-outlined is-light">
+            <p
+              v-if="!newPwMatch"
+              class="has-text-danger is-size-6"
+            >
+              A két új jelszónak egyeznie kell!
+            </p>
+            <b-button
+              type="is-primary is-outlined is-light"
+              :disabled="!btnDisabled || isLoading"
+              @click="changePassword"
+            >
               Beállítás
             </b-button>
           </form>
@@ -83,7 +93,9 @@ export default {
     return {
       password: '',
       newPassword: '',
-      newPasswordConfirmation: ''
+      newPasswordConfirmation: '',
+      isLoading: false,
+      response: ''
     }
   },
   head () {
@@ -100,6 +112,31 @@ export default {
     },
     role () {
       return this.$strapi.user ? this.$strapi.user.role.name : ''
+    },
+    btnDisabled () {
+      return this.password.length > 0 && this.newPassword.length > 0 && this.newPasswordConfirmation.length > 0 && this.newPassword === this.newPasswordConfirmation
+    },
+    newPwMatch () {
+      return this.newPassword === this.newPasswordConfirmation
+    }
+  },
+  methods: {
+    async changePassword () {
+      this.isLoading = true
+      try {
+        const response = await fetch('https://payment-invoicing-site.herokuapp.com/password', {
+          method: 'POST',
+          body: JSON.stringify({
+            password: this.password,
+            newPassword: this.newPassword,
+            newPasswordConfirmation: this.newPasswordConfirmation
+          })
+        })
+        this.isLoading = false
+        this.response = await response.json()
+      } catch (error) {
+        this.response = error.message
+      }
     }
   }
 }
