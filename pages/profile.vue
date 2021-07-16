@@ -39,13 +39,25 @@
           class="tile is-child"
         >
           <form>
+            <b-field label="Régi jelszó">
+              <b-input
+                v-model="password"
+                type="password"
+              />
+            </b-field>
             <b-field label="Új jelszó">
-              <b-input type="password" />
+              <b-input
+                v-model="newPassword"
+                type="password"
+              />
             </b-field>
             <b-field label="Jelszó megerősítése">
-              <b-input type="password" />
+              <b-input
+                v-model="newPasswordConfirmation"
+                type="password"
+              />
             </b-field>
-            <b-button type="is-success is-light">
+            <b-button type="is-primary is-outlined is-light">
               Beállítás
             </b-button>
           </form>
@@ -68,7 +80,11 @@ export default {
     CardComponent
   },
   data () {
-    return {}
+    return {
+      password: '',
+      newPassword: '',
+      newPasswordConfirmation: ''
+    }
   },
   head () {
     return {
