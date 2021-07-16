@@ -1,7 +1,7 @@
 <template>
   <section
     class="columns is-vcentered"
-    :style="{height: '100vh'}"
+    style="height: 100vh"
   >
     <div class="column is-half is-offset-one-quarter">
       <card-component
@@ -26,7 +26,7 @@
           </b-field>
           <p
             v-if="!emailValid"
-            :style="{fontSize: '1rem', color: 'red'}"
+            class="has-text-danger is-size-6"
           >
             Érvényes email címet kell megadni!
           </p>
@@ -46,24 +46,24 @@
           </b-field>
           <p
             v-if="!pwValid"
-            :style="{fontSize: '1rem', color: 'red'}"
+            class="has-text-danger is-size-6"
           >
             A két jelszónak meg kell egyeznie!
           </p>
           <hr>
-          <b-field :style="{fontSize: '1rem'}">
+          <b-field class="is-size-6">
             <b-checkbox v-model="aszf">
               Elfogadom az ÁSZF-et
             </b-checkbox>
           </b-field>
-          <b-field :style="{fontSize: '1rem'}">
+          <b-field class="is-size-6">
             <b-checkbox v-model="adatvedelem">
               Hozzájárulok adataim kezeléséhez
             </b-checkbox>
           </b-field>
           <p
             v-if="!formValid"
-            :style="{fontSize: '1rem', color: 'red'}"
+            class="has-text-danger is-size-6"
           >
             Az aszf-et és az adatvédelmit is el kell fogadni!
           </p>
