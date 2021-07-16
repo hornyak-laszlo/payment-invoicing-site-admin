@@ -53,13 +53,15 @@
           class="is-actions-cell"
         >
           <div class="buttons is-right">
-            <button class="is-small button is-secondary">
-              <b-icon
-                pack="fas"
-                icon="eye"
-                size="is-small"
-              />
-            </button>
+            <nuxt-link :to="`/${collection}/view/${props.row.id}`">
+              <button class="is-small button is-secondary">
+                <b-icon
+                  pack="fas"
+                  icon="eye"
+                  size="is-small"
+                />
+              </button>
+            </nuxt-link>
             <nuxt-link
               :to="`/${collection}/edit/${props.row.id}`"
               class="button is-small is-primary"
