@@ -29,7 +29,7 @@
                           </button>
                         </div>
                         <div class="column is-half">
-                          <nuxt-link to="/login" class="button is-fullwidth is-outlined is-primary" :class="{'is-loading': isLoading}">
+                          <nuxt-link to="/login" class="button is-fullwidth is-outlined is-primary-passive" :class="{'is-loading': isLoading}">
                             Vissza
                           </nuxt-link>
                         </div>

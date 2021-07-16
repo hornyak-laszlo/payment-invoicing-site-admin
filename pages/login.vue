@@ -29,7 +29,7 @@
                           </button>
                         </div>
                         <div class="column is-half">
-                          <nuxt-link to="/forgot-password" class="button is-fullwidth is-outlined is-primary" :class="{'is-loading': isLoading}">
+                          <nuxt-link to="/forgot-password" class="button is-fullwidth is-outlined is-primary-passive" :class="{'is-loading': isLoading}">
                             Elfelejtett a jelszó
                           </nuxt-link>
                         </div>
