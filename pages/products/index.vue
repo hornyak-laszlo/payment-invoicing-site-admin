@@ -2,7 +2,11 @@
   <div>
     <hero-bar>
       Termékek
-      <nuxt-link slot="right" to="/client" class="button">
+      <nuxt-link
+        slot="right"
+        to="/client"
+        class="button"
+      >
         Termék hozzáadása
       </nuxt-link>
     </hero-bar>
@@ -15,7 +19,7 @@
         <data-table
           :fields="fields"
           :collection="collection"
-          :checkable="true"
+          :checkable="false"
         />
       </card-component>
     </section>
