@@ -1,27 +1,97 @@
 <template>
   <div>
     <hero-bar>
-      Termékek
+      Termék Szerkesztése
       <nuxt-link
         slot="right"
-        to="/client"
+        to="/products"
         class="button"
       >
-        Termék hozzáadása
+        Vissza a termékekhez
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
-        class="has-table"
-        title="Termékek"
+        class="tile is-child"
+        :title="`Termék - ID: ${$route.params.id}`"
         icon="tags"
       >
-        <data-table
-          :fields="fields"
-          :collection="collection"
-          :checkable="false"
-          :search-params="searchParams"
-        />
+        <form @submit.prevent="submit">
+          <b-field
+            label="Név"
+            message="A termék neve"
+            horizontal
+          >
+            <b-input
+              v-model="product.name"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Leírás"
+            message="A termék leírása"
+            horizontal
+          >
+            <b-input
+              v-model="product.description"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Bruttó ár"
+            message="A termék bruttó ára"
+            horizontal
+          >
+            <b-input
+              v-model="product.grossPrice"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Számlázási név"
+            message="A termék számlázási neve"
+            horizontal
+          >
+            <b-input
+              v-model="product.nameInvoice"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Szállítható-e"
+            message="A termék szállítható?"
+            horizontal
+          >
+            <b-select
+              v-model="product.isShippable"
+              placeholder="válassz lehetősget"
+              required
+            >
+              <option :value="false">
+                Nem
+              </option>
+              <option :value="true">
+                Igen
+              </option>
+            </b-select>
+          </b-field>
+          <hr>
+          <b-field horizontal>
+            <b-button
+              type="is-primary"
+              :loading="isLoading"
+              native-type="submit"
+            >
+              Mentés
+            </b-button>
+            <nuxt-link
+              to="/products"
+              class="button is-secondary"
+            >
+              Vissza
+            </nuxt-link>
+          </b-field>
+        </form>
       </card-component>
     </section>
   </div>
@@ -30,36 +100,74 @@
 <script>
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
-import DataTable from '@/components/DataTable'
+/* import DataTable from '@/components/DataTable' */
 export default {
   components: {
     HeroBar,
-    DataTable,
+    /* DataTable, */
     CardComponent
   },
   data () {
     return {
+      isLoading: false,
       collection: 'products',
-      searchParams: { id: 3 },
-      fields: [{
-        field: 'name',
-        title: 'Név'
-      }, {
-        field: 'description',
-        title: 'Leírás'
-      }]
+      searchParams: { id: `${this.$route.params.id}` },
+      product: {
+        name: '',
+        description: '',
+        nameInvoice: '',
+        grossPrice: '',
+        isShippable: false,
+        type: '',
+        period: ''
+      }
     }
   },
   head () {
     return {
-      title: 'Termékek'
+      title: 'Termék szerkesztése'
     }
   },
   computed: {
   },
-  mounted () {
+  async mounted () {
+    this.product = await this.getData()
   },
   methods: {
+    async getData () {
+      if (this.$route.params.id) {
+        try {
+          const res = await this.$strapi.findOne('products', this.$route.params.id)
+          return res
+        } catch (err) {
+          this.$buefy.toast.open({
+            message: `Error: ${err.message}`,
+            type: 'is-danger',
+            queue: false
+          })
+        }
+      }
+    },
+    async submit () {
+      try {
+        this.isLoading = true
+
+        await this.$strapi.update('products', this.$route.params.id, this.product)
+
+        this.isLoading = false
+        this.$buefy.snackbar.open({
+          message: 'Sikeresen mentve',
+          queue: false
+        })
+      } catch (err) {
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: `Error: ${err.message}`,
+          type: 'is-danger',
+          queue: false
+        })
+      }
+    }
   }
 }
 </script>
