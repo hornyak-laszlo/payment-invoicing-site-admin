@@ -89,11 +89,9 @@
 </template>
 
 <script>
-// import Tiles from '@/components/common/Tiles'
 import CardComponent from '@/components/common/CardComponent'
 export default {
   components: {
-  //  Tiles,
     CardComponent
   },
   layout: 'unauthorized',
@@ -106,8 +104,6 @@ export default {
       username: '',
       adatvedelem: false,
       aszf: false
-      /* formValid: false
-       pwValid: false */
     }
   },
   head () {
@@ -117,35 +113,23 @@ export default {
   },
   computed: {
     pwValid () {
-      if (this.password.length > 0 && this.password === this.password2) {
-        return true
-      } else {
-        return false
-      }
+      return (this.password.length > 0 && this.password === this.password2)
     },
     formValid () {
-      if (this.adatvedelem && this.aszf) {
-        return true
-      } else {
-        return false
-      }
+      return (this.adatvedelem && this.aszf)
     },
     emailValid () {
       const reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i
       return reg.test(this.email)
     },
     sendValid () {
-      if (this.emailValid && this.formValid && this.pwValid) {
-        return true
-      } else {
-        return false
-      }
+      return (this.emailValid && this.formValid && this.pwValid)
     }
   },
   methods: {
 
     async submit () {
-      if (this.formValid && this.pwValid) {
+      if (this.sendValid) {
         this.isLoading = true
         try {
           await this.$strapi.register({

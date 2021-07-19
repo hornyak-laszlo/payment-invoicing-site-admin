@@ -4,16 +4,13 @@
       v-if="title"
       class="card-header"
     >
-      <p
-        class="card-header-title"
-        :style="{fontSize: '1rem'}"
-      >
+      <p class="card-header-title is-size-6">
         <b-icon
           v-if="icon"
           :icon="icon"
           :pack="iconPack"
           custom-size="default"
-          :style="{marginRight: '1rem'}"
+          style="margin-right: 1rem;"
         />
         {{ title }}
       </p>
