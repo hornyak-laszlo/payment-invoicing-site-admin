@@ -65,7 +65,8 @@
             </p>
             <b-button
               type="is-primary is-outlined is-light"
-              :disabled="!btnDisabled || isLoading"
+              :loading="isLoading"
+              :disabled="!btnEnabled"
               @click="changePassword"
             >
               Beállítás
@@ -94,8 +95,7 @@ export default {
       password: '',
       newPassword: '',
       newPasswordConfirmation: '',
-      isLoading: false,
-      response: ''
+      isLoading: false
     }
   },
   head () {
@@ -113,7 +113,7 @@ export default {
     role () {
       return this.$strapi.user ? this.$strapi.user.role.name : ''
     },
-    btnDisabled () {
+    btnEnabled () {
       return this.password.length > 0 && this.newPassword.length > 0 && this.newPasswordConfirmation.length > 0 && this.newPassword === this.newPasswordConfirmation
     },
     newPwMatch () {
@@ -122,20 +122,33 @@ export default {
   },
   methods: {
     async changePassword () {
-      this.isLoading = true
       try {
-        const response = await fetch('https://payment-invoicing-site.herokuapp.com/password', {
-          method: 'POST',
-          body: JSON.stringify({
-            password: this.password,
-            newPassword: this.newPassword,
-            newPasswordConfirmation: this.newPasswordConfirmation
-          })
-        })
+        this.isLoading = true
+        const data = {
+          password: this.password,
+          newPassword: this.newPassword,
+          newPasswordConfirmation: this.newPasswordConfirmation
+        }
+
+        await this.$strapi.create('password', data)
+
         this.isLoading = false
-        this.response = await response.json()
+        this.$buefy.toast.open({
+          message: 'A jelszavad sikeresen elmentettük!',
+          type: 'is-success',
+          queue: false
+        })
+
+        this.password = ''
+        this.newPassword = ''
+        this.newPasswordConfirmation = ''
       } catch (error) {
-        this.response = error.message
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: 'Nem sikerült elmenteni a jelszavad',
+          type: 'is-danger',
+          queue: false
+        })
       }
     }
   }
