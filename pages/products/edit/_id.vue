@@ -20,6 +20,7 @@
           :fields="fields"
           :collection="collection"
           :checkable="false"
+          :search-params="searchParams"
         />
       </card-component>
     </section>
@@ -39,12 +40,13 @@ export default {
   data () {
     return {
       collection: 'products',
+      searchParams: { id: 3 },
       fields: [{
         field: 'name',
         title: 'Név'
       }, {
-        field: 'grossPrice',
-        title: 'Bruttó ár'
+        field: 'description',
+        title: 'Leírás'
       }]
     }
   },

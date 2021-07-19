@@ -120,6 +120,10 @@ export default {
       type: String,
       default: null
     },
+    searchParams: {
+      type: Object,
+      default: null
+    },
     fields: {
       type: Array,
       default: () => []
@@ -172,7 +176,7 @@ export default {
       if (this.collection) {
         this.isLoading = true
         try {
-          this.data = await this.$strapi.find(this.collection)
+          this.data = await this.$strapi.find(this.collection, this.searchParams)
           this.isLoading = false
           if (this.data.length > this.perPage) {
             this.paginated = true
