@@ -20,10 +20,20 @@
       :data="data"
     >
       <template slot-scope="props">
-        <b-table-column label="Id" field="id" sortable>
+        <b-table-column
+          label="Id"
+          field="id"
+          sortable
+        >
           {{ props.row.id }}
         </b-table-column>
-        <b-table-column v-for="field in fields" :key="field.field" :label="field.title" :field="field.field" sortable>
+        <b-table-column
+          v-for="field in fields"
+          :key="field.field"
+          :label="field.title"
+          :field="field.field"
+          sortable
+        >
           {{ props.row[field.field] }}
         </b-table-column>
         <b-table-column label="Létrehozva">
@@ -38,36 +48,58 @@
             :title="props.row.updated_at"
           >{{ props.row.updated_at }}</small>
         </b-table-column>
-        <b-table-column custom-key="actions" class="is-actions-cell">
+        <b-table-column
+          custom-key="actions"
+          class="is-actions-cell"
+        >
           <div class="buttons is-right">
             <nuxt-link
               :to="`/${collection}/edit/${props.row.id}`"
               class="button is-small is-primary"
             >
-              <b-icon pack="fas" icon="edit" size="is-small" />
+              <b-icon
+                pack="fas"
+                icon="eye"
+                size="is-small"
+              />
             </nuxt-link>
             <button
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
             >
-              <b-icon pack="fas" icon="trash-alt" size="is-small" />
+              <b-icon
+                pack="fas"
+                icon="trash-alt"
+                size="is-small"
+              />
             </button>
           </div>
         </b-table-column>
       </template>
 
-      <section slot="empty" class="section">
+      <section
+        slot="empty"
+        class="section"
+      >
         <div class="content has-text-grey has-text-centered">
           <template v-if="isLoading">
             <p>
-              <b-icon pack="fas" icon="ellipsis-h" size="is-large" />
+              <b-icon
+                pack="fas"
+                icon="ellipsis-h"
+                size="is-large"
+              />
             </p>
             <p>Adatok betöltése...</p>
           </template>
           <template v-else>
             <p>
-              <b-icon pack="fas" icon="frown" size="is-large" />
+              <b-icon
+                pack="fas"
+                icon="frown"
+                size="is-large"
+              />
             </p>
             <p>Nem található adat&hellip;</p>
           </template>

@@ -4,7 +4,7 @@
       Termékek
       <nuxt-link
         slot="right"
-        to="/products/create"
+        to="/client"
         class="button"
       >
         Termék hozzáadása
@@ -27,12 +27,10 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 import DataTable from '@/components/DataTable'
 export default {
-  name: 'Home',
   components: {
     HeroBar,
     DataTable,
@@ -63,3 +61,6 @@ export default {
   }
 }
 </script>
+
+<style>
+</style>
