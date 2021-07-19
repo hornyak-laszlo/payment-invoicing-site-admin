@@ -4,7 +4,7 @@
       Termékek
       <nuxt-link
         slot="right"
-        to="/client"
+        to="/products/create"
         class="button"
       >
         Termék hozzáadása

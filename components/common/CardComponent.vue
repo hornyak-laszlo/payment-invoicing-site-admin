@@ -5,15 +5,14 @@
       class="card-header"
     >
       <p
-        class="card-header-title"
-        :style="{fontSize: '1rem'}"
+        class="card-header-title is-size-6"
       >
         <b-icon
           v-if="icon"
           :icon="icon"
           :pack="iconPack"
           custom-size="default"
-          :style="{marginRight: '1rem'}"
+          style="margin-right: 1rem;"
         />
         {{ title }}
       </p>
@@ -41,10 +40,6 @@
 export default {
   name: 'CardComponent',
   props: {
-    showHeader: {
-      type: Boolean,
-      default: false
-    },
     title: {
       type: String,
       default: null
