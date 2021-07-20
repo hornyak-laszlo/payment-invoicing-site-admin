@@ -64,7 +64,6 @@
           >
             <b-select
               v-model="product.isShippable"
-              placeholder="válassz lehetősget"
               required
             >
               <option :value="false">
@@ -72,6 +71,23 @@
               </option>
               <option :value="true">
                 Igen
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Egyszeri vagy előfizetés"
+            message="A terméknek egyszer ára van, vagy előfizetéses?"
+            horizontal
+          >
+            <b-select
+              v-model="product.type"
+              required
+            >
+              <option :value="'one_time'">
+                Egyszeri
+              </option>
+              <option :value="'subscription'">
+                Előfizetéses
               </option>
             </b-select>
           </b-field>
