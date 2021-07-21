@@ -76,7 +76,7 @@
           </b-field>
           <b-field
             label="Egyszeri vagy előfizetés"
-            message="A terméknek egyszer ára van, vagy előfizetéses?"
+            message="A terméknek egyszeri ára van, vagy előfizetéses?"
             horizontal
           >
             <b-select
@@ -88,6 +88,24 @@
               </option>
               <option :value="'subscription'">
                 Előfizetéses
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            v-if="subscription"
+            label="Előfizetés gyakorisága"
+            message="Milyen gyakran kell fizetni az előfizetést"
+            horizontal
+          >
+            <b-select
+              v-model="product.period"
+              required
+            >
+              <option :value="'weekly'">
+                Heti
+              </option>
+              <option :value="'monthly'">
+                Havi
               </option>
             </b-select>
           </b-field>
@@ -145,6 +163,9 @@ export default {
     }
   },
   computed: {
+    subscription () {
+      return this.product.type === 'subscription'
+    }
   },
   async mounted () {
     this.product = await this.getData()
