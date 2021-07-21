@@ -107,6 +107,9 @@
               <option :value="'monthly'">
                 Havi
               </option>
+              <option :value="'yearly'">
+                Éves
+              </option>
             </b-select>
           </b-field>
           <hr>
@@ -189,13 +192,20 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update('products', this.$route.params.id, this.product)
+        await this.$strapi.update('products', parseInt(this.$route.params.id), this.product)
 
         this.isLoading = false
+        /* this.$buefy.toast.open({
+          message: 'Sikeresen mentve',
+          type: 'is-primary'
+          queue: false
+        }) */
         this.$buefy.snackbar.open({
           message: 'Sikeresen mentve',
+          type: 'is-white has-text-white has-background-primary',
           queue: false
         })
+        this.$router.push('/products')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({
