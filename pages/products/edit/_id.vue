@@ -48,6 +48,23 @@
             />
           </b-field>
           <b-field
+            label="Áfa tartalom"
+            message="A termék áfa tartalma"
+            horizontal
+          >
+            <b-select
+              v-model="product.taxRate.percent"
+              required
+            >
+              <option :value="27">
+                27% ÁFA
+              </option>
+              <option :value="0">
+                Alanyi adómentes
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
             label="Számlázási név"
             message="A termék számlázási neve"
             horizontal
@@ -156,7 +173,11 @@ export default {
         grossPrice: '',
         isShippable: false,
         type: '',
-        period: ''
+        period: '',
+        taxRate: {
+          name: '',
+          percent: 0
+        }
       }
     }
   },
