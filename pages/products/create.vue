@@ -48,6 +48,24 @@
             />
           </b-field>
           <b-field
+            label="Áfa tartalom"
+            message="A termék áfa tartalma"
+            horizontal
+          >
+            <b-select
+              v-model="product.taxRate"
+              required
+            >
+              //TODO: v-for taxRate options
+              <option :value="{id: 1, name: '27% ÁFA', percent: 27}">
+                27% ÁFA
+              </option>
+              <option :value="{id: 2, name: 'Alanyi adómentes', percent: 0}">
+                Alanyi adómentes
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
             label="Számlázási név"
             message="A termék számlázási neve"
             horizontal
@@ -117,16 +135,26 @@
             <b-button
               type="is-primary"
               :loading="isLoading"
+              :disabled="!save"
               native-type="submit"
             >
               Mentés
             </b-button>
+
             <nuxt-link
               to="/products"
               class="button is-secondary"
             >
               Vissza
             </nuxt-link>
+          </b-field>
+          <b-field horizontal>
+            <p
+              v-if="!save"
+              class="has-text-danger"
+            >
+              Minden adatot meg kell adni!
+            </p>
           </b-field>
         </form>
       </card-component>
@@ -152,7 +180,12 @@ export default {
         grossPrice: '',
         isShippable: false,
         type: '',
-        period: ''
+        period: '',
+        taxRate: {
+          id: 0,
+          name: '',
+          percent: 0
+        }
       }
     }
   },
@@ -164,6 +197,9 @@ export default {
   computed: {
     subscription () {
       return this.product.type === 'subscription'
+    },
+    save () {
+      return this.product.name && this.product.description && this.product.nameInvoice && this.product.grossPrice && this.product.type && this.product.taxRate.name.length > 0
     }
   },
   methods: {
