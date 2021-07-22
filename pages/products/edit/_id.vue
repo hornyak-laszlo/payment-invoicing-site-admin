@@ -53,13 +53,14 @@
             horizontal
           >
             <b-select
-              v-model="product.taxRate.percent"
+              v-model="product.taxRate"
+              :placeholder="product.taxRate.name"
               required
             >
-              <option :value="27">
+              <option :value="{id: 1, name: '27% ÁFA', percent: 27}">
                 27% ÁFA
               </option>
-              <option :value="0">
+              <option :value="{id: 2, name: 'Alanyi adómentes', percent: 0}">
                 Alanyi adómentes
               </option>
             </b-select>
@@ -175,6 +176,7 @@ export default {
         type: '',
         period: '',
         taxRate: {
+          id: 0,
           name: '',
           percent: 0
         }
