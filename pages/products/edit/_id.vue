@@ -54,9 +54,15 @@
           >
             <b-select
               v-model="product.taxRate"
-              :placeholder="product.taxRate.name"
+              :placeholder="`${product.taxRate.percent}`"
               required
             >
+              <option
+                :value="null"
+                disabled
+              >
+                aktuális áfa: {{ product.taxRate.percent }}%
+              </option>
               <option :value="{id: 1, name: '27% ÁFA', percent: 27}">
                 27% ÁFA
               </option>
