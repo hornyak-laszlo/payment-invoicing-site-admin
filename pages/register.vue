@@ -53,12 +53,18 @@
           <hr>
           <b-field class="is-size-6">
             <b-checkbox v-model="aszf">
-              Elfogadom az ÁSZF-et
+              Elfogadom az <a
+                href="https://deel.hu/aszf"
+                target="_blank"
+              >ÁSZF</a>-et
             </b-checkbox>
           </b-field>
           <b-field class="is-size-6">
             <b-checkbox v-model="adatvedelem">
-              Hozzájárulok adataim kezeléséhez
+              Elfogadom az <a
+                href="https://deel.hu/adatvedelmi-nyilatkozat"
+                target="_blank"
+              > Adatvédelmi nyilatkozatban </a> foglaltakat
             </b-checkbox>
           </b-field>
           <p
@@ -103,7 +109,8 @@ export default {
       password2: '',
       username: '',
       adatvedelem: false,
-      aszf: false
+      aszf: false,
+      allValid: undefined
     }
   },
   head () {
@@ -130,6 +137,7 @@ export default {
 
     async submit () {
       if (this.sendValid) {
+        this.allValid = true
         this.isLoading = true
         try {
           await this.$strapi.register({
@@ -153,11 +161,13 @@ export default {
 
           // console.log(err)
           this.$buefy.toast.open({
-            message: `${err.message}, error code: ${err.statusCode}`,
+            message: `${err.message} error code: ${err.statusCode}`,
             type: 'is-danger',
             queue: false
           })
         }
+      } else {
+        alert('Minden mezőt megfelelően kell kitölteni')
       }
     }
   }
