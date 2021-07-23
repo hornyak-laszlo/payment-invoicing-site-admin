@@ -138,16 +138,22 @@ export default {
             username: this.username
           })
           this.isLoading = false
+          this.$buefy.toast.open({
+            message: 'Sikeres Regisztráció',
+            type: 'is-success',
+            queue: false
+          })
 
           this.$router.push('/login')
         } catch (err) {
           this.isLoading = false
 
-          const error = (err && err.message) ? err.message : ''
-          const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
+          // const error = (err && err.message) ? err.message : ''
+          // const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
 
+          // console.log(err)
           this.$buefy.toast.open({
-            message,
+            message: `${err.message}, ${err.statusCode}`,
             type: 'is-danger',
             queue: false
           })
