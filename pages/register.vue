@@ -17,6 +17,12 @@
               required
             />
           </b-field>
+          <p
+            v-if="!userValid"
+            class="has-text-danger is-size-7"
+          >
+            Legalább 3 karakter hosszú felhasználó nevet kell beírni!
+          </p>
           <b-field label="Email cím">
             <b-input
               v-model="email"
@@ -26,7 +32,7 @@
           </b-field>
           <p
             v-if="!emailValid"
-            class="has-text-danger is-size-6"
+            class="has-text-danger is-size-7"
           >
             Érvényes email címet kell megadni!
           </p>
@@ -46,7 +52,7 @@
           </b-field>
           <p
             v-if="!pwValid"
-            class="has-text-danger is-size-6"
+            class="has-text-danger is-size-7"
           >
             A két jelszónak meg kell egyeznie!
           </p>
@@ -69,7 +75,7 @@
           </b-field>
           <p
             v-if="!formValid"
-            class="has-text-danger is-size-6"
+            class="has-text-danger is-size-7"
           >
             Az aszf-et és az adatvédelmit is el kell fogadni!
           </p>
@@ -109,8 +115,8 @@ export default {
       password2: '',
       username: '',
       adatvedelem: false,
-      aszf: false,
-      allValid: undefined
+      aszf: false
+
     }
   },
   head () {
@@ -119,6 +125,11 @@ export default {
     }
   },
   computed: {
+
+    userValid () {
+      return this.username.length > 2
+    },
+
     pwValid () {
       return (this.password.length > 0 && this.password === this.password2)
     },
@@ -166,8 +177,6 @@ export default {
             queue: false
           })
         }
-      } else {
-        alert('Minden mezőt megfelelően kell kitölteni')
       }
     }
   }
