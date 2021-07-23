@@ -47,6 +47,7 @@
               required
             />
           </b-field>
+          <!-- //TODO v-for for select? -->
           <b-field
             label="Áfa tartalom"
             message="A termék áfa tartalma"
@@ -54,14 +55,14 @@
           >
             <b-select
               v-model="product.taxRate"
-              :placeholder="`${product.taxRate.percent}`"
               required
             >
               <option
-                :value="null"
+                :value="product.taxRate"
+                selected
                 disabled
               >
-                aktuális áfa: {{ product.taxRate.percent }}%
+                kiválasztott áfa: {{ product.taxRate.percent }}%
               </option>
               <option :value="{id: 1, name: '27% ÁFA', percent: 27}">
                 27% ÁFA
@@ -123,6 +124,7 @@
           >
             <b-select
               v-model="product.period"
+              :placeholder="product.period"
               required
             >
               <option :value="'weekly'">
@@ -173,20 +175,7 @@ export default {
       isLoading: false,
       collection: 'products',
       searchParams: { id: `${this.$route.params.id}` },
-      product: {
-        name: '',
-        description: '',
-        nameInvoice: '',
-        grossPrice: '',
-        isShippable: false,
-        type: '',
-        period: '',
-        taxRate: {
-          id: 0,
-          name: '',
-          percent: 0
-        }
-      }
+      product: this.getClearFormObject()
     }
   },
   head () {
@@ -201,8 +190,25 @@ export default {
   },
   async mounted () {
     this.product = await this.getData()
+    /* console.log(this.product.taxRate.name) */
   },
   methods: {
+    getClearFormObject () {
+      return {
+        name: '',
+        description: '',
+        nameInvoice: '',
+        grossPrice: '',
+        isShippable: false,
+        type: '',
+        period: '',
+        taxRate: {
+          id: 0,
+          name: '',
+          percent: 0
+        }
+      }
+    },
     async getData () {
       if (this.$route.params.id) {
         try {
