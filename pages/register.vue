@@ -153,7 +153,7 @@ export default {
 
           // console.log(err)
           this.$buefy.toast.open({
-            message: `${err.message}, ${err.statusCode}`,
+            message: `${err.message}, error code: ${err.statusCode}`,
             type: 'is-danger',
             queue: false
           })
