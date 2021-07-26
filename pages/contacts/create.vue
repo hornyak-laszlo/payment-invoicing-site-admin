@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Kontakt szerkesztése
+      Kontakt hozzáadása
       <nuxt-link
         slot="right"
         to="/contacts"
@@ -131,7 +131,6 @@ import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
-
   components: {
     HeroBar,
     CardComponent
@@ -139,26 +138,7 @@ export default {
   data () {
     return {
       isLoading: false,
-      collection: 'contacts',
-      searchParams: { id: `${this.$route.params.id}` },
-      contact: this.getClearFormObject()
-    }
-  },
-  head () {
-    return {
-      title: 'Kontakt szerkesztése'
-    }
-  },
-  computed: {
-
-  },
-  async mounted () {
-    this.contact = await this.getData()
-    /* console.log(this.product.taxRate.name) */
-  },
-  methods: {
-    getClearFormObject () {
-      return {
+      contact: {
         firstName: '',
         lastName: '',
         companyName: '',
@@ -166,28 +146,26 @@ export default {
         isNewsletterSubscribed: true,
         isPrivacyPolicyAccepted: true,
         email: ''
+      }
+    }
+  },
+  head () {
+    return {
+      title: 'Kontakt hozzáadása'
+    }
+  },
+  computed: {
 
-      }
-    },
-    async getData () {
-      if (this.$route.params.id) {
-        try {
-          const res = await this.$strapi.findOne(this.collection, this.$route.params.id)
-          return res
-        } catch (err) {
-          this.$buefy.toast.open({
-            message: `Error: ${err.message}`,
-            type: 'is-danger',
-            queue: false
-          })
-        }
-      }
-    },
+    save () {
+      return this.contact.name && this.contact.description && this.contact.nameInvoice && this.contact.grossPrice && this.contact.type && this.contact.taxRate.name.length > 2
+    }
+  },
+  methods: {
     async submit () {
       try {
         this.isLoading = true
 
-        await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.contact)
+        await this.$strapi.create('contacts', this.contact)
 
         this.isLoading = false
         /* this.$buefy.toast.open({

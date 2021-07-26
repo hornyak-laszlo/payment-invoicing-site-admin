@@ -151,7 +151,7 @@
           <b-field horizontal>
             <p
               v-if="!save"
-              class="has-text-danger"
+              class="has-text-danger is-size-7"
             >
               Minden adatot meg kell adni!
             </p>
