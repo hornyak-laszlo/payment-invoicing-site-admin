@@ -1,10 +1,10 @@
 <template>
   <div>
     <hero-bar>
-      Termék Szerkesztése
+      Kontakt szerkesztése
       <nuxt-link
         slot="right"
-        to="/products"
+        to="/contacts"
         class="button"
       >
         Vissza a termékekhez
@@ -13,131 +13,96 @@
     <section class="section is-main-section">
       <card-component
         class="tile is-child"
-        :title="`Termék - ID: ${$route.params.id}`"
+        :title="`Kontakt - ID: ${$route.params.id}`"
         icon="tags"
       >
         <form @submit.prevent="submit">
           <b-field
-            label="Név"
-            message="A termék neve"
+            label="Keresztnév"
+            message="A kontakt keresztneve"
             horizontal
           >
             <b-input
-              v-model="product.name"
+              v-model="contact.firstName"
               required
             />
           </b-field>
           <b-field
-            label="Leírás"
-            message="A termék leírása"
+            label="Család név"
+            message="A kontakt vezetékneve"
             horizontal
           >
             <b-input
-              v-model="product.description"
+              v-model="contact.lastName"
               required
             />
           </b-field>
           <b-field
-            label="Bruttó ár"
-            message="A termék bruttó ára"
+            label="Cégnév"
+            message="A kontakt cégneve"
             horizontal
           >
             <b-input
-              v-model="product.grossPrice"
+              v-model="contact.companyName"
               required
             />
           </b-field>
-          <!-- //TODO v-for for select? -->
+
           <b-field
-            label="Áfa tartalom"
-            message="A termék áfa tartalma"
+            label="Adatvédelmi nyilatkozat elfogadva"
+            message="Elfogadta-e a kontakt az adatvédelmi nyilatkozatot"
             horizontal
           >
             <b-select
-              v-model="product.taxRate"
+              v-model="contact.isPrivacyPolicyAccepted"
               required
             >
-              <option
-                :value="product.taxRate"
-                selected
-                disabled
-              >
-                kiválasztott áfa: {{ product.taxRate.percent }}%
-              </option>
-              <option :value="{id: 1, name: '27% ÁFA', percent: 27}">
-                27% ÁFA
-              </option>
-              <option :value="{id: 2, name: 'Alanyi adómentes', percent: 0}">
-                Alanyi adómentes
-              </option>
-            </b-select>
-          </b-field>
-          <b-field
-            label="Számlázási név"
-            message="A termék számlázási neve"
-            horizontal
-          >
-            <b-input
-              v-model="product.nameInvoice"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Szállítható-e"
-            message="A termék szállítható?"
-            horizontal
-          >
-            <b-select
-              v-model="product.isShippable"
-              required
-            >
-              <option :value="false">
-                Nem
-              </option>
               <option :value="true">
-                Igen
+                igen
+              </option>
+              <option :value="false">
+                nem
               </option>
             </b-select>
           </b-field>
           <b-field
-            label="Egyszeri vagy előfizetés"
-            message="A terméknek egyszeri ára van, vagy előfizetéses?"
+            label="Hírlevélre feliratkozott-e"
+            message="A kontakt feliratkozott-e a hírlevélre"
             horizontal
           >
             <b-select
-              v-model="product.type"
+              v-model="contact.isNewsletterSubscribed"
               required
             >
-              <option :value="'one_time'">
-                Egyszeri
+              <option :value="true">
+                igen
               </option>
-              <option :value="'subscription'">
-                Előfizetéses
+              <option :value="false">
+                nem
               </option>
             </b-select>
           </b-field>
           <b-field
-            v-if="subscription"
-            label="Előfizetés gyakorisága"
-            message="Milyen gyakran kell fizetni az előfizetést"
+            label="Telefonszám"
+            message="A kontakt telefonszáma"
             horizontal
           >
-            <b-select
-              v-model="product.period"
-              :placeholder="product.period"
+            <b-input
+              v-model="contact.phoneNumber"
               required
-            >
-              <option :value="'weekly'">
-                Heti
-              </option>
-              <option :value="'monthly'">
-                Havi
-              </option>
-              <option :value="'yearly'">
-                Éves
-              </option>
-            </b-select>
+            />
           </b-field>
+          <b-field
+            label="Email cím"
+            message="A kontakt email címe"
+            horizontal
+          >
+            <b-input
+              v-model="contact.email"
+              required
+            />
+          </b-field>
+
           <hr>
           <b-field horizontal>
             <b-button
@@ -148,7 +113,7 @@
               Mentés
             </b-button>
             <nuxt-link
-              to="/products"
+              to="/contacts"
               class="button is-secondary"
             >
               Vissza
@@ -161,10 +126,12 @@
 </template>
 
 <script>
+
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
+
   components: {
     HeroBar,
     CardComponent
@@ -172,46 +139,42 @@ export default {
   data () {
     return {
       isLoading: false,
-      collection: 'products',
+      collection: 'contacts',
       searchParams: { id: `${this.$route.params.id}` },
-      product: this.getClearFormObject()
+      contact: this.getClearFormObject()
     }
   },
   head () {
     return {
-      title: 'Termék szerkesztése'
+      title: 'Kontakt szerkesztése'
     }
   },
   computed: {
-    subscription () {
+    /*     subscription () {
       return this.product.type === 'subscription'
-    }
+    } */
   },
   async mounted () {
-    this.product = await this.getData()
+    this.contact = await this.getData()
     /* console.log(this.product.taxRate.name) */
   },
   methods: {
     getClearFormObject () {
       return {
-        name: '',
-        description: '',
-        nameInvoice: '',
-        grossPrice: '',
-        isShippable: false,
-        type: '',
-        period: '',
-        taxRate: {
-          id: 0,
-          name: '',
-          percent: 0
-        }
+        firstName: '',
+        lastName: '',
+        companyName: '',
+        phoneNumber: '',
+        isNewsletterSubscribed: true,
+        isPrivacyPolicyAccepted: true,
+        email: ''
+
       }
     },
     async getData () {
       if (this.$route.params.id) {
         try {
-          const res = await this.$strapi.findOne('products', this.$route.params.id)
+          const res = await this.$strapi.findOne(this.collection, this.$route.params.id)
           return res
         } catch (err) {
           this.$buefy.toast.open({
@@ -226,7 +189,7 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update('products', parseInt(this.$route.params.id), this.product)
+        await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.contact)
 
         this.isLoading = false
         /* this.$buefy.toast.open({
@@ -239,7 +202,7 @@ export default {
           type: 'is-white has-text-white has-background-primary',
           queue: false
         })
-        this.$router.push('/products')
+        this.$router.push('/contacts')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({
