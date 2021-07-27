@@ -54,21 +54,15 @@
             horizontal
           >
             <b-select
-              v-model="product.taxRate"
+              v-model="product.taxRate.id"
               required
             >
               <option
-                :value="product.taxRate"
-                selected
-                disabled
+                v-for="taxRate in taxRates"
+                :key="taxRate.id"
+                :value="taxRate.id"
               >
-                kiválasztott áfa: {{ product.taxRate.percent }}%
-              </option>
-              <option :value="{id: 1, name: '27% ÁFA', percent: 27}">
-                27% ÁFA
-              </option>
-              <option :value="{id: 2, name: 'Alanyi adómentes', percent: 0}">
-                Alanyi adómentes
+                {{ taxRate.name }}
               </option>
             </b-select>
           </b-field>
@@ -166,6 +160,7 @@ export default {
   },
   data () {
     return {
+      taxRates: [],
       isLoading: false,
       collection: 'products',
       searchParams: { id: `${this.$route.params.id}` },
@@ -183,6 +178,7 @@ export default {
     }
   },
   async mounted () {
+    this.taxRates = await this.$strapi.find('tax-sets')
     this.product = await this.getData()
     /* console.log(this.product.taxRate.name) */
   },
@@ -197,9 +193,7 @@ export default {
         type: '',
         period: '',
         taxRate: {
-          id: 0,
-          name: '',
-          percent: 0
+          id: null
         }
       }
     },

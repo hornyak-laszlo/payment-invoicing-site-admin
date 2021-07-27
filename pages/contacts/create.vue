@@ -109,7 +109,6 @@
               type="is-primary"
               :loading="isLoading"
               native-type="submit"
-              :disabled="!save"
               expanded
             >
               Mentés
@@ -117,7 +116,6 @@
           </b-field>
           <b-field horizontal>
             <p
-              v-if="!save"
               class="has-text-danger is-size-7"
             >
               Minden adatot meg kell adni!
@@ -159,10 +157,6 @@ export default {
     }
   },
   computed: {
-
-    save () {
-      return this.contact.firstName && this.contact.lastName && this.contact.companyName && this.contact.phoneNumber > 2
-    }
   },
   methods: {
     async submit () {

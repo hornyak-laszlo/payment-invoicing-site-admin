@@ -56,12 +56,12 @@
               v-model="product.taxRate"
               required
             >
-              <!-- TODO: v-for taxRate select options -->
-              <option :value="{id: 1, name: '27% ÁFA', percent: 27}">
-                27% ÁFA
-              </option>
-              <option :value="{id: 2, name: 'Alanyi adómentes', percent: 0}">
-                Alanyi adómentes
+              <option
+                v-for="taxRate in taxRates"
+                :key="taxRate.id"
+                :value="taxRate.id"
+              >
+                {{ taxRate.name }}
               </option>
             </b-select>
           </b-field>
@@ -135,7 +135,6 @@
             <b-button
               type="is-primary"
               :loading="isLoading"
-              :disabled="!save"
               native-type="submit"
               expanded
             >
@@ -144,7 +143,6 @@
           </b-field>
           <b-field horizontal>
             <p
-              v-if="!save"
               class="has-text-danger is-size-7"
             >
               Minden adatot meg kell adni!
@@ -167,6 +165,7 @@ export default {
   data () {
     return {
       isLoading: false,
+      taxRates: [],
       product: {
         name: '',
         description: '',
@@ -175,11 +174,7 @@ export default {
         isShippable: false,
         type: '',
         period: '',
-        taxRate: {
-          id: 0,
-          name: '',
-          percent: 0
-        }
+        taxRate: null
       }
     }
   },
@@ -191,10 +186,10 @@ export default {
   computed: {
     subscription () {
       return this.product.type === 'subscription'
-    },
-    save () {
-      return this.product.name && this.product.description && this.product.nameInvoice && this.product.grossPrice && this.product.type && this.product.taxRate.name.length > 0
     }
+  },
+  async mounted () {
+    this.taxRates = await this.$strapi.find('tax-sets')
   },
   methods: {
     async submit () {
