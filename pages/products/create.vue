@@ -56,7 +56,7 @@
               v-model="product.taxRate"
               required
             >
-              <!-- //TODO: v-for taxRate select options -->
+              <!-- TODO: v-for taxRate select options -->
               <option :value="{id: 1, name: '27% ÁFA', percent: 27}">
                 27% ÁFA
               </option>
