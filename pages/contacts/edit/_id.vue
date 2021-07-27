@@ -14,7 +14,7 @@
       <card-component
         class="tile is-child"
         :title="`Kontakt - ID: ${$route.params.id}`"
-        icon="tags"
+        icon="user"
       >
         <form @submit.prevent="submit">
           <b-field

@@ -13,8 +13,8 @@
     <section class="section is-main-section">
       <card-component
         class="tile is-child"
-        :title="`Kontakt - ID: ${$route.params.id}`"
-        icon="tags"
+        title="Új kontakt hozzáadása"
+        icon="user"
       >
         <form @submit.prevent="submit">
           <b-field
@@ -109,6 +109,7 @@
               type="is-primary"
               :loading="isLoading"
               native-type="submit"
+              :disabled="!save"
             >
               Mentés
             </b-button>
@@ -118,6 +119,14 @@
             >
               Vissza
             </nuxt-link>
+          </b-field>
+          <b-field horizontal>
+            <p
+              v-if="!save"
+              class="has-text-danger is-size-7"
+            >
+              Minden adatot meg kell adni!
+            </p>
           </b-field>
         </form>
       </card-component>
@@ -157,7 +166,7 @@ export default {
   computed: {
 
     save () {
-      return this.contact.name && this.contact.description && this.contact.nameInvoice && this.contact.grossPrice && this.contact.type && this.contact.taxRate.name.length > 2
+      return this.contact.firstName && this.contact.lastName && this.contact.companyName && this.contact.phoneNumber > 2
     }
   },
   methods: {
