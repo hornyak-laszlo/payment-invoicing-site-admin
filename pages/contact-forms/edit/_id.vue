@@ -2,6 +2,13 @@
   <div>
     <hero-bar>
       Űrlap szerkesztése
+      <nuxt-link
+        slot="right"
+        to="/forms"
+        class="button"
+      >
+        Vissza az űrlapokhoz
+      </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
@@ -10,19 +17,31 @@
         class="tile is-child"
       >
         <form @submit.prevent="submit">
-          <b-field label="Név" message="Űrlap neve" horizontal>
+          <b-field
+            label="Név"
+            message="Űrlap neve"
+            horizontal
+          >
             <b-input
               v-model="contactForm.name"
               required
             />
           </b-field>
-          <b-field label="Link" message="Link ahol elérhető lesz az űrlap" horizontal>
+          <b-field
+            label="Link"
+            message="Link ahol elérhető lesz az űrlap"
+            horizontal
+          >
             <b-input
               v-model="contactForm.link"
               required
             />
           </b-field>
-          <b-field label="Sikeres link" message="Sikeres kapcsolatfevétel linkje" horizontal>
+          <b-field
+            label="Sikeres link"
+            message="Sikeres kapcsolatfevétel linkje"
+            horizontal
+          >
             <b-input
               v-model="contactForm.successLink"
               required
@@ -34,15 +53,10 @@
               type="is-primary"
               :loading="isLoading"
               native-type="submit"
+              expanded
             >
               Mentés
             </b-button>
-            <nuxt-link
-              to="/forms"
-              class="button is-secondary"
-            >
-              Vissza
-            </nuxt-link>
           </b-field>
         </form>
       </card-component>

@@ -109,15 +109,10 @@
               type="is-primary"
               :loading="isLoading"
               native-type="submit"
+              expanded
             >
               Mentés
             </b-button>
-            <nuxt-link
-              to="/contacts"
-              class="button is-secondary"
-            >
-              Vissza
-            </nuxt-link>
           </b-field>
         </form>
       </card-component>

@@ -142,17 +142,12 @@
           <b-field horizontal>
             <b-button
               type="is-primary"
+              expanded
               :loading="isLoading"
               native-type="submit"
             >
               Mentés
             </b-button>
-            <nuxt-link
-              to="/products"
-              class="button is-secondary"
-            >
-              Vissza
-            </nuxt-link>
           </b-field>
         </form>
       </card-component>

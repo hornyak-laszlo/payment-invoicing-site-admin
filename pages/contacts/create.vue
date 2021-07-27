@@ -110,15 +110,10 @@
               :loading="isLoading"
               native-type="submit"
               :disabled="!save"
+              expanded
             >
               Mentés
             </b-button>
-            <nuxt-link
-              to="/contacts"
-              class="button is-secondary"
-            >
-              Vissza
-            </nuxt-link>
           </b-field>
           <b-field horizontal>
             <p

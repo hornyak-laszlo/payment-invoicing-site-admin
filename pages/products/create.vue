@@ -137,16 +137,10 @@
               :loading="isLoading"
               :disabled="!save"
               native-type="submit"
+              expanded
             >
               Mentés
             </b-button>
-
-            <nuxt-link
-              to="/products"
-              class="button is-secondary"
-            >
-              Vissza
-            </nuxt-link>
           </b-field>
           <b-field horizontal>
             <p
