@@ -1,20 +1,20 @@
 <template>
   <div>
     <hero-bar>
-      Kontakt szerkesztése
+      Vásárló szerkesztése
       <nuxt-link
         slot="right"
-        to="/contacts"
+        to="/customers"
         class="button"
       >
-        Vissza a kontaktokhoz
+        Vissza a vásárlókhoz
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
         class="tile is-child"
-        :title="`Kontakt - ID: ${$route.params.id}`"
-        icon="user"
+        :title="`Vásárló - ID: ${$route.params.id}`"
+        icon="user-tag"
       >
         <form @submit.prevent="submit">
           <b-field
@@ -23,7 +23,7 @@
             horizontal
           >
             <b-input
-              v-model="contact.firstName"
+              v-model="customer.firstName"
               required
             />
           </b-field>
@@ -33,7 +33,7 @@
             horizontal
           >
             <b-input
-              v-model="contact.lastName"
+              v-model="customer.lastName"
               required
             />
           </b-field>
@@ -43,52 +43,18 @@
             horizontal
           >
             <b-input
-              v-model="contact.companyName"
+              v-model="customer.companyName"
               required
             />
           </b-field>
 
-          <b-field
-            label="Adatvédelmi nyilatkozat elfogadva"
-            message="Elfogadta-e a kontakt az adatvédelmi nyilatkozatot"
-            horizontal
-          >
-            <b-select
-              v-model="contact.isPrivacyPolicyAccepted"
-              required
-            >
-              <option :value="true">
-                igen
-              </option>
-              <option :value="false">
-                nem
-              </option>
-            </b-select>
-          </b-field>
-          <b-field
-            label="Hírlevélre feliratkozott-e"
-            message="A kontakt feliratkozott-e a hírlevélre"
-            horizontal
-          >
-            <b-select
-              v-model="contact.isNewsletterSubscribed"
-              required
-            >
-              <option :value="true">
-                igen
-              </option>
-              <option :value="false">
-                nem
-              </option>
-            </b-select>
-          </b-field>
           <b-field
             label="Telefonszám"
             message="A kontakt telefonszáma"
             horizontal
           >
             <b-input
-              v-model="contact.phoneNumber"
+              v-model="customer.phoneNumber"
               required
             />
           </b-field>
@@ -98,7 +64,7 @@
             horizontal
           >
             <b-input
-              v-model="contact.email"
+              v-model="customer.email"
               required
             />
           </b-field>
@@ -148,8 +114,9 @@ export default {
 
   },
   async mounted () {
+    this.deliveryAddresses = await this.$strapi.find('delivery-addresses')
+    this.invoiceAddresses = await this.$strapi.find('incoice-addresses')
     this.customer = await this.getData()
-    /* console.log(this.product.taxRate.name) */
   },
   methods: {
     getClearFormObject () {
@@ -159,16 +126,13 @@ export default {
         companyName: '',
         phoneNumber: '',
         SumOfPurchase: 0,
-        deliveryAddresses: '',
-
+        deliveryAddresses: [],
+        invoiceAddresses: [],
         email: ''
 
       }
     },
-    async mounted () {
-      this.taxRates = await this.$strapi.find('tax-sets')
-      this.product = await this.getData()
-    },
+
     async getData () {
       if (this.$route.params.id) {
         try {

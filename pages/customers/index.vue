@@ -56,7 +56,7 @@ export default {
   },
   head () {
     return {
-      title: 'Kontaktok'
+      title: 'Vásárlók'
     }
   },
   computed: {
