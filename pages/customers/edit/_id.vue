@@ -165,6 +165,10 @@ export default {
 
       }
     },
+    async mounted () {
+      this.taxRates = await this.$strapi.find('tax-sets')
+      this.product = await this.getData()
+    },
     async getData () {
       if (this.$route.params.id) {
         try {
