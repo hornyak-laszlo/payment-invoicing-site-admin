@@ -68,6 +68,53 @@
               required
             />
           </b-field>
+          <b-field
+            label="Vásárlások összege"
+            message="A vásárló eddigi összes vásárlásának összege"
+            horizontal
+          >
+            <b-input
+              v-model="customer.sumOfPurchase"
+              required
+            />
+          </b-field>
+
+          <b-field
+            label="Számlázási cím"
+            message="A vásárló számlázási címe"
+            horizontal
+          >
+            <b-select
+              v-model="customer.invoiceAddresses.id"
+              required
+            >
+              <option
+                v-for="invoiceAddress in invoiceAddresses"
+                :key="invoiceAddress.id"
+                :value="invoiceAddress.id"
+              >
+                {{ invoiceAddress.streetNo }} {{ invoiceAddress.companyName }}
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Szállítási cím"
+            message="A vásárló szállítási címe"
+            horizontal
+          >
+            <b-select
+              v-model="customer.deliveryAddresses.id"
+              required
+            >
+              <option
+                v-for="deliveryAddress in deliveryAddresses"
+                :key="deliveryAddress.id"
+                :value="deliveryAddress.id"
+              >
+                {{ deliveryAddress.streetNo }} {{ deliveryAddress.companyName }}
+              </option>
+            </b-select>
+          </b-field>
 
           <hr>
           <b-field horizontal>
@@ -99,6 +146,8 @@ export default {
   },
   data () {
     return {
+      deliveryAddresses: [],
+      invoiceAddresses: [],
       isLoading: false,
       collection: 'customers',
       searchParams: { id: `${this.$route.params.id}` },
@@ -126,8 +175,12 @@ export default {
         companyName: '',
         phoneNumber: '',
         SumOfPurchase: 0,
-        deliveryAddresses: [],
-        invoiceAddresses: [],
+        deliveryAddresses: {
+          id: null
+        },
+        invoiceAddresses: {
+          id: null
+        },
         email: ''
 
       }
@@ -151,9 +204,10 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.contact)
+        await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.customer)
 
         this.isLoading = false
+        // alternative success message
         /* this.$buefy.toast.open({
           message: 'Sikeresen mentve',
           type: 'is-primary'

@@ -47,7 +47,7 @@
               required
             />
           </b-field>
-          <!-- //TODO v-for for select? -->
+
           <b-field
             label="Áfa tartalom"
             message="A termék áfa tartalma"
@@ -76,6 +76,7 @@
               required
             />
           </b-field>
+
           <b-field
             label="Szállítható-e"
             message="A termék szállítható?"
