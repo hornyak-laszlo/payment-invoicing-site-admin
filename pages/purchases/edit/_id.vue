@@ -1,20 +1,20 @@
 <template>
   <div>
     <hero-bar>
-      Vásárló szerkesztése
+      Vásárlás szerkesztése
       <nuxt-link
         slot="right"
-        to="/customers"
+        to="/purchases"
         class="button"
       >
-        Vissza a vásárlókhoz
+        Vissza a vásárlásokhoz
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
         class="tile is-child"
-        :title="`Vásárló - ID: ${$route.params.id}`"
-        icon="user-tag"
+        :title="`Vásárlás - ID: ${$route.params.id}`"
+        icon="shopping-basket"
       >
         <form @submit.prevent="submit">
           <b-field

@@ -1,20 +1,20 @@
 <template>
   <div>
     <hero-bar>
-      Vásárló szerkesztése
+      Vásárlás szerkesztése
       <nuxt-link
         slot="right"
-        to="/customers"
+        to="/purchases"
         class="button"
       >
-        Vissza a vásárlókhoz
+        Vissza a vásárlásokhoz
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
         class="tile is-child"
-        :title="`Vásárló - ID: ${$route.params.id}`"
-        icon="user-tag"
+        :title="`Vásárlás - ID: ${$route.params.id}`"
+        icon="shopping-basket"
       >
         <form @submit.prevent="submit">
           <b-field
@@ -135,104 +135,8 @@
 </template>
 
 <script>
-
-import HeroBar from '@/components/common/HeroBar'
-import CardComponent from '@/components/common/CardComponent'
-
 export default {
 
-  components: {
-    HeroBar,
-    CardComponent
-  },
-  data () {
-    return {
-      allDeliveryAddresses: [],
-      allInvoiceAddresses: [],
-      isLoading: false,
-      collection: 'customers',
-      searchParams: { id: `${this.$route.params.id}` },
-      customer: this.getClearFormObject()
-    }
-  },
-  head () {
-    return {
-      title: 'Vásárló szerkesztése'
-    }
-  },
-  computed: {
-
-  },
-  async mounted () {
-    this.allDeliveryAddresses = await this.$strapi.find('delivery-addresses')
-    this.allInvoiceAddresses = await this.$strapi.find('incoice-addresses')
-    this.customer = await this.getData()
-  },
-  methods: {
-    getClearFormObject () {
-      return {
-        firstName: '',
-        lastName: '',
-        companyName: '',
-        phoneNumber: '',
-        SumOfPurchase: 0,
-        deliveryAddresses: {
-          id: null
-        },
-        invoiceAddresses: {
-          id: null
-        },
-        email: ''
-
-      }
-    },
-    cons1 () {
-      console.log(this.customer.deliveryAddresses)
-    },
-
-    async getData () {
-      if (this.$route.params.id) {
-        try {
-          const res = await this.$strapi.findOne(this.collection, this.$route.params.id)
-          return res
-        } catch (err) {
-          this.$buefy.toast.open({
-            message: `Error: ${err.message}`,
-            type: 'is-danger',
-            queue: false
-          })
-        }
-      }
-    },
-    async submit () {
-      try {
-        this.isLoading = true
-
-        await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.customer)
-
-        this.isLoading = false
-        // alternative success message
-        /* this.$buefy.toast.open({
-          message: 'Sikeresen mentve',
-          type: 'is-primary'
-          queue: false
-        }) */
-        this.$buefy.snackbar.open({
-          message: 'Sikeresen mentve',
-          type: 'is-white has-text-white has-background-primary',
-          queue: false
-        })
-        this.$router.push('/contacts')
-      } catch (err) {
-        this.isLoading = false
-        this.$buefy.toast.open({
-          message: `Error: ${err.message}`,
-          type: 'is-danger',
-          queue: false
-        })
-      }
-    }
-  }
 }
 </script>
 

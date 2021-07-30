@@ -2,6 +2,13 @@
   <div>
     <hero-bar>
       Vásárlások
+      <nuxt-link
+        slot="right"
+        to="/create"
+        class="button"
+      >
+        Új vásárlás
+      </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
