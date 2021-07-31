@@ -4,9 +4,7 @@
       v-if="title"
       class="card-header"
     >
-      <p
-        class="card-header-title is-size-6"
-      >
+      <p class="card-header-title is-size-6">
         <b-icon
           v-if="icon"
           :icon="icon"

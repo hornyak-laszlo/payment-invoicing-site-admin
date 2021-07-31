@@ -24,7 +24,7 @@ import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 import DataTable from '@/components/DataTable'
 export default {
-  name: 'Contacts',
+  name: 'Customers',
   components: {
     HeroBar,
     DataTable,
@@ -34,29 +34,17 @@ export default {
     return {
       collection: 'customers',
       fields: [{
-        field: 'companyName',
-        title: 'Cégnév'
-      }, {
-        field: 'firstName',
-        title: 'Vezetéknév'
-      }, {
-        field: 'lastName',
-        title: 'Keresztnév'
-      }, {
         field: 'email',
-        title: 'Email'
+        title: 'Email cím'
       }, {
-        field: 'phoneNumber',
-        title: 'Telefon'
-      }, {
-        field: 'sumOfPurchase',
-        title: 'Vásárlói érték'
+        field: 'tag',
+        title: 'Tag'
       }]
     }
   },
   head () {
     return {
-      title: 'Kontaktok'
+      title: 'Vásárlók'
     }
   },
   computed: {

@@ -28,6 +28,12 @@
               required
             />
           </b-field>
+          <b-field label="Sikeres szöveg" message="Sikeres kapcsolatfevétel szövege" horizontal>
+            <b-input
+              v-model="contactForm.successText"
+              required
+            />
+          </b-field>
           <hr>
           <b-field horizontal>
             <b-button
@@ -77,7 +83,8 @@ export default {
         type: 'contact-forms',
         name: '',
         link: '',
-        successLink: ''
+        successLink: '',
+        successText: ''
       }
     },
     async submit () {
@@ -93,6 +100,7 @@ export default {
           message: 'Létrehozás sikeres',
           queue: false
         })
+        this.$router.push('/forms')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({

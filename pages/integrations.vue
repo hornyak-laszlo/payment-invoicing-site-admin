@@ -50,7 +50,7 @@
             <b-input v-model="stripePrivateKey" custom-class="is-static" readonly />
           </b-field>
           <b-field v-if="stripeIntegrated" label="Publikus kulcs">
-            <b-input v-model="stripePubliceKey" custom-class="is-static" readonly />
+            <b-input v-model="stripePublicKey" custom-class="is-static" readonly />
           </b-field>
         </card-component>
       </tiles>

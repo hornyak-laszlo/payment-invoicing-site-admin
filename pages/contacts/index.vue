@@ -2,6 +2,13 @@
   <div>
     <hero-bar>
       Kontaktok
+      <nuxt-link
+        slot="right"
+        to="/contacts/create"
+        class="button"
+      >
+        Új kontakt hozzáadása
+      </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component

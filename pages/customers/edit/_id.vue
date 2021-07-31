@@ -1,62 +1,45 @@
 <template>
   <div>
     <hero-bar>
-      Űrlap szerkesztése
+      Vásárló szerkesztése
       <nuxt-link
         slot="right"
-        to="/forms"
+        to="/customers"
         class="button"
       >
-        Vissza az űrlapokhoz
+        Vissza a vásárlókhoz
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
       <card-component
-        :title="`Űrlap - ID: ${contactForm.id}`"
-        icon="columns"
         class="tile is-child"
+        :title="`Vásárló - ID: ${$route.params.id}`"
+        icon="user-tag"
       >
         <form @submit.prevent="submit">
           <b-field
-            label="Név"
-            message="Űrlap neve"
+            label="Email cím"
+            message="A kontakt email címe"
             horizontal
           >
             <b-input
-              v-model="contactForm.name"
-              required
+              :value="customer.email"
+              custom-class="is-static"
+              readonly
             />
           </b-field>
+
           <b-field
-            label="Link"
-            message="Link ahol elérhető lesz az űrlap"
+            label="Tag"
+            message="tag"
             horizontal
           >
             <b-input
-              v-model="contactForm.link"
+              v-model="customer.tag"
               required
             />
           </b-field>
-          <b-field
-            label="Sikeres link"
-            message="Sikeres kapcsolatfevétel linkje"
-            horizontal
-          >
-            <b-input
-              v-model="contactForm.successLink"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Sikeres szöveg"
-            message="Sikeres kapcsolatfevétel szövege"
-            horizontal
-          >
-            <b-input
-              v-model="contactForm.successText"
-              required
-            />
-          </b-field>
+
           <hr>
           <b-field horizontal>
             <b-button
@@ -75,43 +58,47 @@
 </template>
 
 <script>
+
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
-  name: 'ContactFormEdit',
+
   components: {
-    CardComponent,
-    HeroBar
+    HeroBar,
+    CardComponent
   },
   data () {
     return {
       isLoading: false,
-      contactForm: this.getClearFormObject()
+      collection: 'customers',
+      customer: this.getClearFormObject()
     }
   },
   head () {
     return {
-      title: 'Kontakt űrlap szerkesztése'
+      title: 'Vásárló szerkesztése'
     }
   },
+  computed: {
+
+  },
   async mounted () {
-    this.contactForm = await this.getData()
+    this.customer = await this.getData()
   },
   methods: {
     getClearFormObject () {
       return {
-        id: '',
-        name: '',
-        link: '',
-        successLink: '',
-        successText: ''
+        tag: '',
+        email: '',
+        purchases: []
       }
     },
+
     async getData () {
       if (this.$route.params.id) {
         try {
-          const res = await this.$strapi.findOne('contact-forms', this.$route.params.id)
+          const res = await this.$strapi.findOne(this.collection, this.$route.params.id)
           return res
         } catch (err) {
           this.$buefy.toast.open({
@@ -126,14 +113,21 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update('contact-forms', this.contactForm.id, this.contactForm)
+        await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.customer)
 
         this.isLoading = false
+        // alternative success message
+        /* this.$buefy.toast.open({
+          message: 'Sikeresen mentve',
+          type: 'is-primary'
+          queue: false
+        }) */
         this.$buefy.snackbar.open({
           message: 'Sikeresen mentve',
+          type: 'is-white has-text-white has-background-primary',
           queue: false
         })
-        this.$router.push('/forms')
+        this.$router.push('/customers')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({
@@ -146,3 +140,6 @@ export default {
   }
 }
 </script>
+
+<style>
+</style>

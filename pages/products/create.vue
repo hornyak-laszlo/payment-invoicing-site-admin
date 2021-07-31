@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Termék Szerkesztése
+      Termék Hozzáadása
       <nuxt-link
         slot="right"
         to="/products"
@@ -13,7 +13,7 @@
     <section class="section is-main-section">
       <card-component
         class="tile is-child"
-        :title="`Termék - ID: ${$route.params.id}`"
+        title="Új termék"
         icon="tags"
       >
         <form @submit.prevent="submit">
@@ -47,14 +47,13 @@
               required
             />
           </b-field>
-
           <b-field
             label="Áfa tartalom"
             message="A termék áfa tartalma"
             horizontal
           >
             <b-select
-              v-model="product.taxRate.id"
+              v-model="product.taxRate"
               required
             >
               <option
@@ -76,7 +75,6 @@
               required
             />
           </b-field>
-
           <b-field
             label="Szállítható-e"
             message="A termék szállítható?"
@@ -119,7 +117,6 @@
           >
             <b-select
               v-model="product.period"
-              :placeholder="product.period"
               required
             >
               <option :value="'weekly'">
@@ -137,12 +134,19 @@
           <b-field horizontal>
             <b-button
               type="is-primary"
-              expanded
               :loading="isLoading"
               native-type="submit"
+              expanded
             >
               Mentés
             </b-button>
+          </b-field>
+          <b-field horizontal>
+            <p
+              class="has-text-danger is-size-7"
+            >
+              Minden adatot meg kell adni!
+            </p>
           </b-field>
         </form>
       </card-component>
@@ -153,7 +157,6 @@
 <script>
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
-
 export default {
   components: {
     HeroBar,
@@ -161,15 +164,23 @@ export default {
   },
   data () {
     return {
-      taxRates: [],
       isLoading: false,
-      collection: 'products',
-      product: this.getClearFormObject()
+      taxRates: [],
+      product: {
+        name: '',
+        description: '',
+        nameInvoice: '',
+        grossPrice: '',
+        isShippable: false,
+        type: '',
+        period: '',
+        taxRate: null
+      }
     }
   },
   head () {
     return {
-      title: 'Termék szerkesztése'
+      title: 'Termék hozzáadása'
     }
   },
   computed: {
@@ -179,46 +190,15 @@ export default {
   },
   async mounted () {
     this.taxRates = await this.$strapi.find('tax-sets')
-    this.product = await this.getData()
-    /* console.log(this.product.taxRate.name) */
   },
   methods: {
-    getClearFormObject () {
-      return {
-        name: '',
-        description: '',
-        nameInvoice: '',
-        grossPrice: '',
-        isShippable: false,
-        type: '',
-        period: '',
-        taxRate: {
-          id: null
-        }
-      }
-    },
-    async getData () {
-      if (this.$route.params.id) {
-        try {
-          const res = await this.$strapi.findOne('products', this.$route.params.id)
-          return res
-        } catch (err) {
-          this.$buefy.toast.open({
-            message: `Error: ${err.message}`,
-            type: 'is-danger',
-            queue: false
-          })
-        }
-      }
-    },
     async submit () {
       try {
         this.isLoading = true
         if (this.product.type === 'one_time') {
           delete this.product.period
         }
-
-        await this.$strapi.update('products', parseInt(this.$route.params.id), this.product)
+        await this.$strapi.create('products', this.product)
 
         this.isLoading = false
         /* this.$buefy.toast.open({

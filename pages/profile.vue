@@ -69,7 +69,7 @@
               :disabled="!btnEnabled"
               @click="changePassword"
             >
-              Beállítás
+              Jelszó módosítása
             </b-button>
           </form>
         </card-component>
