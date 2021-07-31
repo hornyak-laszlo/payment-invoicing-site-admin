@@ -164,7 +164,6 @@ export default {
       taxRates: [],
       isLoading: false,
       collection: 'products',
-      searchParams: { id: `${this.$route.params.id}` },
       product: this.getClearFormObject()
     }
   },
@@ -215,6 +214,9 @@ export default {
     async submit () {
       try {
         this.isLoading = true
+        if (this.product.type === 'one_time') {
+          delete this.product.period
+        }
 
         await this.$strapi.update('products', parseInt(this.$route.params.id), this.product)
 

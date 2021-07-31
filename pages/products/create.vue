@@ -195,7 +195,9 @@ export default {
     async submit () {
       try {
         this.isLoading = true
-
+        if (this.product.type === 'one_time') {
+          delete this.product.period
+        }
         await this.$strapi.create('products', this.product)
 
         this.isLoading = false

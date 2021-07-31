@@ -18,103 +18,26 @@
       >
         <form @submit.prevent="submit">
           <b-field
-            label="Keresztnév"
-            message="A kontakt keresztneve"
-            horizontal
-          >
-            <b-input
-              v-model="customer.firstName"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Család név"
-            message="A kontakt vezetékneve"
-            horizontal
-          >
-            <b-input
-              v-model="customer.lastName"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Cégnév"
-            message="A kontakt cégneve"
-            horizontal
-          >
-            <b-input
-              v-model="customer.companyName"
-              required
-            />
-          </b-field>
-
-          <b-field
-            label="Telefonszám"
-            message="A kontakt telefonszáma"
-            horizontal
-          >
-            <b-input
-              v-model="customer.phoneNumber"
-              required
-            />
-          </b-field>
-          <b-field
             label="Email cím"
             message="A kontakt email címe"
             horizontal
           >
             <b-input
-              v-model="customer.email"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Vásárlások összege"
-            message="A vásárló eddigi összes vásárlásának összege"
-            horizontal
-          >
-            <b-input
-              v-model="customer.sumOfPurchase"
-              required
+              :value="customer.email"
+              custom-class="is-static"
+              readonly
             />
           </b-field>
 
           <b-field
-            label="Számlázási cím"
-            message="A vásárló számlázási címe"
+            label="Tag"
+            message="tag"
             horizontal
           >
-            <b-select
-              v-model="customer.invoiceAddresses.id"
+            <b-input
+              v-model="customer.tag"
               required
-            >
-              <option
-                v-for="invoiceAddress in allInvoiceAddresses"
-                :key="invoiceAddress.id"
-                :value="invoiceAddress.id"
-              >
-                {{ invoiceAddress.streetNo }}, {{ invoiceAddress.companyName }}
-              </option>
-            </b-select>
-          </b-field>
-          <b-field
-            label="Szállítási cím"
-            message="A vásárló szállítási címe"
-            horizontal
-          >
-            <b-select
-              v-model="customer.deliveryAddresses.id"
-              required
-              @blur="cons1"
-            >
-              <option
-                v-for="deliveryAddress in allDeliveryAddresses"
-                :key="deliveryAddress.id"
-                :value="deliveryAddress.id"
-              >
-                {{ deliveryAddress.streetNo }}
-              </option>
-            </b-select>
+            />
           </b-field>
 
           <hr>
@@ -147,11 +70,8 @@ export default {
   },
   data () {
     return {
-      allDeliveryAddresses: [],
-      allInvoiceAddresses: [],
       isLoading: false,
       collection: 'customers',
-      searchParams: { id: `${this.$route.params.id}` },
       customer: this.getClearFormObject()
     }
   },
@@ -164,30 +84,15 @@ export default {
 
   },
   async mounted () {
-    this.allDeliveryAddresses = await this.$strapi.find('delivery-addresses')
-    this.allInvoiceAddresses = await this.$strapi.find('incoice-addresses')
     this.customer = await this.getData()
   },
   methods: {
     getClearFormObject () {
       return {
-        firstName: '',
-        lastName: '',
-        companyName: '',
-        phoneNumber: '',
-        SumOfPurchase: 0,
-        deliveryAddresses: {
-          id: null
-        },
-        invoiceAddresses: {
-          id: null
-        },
-        email: ''
-
+        tag: '',
+        email: '',
+        purchases: []
       }
-    },
-    cons1 () {
-      console.log(this.customer.deliveryAddresses)
     },
 
     async getData () {
@@ -222,7 +127,7 @@ export default {
           type: 'is-white has-text-white has-background-primary',
           queue: false
         })
-        this.$router.push('/contacts')
+        this.$router.push('/customers')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({

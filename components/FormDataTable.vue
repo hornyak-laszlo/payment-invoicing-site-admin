@@ -44,7 +44,7 @@
               :to="`/${props.row.type}/edit/${props.row.id}`"
               class="button is-small is-primary"
             >
-              <b-icon pack="fas" icon="edit" size="is-small" />
+              <b-icon pack="fas" icon="eye" size="is-small" />
             </nuxt-link>
             <button
               class="button is-small is-danger"

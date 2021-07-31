@@ -135,7 +135,6 @@ export default {
     return {
       isLoading: false,
       collection: 'contacts',
-      searchParams: { id: `${this.$route.params.id}` },
       contact: this.getClearFormObject()
     }
   },
