@@ -34,6 +34,7 @@
           >
             <b-input
               v-model="product.description"
+              type="textarea"
               required
             />
           </b-field>

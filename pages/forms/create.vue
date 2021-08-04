@@ -55,6 +55,7 @@
             <b-input
               v-model="contactForm.successText"
               required
+              type="textarea"
             />
           </b-field>
           <hr>
