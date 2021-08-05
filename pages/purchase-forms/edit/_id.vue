@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component
-        :title="`Űrlap - ID: ${contactForm.id}`"
+        :title="`Űrlap - ID: ${purchaseForm.id}`"
         icon="columns"
         class="tile is-child"
       >
@@ -23,7 +23,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.name"
+              v-model="purchaseForm.name"
               required
             />
           </b-field>
@@ -33,7 +33,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.link"
+              v-model="purchaseForm.link"
               required
             />
           </b-field>
@@ -43,7 +43,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.successLink"
+              v-model="purchaseForm.successLink"
               required
             />
           </b-field>
@@ -53,7 +53,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.successText"
+              v-model="purchaseForm.successText"
               type="textarea"
               required
             />
@@ -80,7 +80,7 @@ import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
-  name: 'ContactFormEdit',
+  name: 'PurchaseFormEdit',
   components: {
     CardComponent,
     HeroBar
@@ -88,16 +88,16 @@ export default {
   data () {
     return {
       isLoading: false,
-      contactForm: this.getClearFormObject()
+      purchaseForm: this.getClearFormObject()
     }
   },
   head () {
     return {
-      title: 'Kontakt űrlap szerkesztése'
+      title: 'Vásárlás űrlap szerkesztése'
     }
   },
   async mounted () {
-    this.contactForm = await this.getData()
+    this.purchaseForm = await this.getData()
   },
   methods: {
     getClearFormObject () {
@@ -106,13 +106,15 @@ export default {
         name: '',
         link: '',
         successLink: '',
-        successText: ''
+        successText: '',
+        products: [],
+        company: {}
       }
     },
     async getData () {
       if (this.$route.params.id) {
         try {
-          const res = await this.$strapi.findOne('contact-forms', this.$route.params.id)
+          const res = await this.$strapi.findOne('purchase-forms', this.$route.params.id)
           return res
         } catch (err) {
           this.$buefy.toast.open({
@@ -127,7 +129,7 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update('contact-forms', this.contactForm.id, this.contactForm)
+        await this.$strapi.update('purchase-forms', this.purchaseForm.id, this.purchaseForm)
 
         this.isLoading = false
         this.$buefy.snackbar.open({

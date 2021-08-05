@@ -34,6 +34,7 @@
           >
             <b-input
               v-model="product.description"
+              type="textarea"
               required
             />
           </b-field>
@@ -142,9 +143,7 @@
             </b-button>
           </b-field>
           <b-field horizontal>
-            <p
-              class="has-text-danger is-size-7"
-            >
+            <p class="has-text-danger is-size-7">
               Minden adatot meg kell adni!
             </p>
           </b-field>

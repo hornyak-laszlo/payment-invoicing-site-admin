@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Űrlap szerkesztése
+      Űrlap hozzáadása
       <nuxt-link
         slot="right"
         to="/forms"
@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component
-        :title="`Űrlap - ID: ${contactForm.id}`"
+        title="Új űrlap"
         icon="columns"
         class="tile is-child"
       >
@@ -23,7 +23,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.name"
+              v-model="purchaseForm.name"
               required
             />
           </b-field>
@@ -33,7 +33,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.link"
+              v-model="purchaseForm.link"
               required
             />
           </b-field>
@@ -43,7 +43,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.successLink"
+              v-model="purchaseForm.successLink"
               required
             />
           </b-field>
@@ -53,9 +53,9 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.successText"
-              type="textarea"
+              v-model="purchaseForm.successText"
               required
+              type="textarea"
             />
           </b-field>
           <hr>
@@ -66,7 +66,7 @@
               native-type="submit"
               expanded
             >
-              Mentés
+              Létrehozás
             </b-button>
           </b-field>
         </form>
@@ -80,7 +80,7 @@ import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
-  name: 'ContactFormEdit',
+  name: 'FormCreate',
   components: {
     CardComponent,
     HeroBar
@@ -88,50 +88,35 @@ export default {
   data () {
     return {
       isLoading: false,
-      contactForm: this.getClearFormObject()
+      purchaseForm: this.getClearFormObject()
     }
   },
   head () {
     return {
-      title: 'Kontakt űrlap szerkesztése'
+      title: 'Űrlap hozzáadása'
     }
-  },
-  async mounted () {
-    this.contactForm = await this.getData()
   },
   methods: {
     getClearFormObject () {
       return {
-        id: '',
+        type: 'purchase-forms',
         name: '',
         link: '',
         successLink: '',
         successText: ''
       }
     },
-    async getData () {
-      if (this.$route.params.id) {
-        try {
-          const res = await this.$strapi.findOne('contact-forms', this.$route.params.id)
-          return res
-        } catch (err) {
-          this.$buefy.toast.open({
-            message: `Error: ${err.message}`,
-            type: 'is-danger',
-            queue: false
-          })
-        }
-      }
-    },
     async submit () {
       try {
         this.isLoading = true
+        if (this.purchaseForm.type === 'purchase-forms') {
+          await this.$strapi.create('purchase-forms', this.purchaseForm)
+        }
 
-        await this.$strapi.update('contact-forms', this.contactForm.id, this.contactForm)
-
+        this.purchaseForm = this.getClearFormObject()
         this.isLoading = false
         this.$buefy.snackbar.open({
-          message: 'Sikeresen mentve',
+          message: 'Létrehozás sikeres',
           queue: false
         })
         this.$router.push('/forms')
