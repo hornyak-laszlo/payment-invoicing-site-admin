@@ -12,6 +12,7 @@
         <data-table
           :fields="fields"
           :collection="collection"
+          :read-only="true"
         />
       </card-component>
     </section>
@@ -34,11 +35,17 @@ export default {
     return {
       collection: 'customers',
       fields: [{
+        field: 'lastPurchaseName',
+        title: 'Név'
+      }, {
         field: 'email',
         title: 'Email cím'
       }, {
-        field: 'tag',
-        title: 'Tag'
+        field: 'sumOfPurchases',
+        title: 'Összes vásárlás összege'
+      }, {
+        field: 'lastPurchaseDate',
+        title: 'Legutóbbi vásárlás'
       }]
     }
   },

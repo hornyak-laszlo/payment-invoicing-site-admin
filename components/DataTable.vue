@@ -54,6 +54,18 @@
         >
           <div class="buttons is-right">
             <nuxt-link
+              v-if="readOnly"
+              :to="`/${collection}/view/${props.row.id}`"
+              class="button is-small is-primary"
+            >
+              <b-icon
+                pack="fas"
+                icon="eye"
+                size="is-small"
+              />
+            </nuxt-link>
+            <nuxt-link
+              v-if="!readOnly"
               :to="`/${collection}/edit/${props.row.id}`"
               class="button is-small is-primary"
             >
@@ -64,6 +76,7 @@
               />
             </nuxt-link>
             <button
+              v-if="!readOnly"
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"
@@ -116,6 +129,10 @@ export default {
   name: 'DataTable',
   components: { ModalBox },
   props: {
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
     collection: {
       type: String,
       default: null
