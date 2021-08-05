@@ -4,7 +4,7 @@
       Vásárlások
       <nuxt-link
         slot="right"
-        to="/create"
+        to="/purchases/create"
         class="button"
       >
         Új vásárlás
