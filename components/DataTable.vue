@@ -49,6 +49,7 @@
           >{{ props.row.updated_at }}</small>
         </b-table-column>
         <b-table-column
+          v-if="!readOnly"
           custom-key="actions"
           class="is-actions-cell"
         >
@@ -116,6 +117,10 @@ export default {
   name: 'DataTable',
   components: { ModalBox },
   props: {
+    readOnly: {
+      type: Boolean,
+      default: false
+    },
     collection: {
       type: String,
       default: null

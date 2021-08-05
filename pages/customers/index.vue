@@ -12,6 +12,7 @@
         <data-table
           :fields="fields"
           :collection="collection"
+          :read-only="true"
         />
       </card-component>
     </section>
@@ -36,9 +37,6 @@ export default {
       fields: [{
         field: 'email',
         title: 'Email cím'
-      }, {
-        field: 'tag',
-        title: 'Tag'
       }]
     }
   },
