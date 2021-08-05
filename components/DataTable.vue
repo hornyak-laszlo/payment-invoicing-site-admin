@@ -49,12 +49,23 @@
           >{{ props.row.updated_at }}</small>
         </b-table-column>
         <b-table-column
-          v-if="!readOnly"
           custom-key="actions"
           class="is-actions-cell"
         >
           <div class="buttons is-right">
             <nuxt-link
+              v-if="readOnly"
+              :to="`/${collection}/view/${props.row.id}`"
+              class="button is-small is-primary"
+            >
+              <b-icon
+                pack="fas"
+                icon="eye"
+                size="is-small"
+              />
+            </nuxt-link>
+            <nuxt-link
+              v-if="!readOnly"
               :to="`/${collection}/edit/${props.row.id}`"
               class="button is-small is-primary"
             >
@@ -65,6 +76,7 @@
               />
             </nuxt-link>
             <button
+              v-if="!readOnly"
               class="button is-small is-danger"
               type="button"
               @click.prevent="trashModal(props.row)"

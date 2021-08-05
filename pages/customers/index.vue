@@ -35,8 +35,17 @@ export default {
     return {
       collection: 'customers',
       fields: [{
+        field: 'lastPurchaseName',
+        title: 'Név'
+      }, {
         field: 'email',
         title: 'Email cím'
+      }, {
+        field: 'sumOfPurchases',
+        title: 'Összes vásárlás összege'
+      }, {
+        field: 'lastPurchaseDate',
+        title: 'Legutóbbi vásárlás'
       }]
     }
   },
