@@ -129,7 +129,7 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update('purchase-forms', this.purchaseForm.id, this.contactForm)
+        await this.$strapi.update('purchase-forms', this.purchaseForm.id, this.purchaseForm)
 
         this.isLoading = false
         this.$buefy.snackbar.open({

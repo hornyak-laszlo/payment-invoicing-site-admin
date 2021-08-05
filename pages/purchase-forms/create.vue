@@ -23,7 +23,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.name"
+              v-model="purchaseForm.name"
               required
             />
           </b-field>
@@ -33,7 +33,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.link"
+              v-model="purchaseForm.link"
               required
             />
           </b-field>
@@ -43,7 +43,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.successLink"
+              v-model="purchaseForm.successLink"
               required
             />
           </b-field>
@@ -53,7 +53,7 @@
             horizontal
           >
             <b-input
-              v-model="contactForm.successText"
+              v-model="purchaseForm.successText"
               required
               type="textarea"
             />
@@ -88,7 +88,7 @@ export default {
   data () {
     return {
       isLoading: false,
-      contactForm: this.getClearFormObject()
+      purchaseForm: this.getClearFormObject()
     }
   },
   head () {
@@ -99,7 +99,7 @@ export default {
   methods: {
     getClearFormObject () {
       return {
-        type: 'contact-forms',
+        type: 'purchase-forms',
         name: '',
         link: '',
         successLink: '',
@@ -109,11 +109,11 @@ export default {
     async submit () {
       try {
         this.isLoading = true
-        if (this.contactForm.type === 'contact-forms') {
-          await this.$strapi.create('contact-forms', this.contactForm)
+        if (this.purchaseForm.type === 'purchase-forms') {
+          await this.$strapi.create('purchase-forms', this.purchaseForm)
         }
 
-        this.contactForm = this.getClearFormObject()
+        this.purchaseForm = this.getClearFormObject()
         this.isLoading = false
         this.$buefy.snackbar.open({
           message: 'Létrehozás sikeres',
