@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component
-        :title="`Űrlap - ID: ${purchase.id}`"
+        :title="`Vásárlás - ID: ${purchase.id}`"
         icon="shopping-basket"
         class="tile is-child"
       >
@@ -44,6 +44,57 @@
             />
           </b-field>
           <b-field
+            label="Hírlevélre feliratkozott"
+            message="A vásárló feliratkozott a hírlevélre"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.isNewsletterSubscribed"
+              required
+            >
+              <option :value="true">
+                igen
+              </option>
+              <option :value="false">
+                nem
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Feltételeket elfogadta"
+            message="A vásárló elfogadta az általános feltételeket"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.isGTCaccepted"
+              required
+            >
+              <option :value="true">
+                igen
+              </option>
+              <option :value="false">
+                nem
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Adatkezelést elfogadta"
+            message="A vásárló elfogadta az adatkezelési feltételeket"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.isPrivacyPolicyAccepted"
+              required
+            >
+              <option :value="true">
+                igen
+              </option>
+              <option :value="false">
+                nem
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
             label="Telefonszám"
             message="Vásárló telefonszáma"
             horizontal
@@ -64,18 +115,54 @@
               required
             />
             <b-input
-              v-model="purchase.deliveryCity"
-              placeholder="Város"
-              required
-            />
-            <b-input
               v-model="purchase.deliveryZip"
               placeholder="Irányítószám"
               required
             />
             <b-input
+              v-model="purchase.deliveryCity"
+              placeholder="Város"
+              required
+            />
+            <b-input
               v-model="purchase.deliveryStreetNo"
               placeholder="Utca és házszám"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Számlázási cím"
+            message="A számlán szereplő cím"
+            horizontal
+          >
+            <b-input
+              v-model="purchase.invoiceCountry"
+              placeholder="Ország"
+              required
+            />
+            <b-input
+              v-model="purchase.invoiceZip"
+              placeholder="Irányítószám"
+              required
+            />
+            <b-input
+              v-model="purchase.invoiceCity"
+              placeholder="Város"
+              required
+            />
+            <b-input
+              v-model="purchase.invoiceStreetNo"
+              placeholder="Utca és házszám"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Rendelés összege"
+            message="Mennyiért vásárolt a vevő"
+            horizontal
+          >
+            <b-input
+              v-model="purchase.sumOfPurchase"
               required
             />
           </b-field>
@@ -96,6 +183,69 @@
               </option>
             </b-select>
           </b-field>
+          <b-field
+            label="Rendelés státusza"
+            message="Hol tart a rendelés"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.status"
+              required
+            >
+              <option value="ordered">
+                Megrendelve
+              </option>
+              <option value="payed">
+                Kifizetve
+              </option>
+              <option value="shipped">
+                Kiszállítva
+              </option>
+            </b-select>
+          </b-field>
+          <hr>
+          <b-field
+            horizontal
+            label="Rendelt termékek"
+          >
+            Vásárló által rendelt termékek listája:
+          </b-field>
+          <b-collapse
+            v-for="(product, index) of purchase.products"
+            :key="index"
+            style="width: 85%; margin: auto;"
+            class="card"
+            animation="slide"
+          >
+            <template #trigger="props">
+              <div
+                class="card-header"
+                role="button"
+              >
+                <p class="card-header-title">
+                  {{ product.name }}
+                </p>
+                <a class="card-header-icon">
+                  <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
+                </a>
+              </div>
+            </template>
+            <div class="card-content">
+              <div class="content">
+                <p><strong>Termék leírása:</strong> {{ product.description }}</p>
+              </div>
+              <div class="content">
+                <p><strong>Termék ára:</strong> {{ product.grossPrice }}</p>
+              </div>
+              <div class="content">
+                <p><strong>Rendelt mennyiség:</strong> {{ product.quantity }}</p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a class="card-footer-item">Edit</a>
+              <a class="card-footer-item">Delete</a>
+            </footer>
+          </b-collapse>
           <hr>
           <b-field horizontal>
             <b-button
@@ -125,6 +275,7 @@ export default {
   },
   data () {
     return {
+      isOpen: false,
       isLoading: false,
       purchase: this.getClearFormObject()
     }
