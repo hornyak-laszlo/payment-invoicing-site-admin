@@ -1,9 +1,343 @@
 <template>
-  <div>purchases/create</div>
+  <div>
+    <hero-bar>
+      Vásárlás hozzáadása
+      <nuxt-link
+        slot="right"
+        to="/purchases"
+        class="button"
+      >
+        Vissza a vásárlásokhoz
+      </nuxt-link>
+    </hero-bar>
+    <section class="section is-main-section">
+      <card-component
+        :title="`Vásárlás hozzáadása`"
+        icon="shopping-basket"
+        class="tile is-child"
+      >
+        <form @submit.prevent="submit">
+          <b-field
+            label="Név"
+            message="Vásárló neve"
+            horizontal
+          >
+            <b-input
+              v-model="purchase.firstName"
+              placeholder="Keresztnév"
+              required
+            />
+            <b-input
+              v-model="purchase.lastName"
+              placeholder="Vezetéknév"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Email"
+            message="Vásárló e-mail címe"
+            horizontal
+          >
+            <b-input
+              v-model="purchase.email"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Hírlevélre feliratkozott"
+            message="A vásárló feliratkozott a hírlevélre"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.isNewsletterSubscribed"
+              required
+            >
+              <option :value="true">
+                igen
+              </option>
+              <option :value="false">
+                nem
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Feltételeket elfogadta"
+            message="A vásárló elfogadta az általános feltételeket"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.isGTCaccepted"
+              required
+            >
+              <option :value="true">
+                igen
+              </option>
+              <option :value="false">
+                nem
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Adatkezelést elfogadta"
+            message="A vásárló elfogadta az adatkezelési feltételeket"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.isPrivacyPolicyAccepted"
+              required
+            >
+              <option :value="true">
+                igen
+              </option>
+              <option :value="false">
+                nem
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Telefonszám"
+            message="Vásárló telefonszáma"
+            horizontal
+          >
+            <b-input
+              v-model="purchase.phoneNumber"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Kiszállítási cím"
+            message="Ahova a terméket szállítani kell"
+            horizontal
+          >
+            <b-input
+              v-model="purchase.deliveryCountry"
+              placeholder="Ország"
+              required
+            />
+            <b-input
+              v-model="purchase.deliveryZip"
+              placeholder="Irányítószám"
+              required
+            />
+            <b-input
+              v-model="purchase.deliveryCity"
+              placeholder="Város"
+              required
+            />
+            <b-input
+              v-model="purchase.deliveryStreetNo"
+              placeholder="Utca és házszám"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Számlázási cím"
+            message="A számlán szereplő cím"
+            horizontal
+          >
+            <b-input
+              v-model="purchase.invoiceCountry"
+              placeholder="Ország"
+              required
+            />
+            <b-input
+              v-model="purchase.invoiceZip"
+              placeholder="Irányítószám"
+              required
+            />
+            <b-input
+              v-model="purchase.invoiceCity"
+              placeholder="Város"
+              required
+            />
+            <b-input
+              v-model="purchase.invoiceStreetNo"
+              placeholder="Utca és házszám"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Rendelés összege"
+            message="Mennyiért vásárolt a vevő"
+            horizontal
+          >
+            <b-input
+              v-model="purchase.sumOfPurchase"
+              required
+            />
+          </b-field>
+          <b-field
+            label="Fizetési mód"
+            message="Hogy fizet a vevő"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.paymentMethod"
+              required
+            >
+              <option value="transfer">
+                Átutalás
+              </option>
+              <option value="creditCard">
+                Bankkártya
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            label="Rendelés státusza"
+            message="Hol tart a rendelés"
+            horizontal
+          >
+            <b-select
+              v-model="purchase.status"
+              required
+            >
+              <option value="ordered">
+                Megrendelve
+              </option>
+              <option value="payed">
+                Kifizetve
+              </option>
+              <option value="shipped">
+                Kiszállítva
+              </option>
+            </b-select>
+          </b-field>
+          <hr>
+          <b-field
+            horizontal
+            label="Rendelt termékek"
+          >
+            Vásárló által rendelt termékek listája:
+          </b-field>
+          <b-collapse
+            v-for="(product, index) of purchase.products"
+            :key="index"
+            style="width: 85%; margin: auto;"
+            class="card"
+            animation="slide"
+          >
+            <template #trigger="props">
+              <div
+                class="card-header"
+                role="button"
+              >
+                <p class="card-header-title">
+                  {{ product.name }}
+                </p>
+                <a class="card-header-icon">
+                  <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
+                </a>
+              </div>
+            </template>
+            <div class="card-content">
+              <div class="content">
+                <p><strong>Termék leírása:</strong> {{ product.description }}</p>
+              </div>
+              <div class="content">
+                <p><strong>Termék ára:</strong> {{ product.grossPrice }}</p>
+              </div>
+              <div class="content">
+                <p><strong>Rendelt mennyiség:</strong> {{ product.quantity }}</p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <a class="card-footer-item">Edit</a>
+              <a class="card-footer-item">Delete</a>
+            </footer>
+          </b-collapse>
+          <hr>
+          <b-field horizontal>
+            <b-button
+              type="is-primary"
+              :loading="isLoading"
+              native-type="submit"
+              expanded
+            >
+              Mentés
+            </b-button>
+          </b-field>
+        </form>
+      </card-component>
+    </section>
+  </div>
 </template>
 
 <script>
-export default {
+import HeroBar from '@/components/common/HeroBar'
+import CardComponent from '@/components/common/CardComponent'
 
+export default {
+  name: 'PurchaseEdit',
+  components: {
+    CardComponent,
+    HeroBar
+  },
+  data () {
+    return {
+      isOpen: false,
+      isLoading: false,
+      purchase: this.getClearFormObject()
+    }
+  },
+  head () {
+    return {
+      title: 'Vásárlás hozzáadása'
+    }
+  },
+  async mounted () {
+    this.purchase = await this.getClearFormObject()
+  },
+  methods: {
+    getClearFormObject () {
+      return {
+        id: '',
+        firstName: '',
+        lastName: '',
+        isGTCaccepted: null,
+        isNewsletterSubscribed: null,
+        isPrivacyPolicyAccepted: null,
+        paymentMethod: '',
+        email: '',
+        phoneNumber: '',
+        companyName: '',
+        deliveryCountry: '',
+        deliveryCity: '',
+        deliveryZip: '',
+        deliveryStreetNo: '',
+        taxNumber: '',
+        invoiceCountry: '',
+        invoiceCity: '',
+        invoiceZip: '',
+        invoiceStreetNo: '',
+        sumOfPurchase: '',
+        products: [],
+        status: '',
+        company: {}
+      }
+    },
+
+    async submit () {
+      try {
+        this.isLoading = true
+
+        await this.$strapi.create('purchases', this.purchase)
+
+        this.isLoading = false
+        this.$buefy.snackbar.open({
+          message: 'Sikeresen mentve',
+          queue: false
+        })
+        this.$router.push('/purchases')
+      } catch (err) {
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: `Error: ${err.message}`,
+          type: 'is-danger',
+          queue: false
+        })
+      }
+    }
+  }
 }
 </script>
