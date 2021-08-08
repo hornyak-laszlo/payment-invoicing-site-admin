@@ -242,8 +242,16 @@
               </div>
             </div>
             <footer class="card-footer">
-              <a class="card-footer-item">Edit</a>
-              <a class="card-footer-item">Delete</a>
+              <nuxt-link
+                class="card-footer-item"
+                :to="`/products/edit/${product.id}`"
+              >
+                Edit
+              </nuxt-link>
+              <a
+                class="card-footer-item"
+                @click="deleteFunction(product.id)"
+              >Delete</a>
             </footer>
           </b-collapse>
           <hr>
@@ -277,7 +285,8 @@ export default {
     return {
       isOpen: false,
       isLoading: false,
-      purchase: this.getClearFormObject()
+      purchase: this.getClearFormObject(),
+      deleteID: null
     }
   },
   head () {
@@ -285,6 +294,7 @@ export default {
       title: 'Vásárlás szerkesztése'
     }
   },
+
   async mounted () {
     this.purchase = await this.getData()
   },
@@ -315,6 +325,34 @@ export default {
         status: '',
         company: {}
       }
+    },
+    deleteFunction (id) {
+      this.deleteID = id
+      this.confirmDelete()
+    },
+    async deleteConfirm () {
+      await this.$strapi.delete('products', this.deleteID)
+      await this.getData
+    },
+    confirmDelete () {
+      this.$buefy.dialog.confirm({
+        title: 'Termék törlése',
+        message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
+        confirmText: 'Termék törlése',
+        cancelText: 'Mégse',
+        type: 'is-danger',
+        hasIcon: true,
+        iconPack: 'fas',
+        icon: 'tags',
+        onConfirm: () => {
+          this.deleteConfirm()
+          this.$buefy.toast.open({
+            message: 'Termék törölve',
+            type: 'is-success',
+            queue: false
+          })
+        }
+      })
     },
     async getData () {
       if (this.$route.params.id) {
