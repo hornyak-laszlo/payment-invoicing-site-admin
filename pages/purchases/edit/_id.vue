@@ -213,7 +213,7 @@
           <b-collapse
             v-for="(product, index) of purchase.products"
             :key="index"
-            style="width: 85%; margin: auto;"
+            style="max-width: 80%; margin-left: 19%;"
             class="card"
             animation="slide"
           >
@@ -246,12 +246,12 @@
                 class="card-footer-item"
                 :to="`/products/edit/${product.id}`"
               >
-                Edit
+                Szerkesztés
               </nuxt-link>
               <a
                 class="card-footer-item"
                 @click="deleteFunction(product.id)"
-              >Delete</a>
+              >Törlés</a>
             </footer>
           </b-collapse>
           <hr>
