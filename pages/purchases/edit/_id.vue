@@ -252,7 +252,7 @@
               <div class="content">
                 <p>
                   <strong>Rendelt mennyiség:</strong>
-                  <b-input
+                  <b-style
                     v-model="product.quantity"
                     required
                   />
@@ -260,10 +260,14 @@
               </div>
             </div>
             <footer class="card-footer">
-              <a
+              <b-button
+                style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
+                label="Termék törlése"
+                icon-pack="fas"
+                icon-left="trash-alt"
                 class="card-footer-item has-text-danger"
                 @click="deleteFunction(product.id)"
-              >Termék törlése</a>
+              />
             </footer>
           </b-collapse>
           <hr>
