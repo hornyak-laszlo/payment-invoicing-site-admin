@@ -252,8 +252,9 @@
               <div class="content">
                 <p>
                   <strong>Rendelt mennyiség:</strong>
-                  <b-style
+                  <b-input
                     v-model="product.quantity"
+                    type="number"
                     required
                   />
                 </p>
