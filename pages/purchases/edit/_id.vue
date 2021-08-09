@@ -234,10 +234,7 @@
               <div class="content">
                 <p>
                   <strong>Termék leírása:</strong>
-                  <b-input
-                    v-model="product.description"
-                    required
-                  />
+                  {{ product.description }}
                 </p>
               </div>
               <div class="content">
@@ -271,6 +268,47 @@
               />
             </footer>
           </b-collapse>
+          <b-field horizontal>
+            <b-button
+              outlined
+              type="is-primary"
+              label="Termék hozzáadása"
+              :loading="isLoading"
+              @click="addProduct = true"
+            />
+            <b-select
+              v-if="addProduct"
+              v-model="plusProductId"
+              required
+            >
+              <option
+                v-for="product in allProducts"
+                :key="product.id"
+                :value="product.id"
+              >
+                {{ product.name }}
+              </option>
+            </b-select>
+            <b-button
+              v-if="addProduct"
+              style="border-radius: 5px"
+              type="is-primary"
+              label="Hozzáadás"
+              size="is-small"
+              :loading="isLoading"
+              @click="addNewProduct()"
+            />
+            <b-button
+              v-if="addProduct"
+              style="border-radius: 5px"
+              type="is-danger"
+              label="Mégse"
+              size="is-small"
+              :loading="isLoading"
+              @click="addProduct = false"
+            />
+          </b-field>
+
           <hr>
           <b-field horizontal>
             <b-button
@@ -303,7 +341,11 @@ export default {
       isOpen: false,
       isLoading: false,
       purchase: this.getClearFormObject(),
-      deleteID: null
+      addProduct: false,
+      deleteID: null,
+      allProducts: [],
+      plusProductId: 0,
+      plusProduct: {}
     }
   },
   head () {
@@ -314,6 +356,7 @@ export default {
 
   async mounted () {
     this.purchase = await this.getData()
+    this.allProducts = await this.$strapi.find('products')
   },
   methods: {
     getClearFormObject () {
@@ -341,6 +384,31 @@ export default {
         products: [],
         status: '',
         company: {}
+      }
+    },
+    async addNewProduct () {
+      this.plusProduct = this.allProducts.find(product => product.id === this.plusProductId)
+      this.plusProduct.productId = this.plusProductId
+      this.purchase.products.push(this.plusProduct)
+      try {
+        this.isLoading = true
+
+        await this.$strapi.update('purchases', this.purchase.id, this.purchase)
+
+        await this.getData
+        this.addProduct = false
+        this.isLoading = false
+        this.$buefy.snackbar.open({
+          message: 'Sikeresen mentve',
+          queue: false
+        })
+      } catch (err) {
+        this.isLoading = false
+        this.$buefy.snackbar.open({
+          message: `Error: ${err.message}`,
+          type: 'is-danger',
+          queue: false
+        })
       }
     },
     deleteFunction (id) {
