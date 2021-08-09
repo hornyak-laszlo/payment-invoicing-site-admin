@@ -232,26 +232,38 @@
             </template>
             <div class="card-content">
               <div class="content">
-                <p><strong>Termék leírása:</strong> {{ product.description }}</p>
+                <p>
+                  <strong>Termék leírása:</strong>
+                  <b-input
+                    v-model="product.description"
+                    required
+                  />
+                </p>
               </div>
               <div class="content">
-                <p><strong>Termék ára:</strong> {{ product.grossPrice }}</p>
+                <p>
+                  <strong>Termék ára:</strong>
+                  <b-input
+                    v-model="product.grossPrice"
+                    required
+                  />
+                </p>
               </div>
               <div class="content">
-                <p><strong>Rendelt mennyiség:</strong> {{ product.quantity }}</p>
+                <p>
+                  <strong>Rendelt mennyiség:</strong>
+                  <b-input
+                    v-model="product.quantity"
+                    required
+                  />
+                </p>
               </div>
             </div>
             <footer class="card-footer">
-              <nuxt-link
-                class="card-footer-item"
-                :to="`/products/edit/${product.id}`"
-              >
-                Szerkesztés
-              </nuxt-link>
               <a
-                class="card-footer-item"
+                class="card-footer-item has-text-danger"
                 @click="deleteFunction(product.id)"
-              >Törlés</a>
+              >Termék törlése</a>
             </footer>
           </b-collapse>
           <hr>
@@ -344,7 +356,7 @@ export default {
         type: 'is-danger',
         hasIcon: true,
         iconPack: 'fas',
-        icon: 'tags',
+        icon: 'trash-alt',
         onConfirm: () => {
           this.deleteConfirm()
           this.$buefy.toast.open({
