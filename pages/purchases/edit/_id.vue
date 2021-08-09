@@ -331,7 +331,8 @@ export default {
       this.confirmDelete()
     },
     async deleteConfirm () {
-      await this.$strapi.delete('products', this.deleteID)
+      this.purchase.products = this.purchase.products.filter(product => product.id !== this.deleteID)
+      await this.$strapi.update('purchases', this.purchase.id, this.purchase)
       await this.getData
     },
     confirmDelete () {
