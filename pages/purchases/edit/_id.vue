@@ -268,7 +268,7 @@
               />
             </footer>
           </b-collapse>
-          <b-field horizontal>
+          <b-field v-if="!addProduct" horizontal>
             <b-button
               outlined
               type="is-primary"
@@ -276,8 +276,10 @@
               :loading="isLoading"
               @click="addProduct = true"
             />
+          </b-field>
+          <b-field v-else horizontal>
+            <strong>Termék:</strong>
             <b-select
-              v-if="addProduct"
               v-model="plusProductId"
               required
             >
@@ -289,8 +291,13 @@
                 {{ product.name }}
               </option>
             </b-select>
+            <strong>Mennyiség:</strong>
+            <b-input
+              v-model="plusProductQuantity"
+              type="number"
+              required
+            />
             <b-button
-              v-if="addProduct"
               style="border-radius: 5px"
               type="is-primary"
               label="Hozzáadás"
@@ -299,7 +306,6 @@
               @click="addNewProduct()"
             />
             <b-button
-              v-if="addProduct"
               style="border-radius: 5px"
               type="is-danger"
               label="Mégse"
@@ -345,6 +351,7 @@ export default {
       deleteID: null,
       allProducts: [],
       plusProductId: 0,
+      plusProductQuantity: 1,
       plusProduct: {}
     }
   },
@@ -387,15 +394,26 @@ export default {
       }
     },
     async addNewProduct () {
-      this.plusProduct = this.allProducts.find(product => product.id === this.plusProductId)
-      this.plusProduct.productId = this.plusProductId
-      this.purchase.products.push(this.plusProduct)
+      const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
+      const plusProduct = {
+        productId: this.plusProductId,
+        quantity: this.plusProductQuantity,
+        name: foundPlusProduct.name,
+        nameInvoice: foundPlusProduct.nameInvoice,
+        description: foundPlusProduct.description,
+        grossPrice: foundPlusProduct.grossPrice,
+        isShippable: foundPlusProduct.isShippable,
+        type: foundPlusProduct.type,
+        period: foundPlusProduct.period,
+        taxRatePercent: foundPlusProduct.taxRate.percent
+      }
+      this.purchase.products.push(plusProduct)
       try {
         this.isLoading = true
 
         await this.$strapi.update('purchases', this.purchase.id, this.purchase)
 
-        await this.getData
+        await this.getData()
         this.addProduct = false
         this.isLoading = false
         this.$buefy.snackbar.open({
@@ -418,7 +436,7 @@ export default {
     async deleteConfirm () {
       this.purchase.products = this.purchase.products.filter(product => product.id !== this.deleteID)
       await this.$strapi.update('purchases', this.purchase.id, this.purchase)
-      await this.getData
+      await this.getData()
     },
     confirmDelete () {
       this.$buefy.dialog.confirm({
