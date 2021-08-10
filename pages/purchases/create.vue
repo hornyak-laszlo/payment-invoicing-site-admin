@@ -213,7 +213,7 @@
           <b-collapse
             v-for="(product, index) of purchase.products"
             :key="index"
-            style="width: 85%; margin: auto;"
+            style="max-width: 80%; margin-left: 19%;"
             class="card"
             animation="slide"
           >
@@ -242,10 +242,68 @@
               </div>
             </div>
             <footer class="card-footer">
-              <a class="card-footer-item">Edit</a>
-              <a class="card-footer-item">Delete</a>
+              <b-button
+                style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
+                label="Termék törlése"
+                icon-pack="fas"
+                icon-left="trash-alt"
+                class="card-footer-item has-text-danger"
+                @click="deleteFunction(product.id)"
+              />
             </footer>
           </b-collapse>
+          <b-field
+            v-if="!addProduct"
+            horizontal
+          >
+            <b-button
+              outlined
+              type="is-primary"
+              label="Termék hozzáadása"
+              :loading="isLoading"
+              @click="addProduct = true"
+            />
+          </b-field>
+          <b-field
+            v-else
+            horizontal
+          >
+            <strong>Termék:</strong>
+            <b-select
+              v-model="plusProductId"
+              required
+            >
+              <option
+                v-for="product in allProducts"
+                :key="product.id"
+                :value="product.id"
+              >
+                {{ product.name }}
+              </option>
+            </b-select>
+            <strong>Mennyiség:</strong>
+            <b-input
+              v-model="plusProductQuantity"
+              type="number"
+              required
+            />
+            <b-button
+              style="border-radius: 5px"
+              type="is-primary"
+              label="Hozzáadás"
+              size="is-small"
+              :loading="isLoading"
+              @click="addNewProduct()"
+            />
+            <b-button
+              style="border-radius: 5px"
+              type="is-danger"
+              label="Mégse"
+              size="is-small"
+              :loading="isLoading"
+              @click="addProduct = false"
+            />
+          </b-field>
           <hr>
           <b-field horizontal>
             <b-button
@@ -268,7 +326,7 @@ import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
-  name: 'PurchaseEdit',
+  name: 'PurchaseCreate',
   components: {
     CardComponent,
     HeroBar
@@ -277,7 +335,13 @@ export default {
     return {
       isOpen: false,
       isLoading: false,
-      purchase: this.getClearFormObject()
+      purchase: this.getClearFormObject(),
+      addProduct: false,
+      deleteID: null,
+      allProducts: [],
+      plusProductId: 0,
+      plusProductQuantity: 1,
+      plusProduct: {}
     }
   },
   head () {
@@ -287,6 +351,7 @@ export default {
   },
   async mounted () {
     this.purchase = await this.getClearFormObject()
+    this.allProducts = await this.$strapi.find('products')
   },
   methods: {
     getClearFormObject () {
@@ -316,7 +381,50 @@ export default {
         company: {}
       }
     },
-
+    addNewProduct () {
+      const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
+      const plusProduct = {
+        productId: this.plusProductId,
+        quantity: this.plusProductQuantity,
+        name: foundPlusProduct.name,
+        nameInvoice: foundPlusProduct.nameInvoice,
+        description: foundPlusProduct.description,
+        grossPrice: foundPlusProduct.grossPrice,
+        isShippable: foundPlusProduct.isShippable,
+        type: foundPlusProduct.type,
+        period: foundPlusProduct.period,
+        taxRatePercent: foundPlusProduct.taxRate.percent
+      }
+      this.purchase.products.push(plusProduct)
+      this.addProduct = false
+    },
+    deleteFunction (id) {
+      this.deleteID = id
+      this.confirmDelete()
+    },
+    deleteConfirm () {
+      this.purchase.products = this.purchase.products.filter(product => product.id !== this.deleteID)
+    },
+    confirmDelete () {
+      this.$buefy.dialog.confirm({
+        title: 'Termék törlése',
+        message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
+        confirmText: 'Termék törlése',
+        cancelText: 'Mégse',
+        type: 'is-danger',
+        hasIcon: true,
+        iconPack: 'fas',
+        icon: 'trash-alt',
+        onConfirm: () => {
+          this.deleteConfirm()
+          this.$buefy.toast.open({
+            message: 'Termék törölve',
+            type: 'is-success',
+            queue: false
+          })
+        }
+      })
+    },
     async submit () {
       try {
         this.isLoading = true

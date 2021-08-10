@@ -268,7 +268,10 @@
               />
             </footer>
           </b-collapse>
-          <b-field v-if="!addProduct" horizontal>
+          <b-field
+            v-if="!addProduct"
+            horizontal
+          >
             <b-button
               outlined
               type="is-primary"
@@ -277,7 +280,10 @@
               @click="addProduct = true"
             />
           </b-field>
-          <b-field v-else horizontal>
+          <b-field
+            v-else
+            horizontal
+          >
             <strong>Termék:</strong>
             <b-select
               v-model="plusProductId"
