@@ -11,11 +11,20 @@
       >
         <form @submit.prevent="submit">
           <b-field label="Felhasználó név">
-            <b-input
-              v-model="username"
-              type="text"
-              required
-            />
+            <ValidationObserver>
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="felhasznaló név"
+                rules="required|min:4"
+              >
+                <b-input
+                  v-model="username"
+                  type="text"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </ValidationObserver>
           </b-field>
           <p
             v-if="!userValid"
@@ -102,9 +111,13 @@
 
 <script>
 import CardComponent from '@/components/common/CardComponent'
+// import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full.esm'
+
 export default {
   components: {
     CardComponent
+    /* ValidationProvider,
+    ValidationObserver */
   },
   layout: 'unauthorized',
   data () {
