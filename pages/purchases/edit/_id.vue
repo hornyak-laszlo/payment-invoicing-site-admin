@@ -264,7 +264,7 @@
                 icon-pack="fas"
                 icon-left="trash-alt"
                 class="card-footer-item has-text-danger"
-                @click="deleteFunction(product.id)"
+                @click="deleteProduct(product.id)"
               />
             </footer>
           </b-collapse>
@@ -350,15 +350,12 @@ export default {
   },
   data () {
     return {
-      isOpen: false,
       isLoading: false,
       purchase: this.getClearFormObject(),
       addProduct: false,
-      deleteID: null,
       allProducts: [],
       plusProductId: 0,
-      plusProductQuantity: 1,
-      plusProduct: {}
+      plusProductQuantity: 1
     }
   },
   head () {
@@ -368,7 +365,7 @@ export default {
   },
 
   async mounted () {
-    this.purchase = await this.getData()
+    await this.getData()
     this.allProducts = await this.$strapi.find('products')
   },
   methods: {
@@ -435,16 +432,7 @@ export default {
         })
       }
     },
-    deleteFunction (id) {
-      this.deleteID = id
-      this.confirmDelete()
-    },
-    async deleteConfirm () {
-      this.purchase.products = this.purchase.products.filter(product => product.id !== this.deleteID)
-      await this.$strapi.update('purchases', this.purchase.id, this.purchase)
-      await this.getData()
-    },
-    confirmDelete () {
+    deleteProduct (id) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
         message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
@@ -454,8 +442,10 @@ export default {
         hasIcon: true,
         iconPack: 'fas',
         icon: 'trash-alt',
-        onConfirm: () => {
-          this.deleteConfirm()
+        onConfirm: async () => {
+          this.purchase.products = this.purchase.products.filter(product => product.id !== id)
+          await this.$strapi.update('purchases', this.purchase.id, this.purchase)
+          await this.getData()
           this.$buefy.toast.open({
             message: 'Termék törölve',
             type: 'is-success',
@@ -467,8 +457,7 @@ export default {
     async getData () {
       if (this.$route.params.id) {
         try {
-          const res = await this.$strapi.findOne('purchases', this.$route.params.id)
-          return res
+          this.purchase = await this.$strapi.findOne('purchases', this.$route.params.id)
         } catch (err) {
           this.$buefy.toast.open({
             message: `Error: ${err.message}`,

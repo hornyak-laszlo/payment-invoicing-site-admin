@@ -248,7 +248,7 @@
                 icon-pack="fas"
                 icon-left="trash-alt"
                 class="card-footer-item has-text-danger"
-                @click="deleteFunction(product.id)"
+                @click="deleteProduct(product.id)"
               />
             </footer>
           </b-collapse>
@@ -333,15 +333,12 @@ export default {
   },
   data () {
     return {
-      isOpen: false,
       isLoading: false,
       purchase: this.getClearFormObject(),
       addProduct: false,
-      deleteID: null,
       allProducts: [],
       plusProductId: 0,
-      plusProductQuantity: 1,
-      plusProduct: {}
+      plusProductQuantity: 1
     }
   },
   head () {
@@ -398,14 +395,8 @@ export default {
       this.purchase.products.push(plusProduct)
       this.addProduct = false
     },
-    deleteFunction (id) {
-      this.deleteID = id
-      this.confirmDelete()
-    },
-    deleteConfirm () {
-      this.purchase.products = this.purchase.products.filter(product => product.id !== this.deleteID)
-    },
-    confirmDelete () {
+
+    deleteProduct (id) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
         message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
@@ -416,7 +407,7 @@ export default {
         iconPack: 'fas',
         icon: 'trash-alt',
         onConfirm: () => {
-          this.deleteConfirm()
+          this.purchase.products = this.purchase.products.filter(product => product.id !== id)
           this.$buefy.toast.open({
             message: 'Termék törölve',
             type: 'is-success',
