@@ -42,7 +42,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/after-each.js', mode: 'client' }
+    { src: '~/plugins/after-each.js', mode: 'client' },
+    '~/plugins/vee-validate.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -84,6 +85,10 @@ export default {
     /*
      ** You can extend webpack config here
      */
+    transpile: [
+      'vee-validate',
+      'vee-validate/dist/rules'
+    ],
     extend (config, ctx) {
       if (!config.externals) {
         config.externals = {}
