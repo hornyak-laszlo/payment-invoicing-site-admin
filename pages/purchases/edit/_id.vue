@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Vásárlás hozzáadása
+      Vásárlás szerkesztése
       <nuxt-link
         slot="right"
         to="/purchases"
@@ -12,7 +12,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component
-        :title="`Vásárlás hozzáadása`"
+        :title="`Vásárlás - ID: ${purchase.id}`"
         icon="shopping-basket"
         class="tile is-child"
       >
@@ -232,13 +232,29 @@
             </template>
             <div class="card-content">
               <div class="content">
-                <p><strong>Termék leírása:</strong> {{ product.description }}</p>
+                <p>
+                  <strong>Termék leírása:</strong>
+                  {{ product.description }}
+                </p>
               </div>
               <div class="content">
-                <p><strong>Termék ára:</strong> {{ product.grossPrice }}</p>
+                <p>
+                  <strong>Termék ára:</strong>
+                  <b-input
+                    v-model="product.grossPrice"
+                    required
+                  />
+                </p>
               </div>
               <div class="content">
-                <p><strong>Rendelt mennyiség:</strong> {{ product.quantity }}</p>
+                <p>
+                  <strong>Rendelt mennyiség:</strong>
+                  <b-input
+                    v-model="product.quantity"
+                    type="number"
+                    required
+                  />
+                </p>
               </div>
             </div>
             <footer class="card-footer">
@@ -304,6 +320,7 @@
               @click="addProduct = false"
             />
           </b-field>
+
           <hr>
           <b-field horizontal>
             <b-button
@@ -326,7 +343,7 @@ import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
-  name: 'PurchaseCreate',
+  name: 'PurchaseEdit',
   components: {
     CardComponent,
     HeroBar
@@ -343,11 +360,12 @@ export default {
   },
   head () {
     return {
-      title: 'Vásárlás hozzáadása'
+      title: 'Vásárlás szerkesztése'
     }
   },
+
   async mounted () {
-    this.purchase = await this.getClearFormObject()
+    await this.getData()
     this.allProducts = await this.$strapi.find('products')
   },
   methods: {
@@ -378,7 +396,7 @@ export default {
         company: {}
       }
     },
-    addNewProduct () {
+    async addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       const plusProduct = {
         productId: this.plusProductId,
@@ -393,9 +411,27 @@ export default {
         taxRatePercent: foundPlusProduct.taxRate.percent
       }
       this.purchase.products.push(plusProduct)
-      this.addProduct = false
-    },
+      try {
+        this.isLoading = true
 
+        await this.$strapi.update('purchases', this.purchase.id, this.purchase)
+
+        await this.getData()
+        this.addProduct = false
+        this.isLoading = false
+        this.$buefy.snackbar.open({
+          message: 'Sikeresen mentve',
+          queue: false
+        })
+      } catch (err) {
+        this.isLoading = false
+        this.$buefy.snackbar.open({
+          message: `Error: ${err.message}`,
+          type: 'is-danger',
+          queue: false
+        })
+      }
+    },
     deleteProduct (id) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
@@ -406,8 +442,10 @@ export default {
         hasIcon: true,
         iconPack: 'fas',
         icon: 'trash-alt',
-        onConfirm: () => {
+        onConfirm: async () => {
           this.purchase.products = this.purchase.products.filter(product => product.id !== id)
+          await this.$strapi.update('purchases', this.purchase.id, this.purchase)
+          await this.getData()
           this.$buefy.toast.open({
             message: 'Termék törölve',
             type: 'is-success',
@@ -416,11 +454,24 @@ export default {
         }
       })
     },
+    async getData () {
+      if (this.$route.params.id) {
+        try {
+          this.purchase = await this.$strapi.findOne('purchases', this.$route.params.id)
+        } catch (err) {
+          this.$buefy.toast.open({
+            message: `Error: ${err.message}`,
+            type: 'is-danger',
+            queue: false
+          })
+        }
+      }
+    },
     async submit () {
       try {
         this.isLoading = true
 
-        await this.$strapi.create('purchases', this.purchase)
+        await this.$strapi.update('purchases', this.purchase.id, this.purchase)
 
         this.isLoading = false
         this.$buefy.snackbar.open({
