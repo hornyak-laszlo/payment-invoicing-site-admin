@@ -9,101 +9,116 @@
         icon="user-lock"
         class="title is-child"
       >
-        <form @submit.prevent="submit">
-          <b-field label="Felhasználó név">
-            <ValidationObserver>
+        <ValidationObserver>
+          <form @submit.prevent="submit">
+            <b-field label="Felhasználó név">
               <ValidationProvider
                 v-slot="{ errors }"
                 name="felhasznaló név"
-                rules="required|min:4"
+                rules="required|min:4|alpha_num"
               >
                 <b-input
                   v-model="username"
                   type="text"
-                  required
                 />
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
-            </ValidationObserver>
-          </b-field>
-          <p
-            v-if="!userValid"
-            class="has-text-danger is-size-7"
-          >
-            Legalább 3 karakter hosszú felhasználó nevet kell beírni!
-          </p>
-          <b-field label="Email cím">
-            <b-input
-              v-model="email"
-              type="email"
-              required
-            />
-          </b-field>
-          <p
-            v-if="!emailValid"
-            class="has-text-danger is-size-7"
-          >
-            Érvényes email címet kell megadni!
-          </p>
-          <b-field label="Jelszó">
-            <b-input
-              v-model="password"
-              type="password"
-              required
-            />
-          </b-field>
-          <b-field label="Jelszó megerősítése">
-            <b-input
-              v-model="password2"
-              type="password"
-              required
-            />
-          </b-field>
-          <p
-            v-if="!pwValid"
-            class="has-text-danger is-size-7"
-          >
-            A két jelszónak meg kell egyeznie!
-          </p>
-          <hr>
-          <b-field class="is-size-6">
-            <b-checkbox v-model="aszf">
-              Elfogadom az <a
-                href="https://deel.hu/aszf"
-                target="_blank"
-              >ÁSZF</a>-et
-            </b-checkbox>
-          </b-field>
-          <b-field class="is-size-6">
-            <b-checkbox v-model="adatvedelem">
-              Elfogadom az <a
-                href="https://deel.hu/adatvedelmi-nyilatkozat"
-                target="_blank"
-              > Adatvédelmi nyilatkozatban </a> foglaltakat
-            </b-checkbox>
-          </b-field>
-          <p
-            v-if="!formValid"
-            class="has-text-danger is-size-7"
-          >
-            Az aszf-et és az adatvédelmit is el kell fogadni!
-          </p>
-          <hr>
-          <div class="field">
-            <div class="field-body">
-              <div class="field columns">
-                <button
-                  type="submit"
-                  class="button is-primary is-fullwidth"
-                  :class="{'is-loading': isLoading}"
-                  :disabled="!sendValid"
-                >
-                  Regisztráció
-                </button>
+            </b-field>
+
+            <b-field label="Email cím">
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="email"
+                rules="required|email"
+              >
+                <b-input
+                  v-model="email"
+                  type="text"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+
+            <b-field label="Jelszó">
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="jelszó"
+                rules="required|confirmed:confirmation"
+              >
+                <b-input
+                  v-model="password"
+                  type="password"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+            <b-field label="Jelszó megerősítése">
+              <ValidationProvider
+                v-slot="{ errors }"
+                vid="confirmation"
+                name="jelszó megerősítése"
+              >
+                <b-input
+                  v-model="password2"
+                  type="password"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+
+            <hr>
+            <b-field class="is-size-6">
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="ÁSZF"
+                :rules="{required: {allowFalse: false}}"
+              >
+                <b-checkbox v-model="aszf">
+                  Elfogadom az <a
+                    href="https://deel.hu/aszf"
+                    target="_blank"
+                  >ÁSZF</a>-et
+                </b-checkbox>
+                <p class="has-text-danger is-size-7">
+                  {{ errors[0] }}
+                </p>
+              </ValidationProvider>
+            </b-field>
+            <b-field class="is-size-6">
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="ÁSZF"
+                :rules="{required: {allowFalse: false}}"
+              >
+                <b-checkbox v-model="adatvedelem">
+                  Elfogadom az <a
+                    href="https://deel.hu/adatvedelmi-nyilatkozat"
+                    target="_blank"
+                  > Adatvédelmi nyilatkozatban </a> foglaltakat
+                </b-checkbox>
+                <p class="has-text-danger is-size-7">
+                  {{ errors[0] }}
+                </p>
+              </ValidationProvider>
+            </b-field>
+
+            <hr>
+            <div class="field">
+              <div class="field-body">
+                <div class="field columns">
+                  <button
+                    type="submit"
+                    class="button is-primary is-fullwidth"
+                    :class="{'is-loading': isLoading}"
+                    :disabled="!sendValid"
+                  >
+                    Regisztráció
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </ValidationObserver>
       </card-component>
     </div>
   </section>
