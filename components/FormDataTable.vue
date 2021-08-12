@@ -26,13 +26,21 @@
         <b-table-column v-for="field in fields" :key="field.field" :label="field.title" :field="field.field" sortable>
           {{ props.row[field.field] }}
         </b-table-column>
-        <b-table-column label="Létrehozva">
+        <b-table-column
+          label="Létrehozva"
+          field="created_at"
+          sortable
+        >
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.created_at"
           >{{ props.row.created_at }}</small>
         </b-table-column>
-        <b-table-column label="Módosítva">
+        <b-table-column
+          label="Módosítva"
+          field="updated_at"
+          sortable
+        >
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.updated_at"
@@ -79,6 +87,7 @@
 
 <script>
 import ModalBox from '@/components/common/ModalBox'
+import { convertToHungarianTime } from '../utils/dateHelpers'
 
 export default {
   name: 'DataTable',
@@ -147,6 +156,10 @@ export default {
         purchaseFormsData.forEach((data) => { data.type = 'purchase-forms' })
 
         this.data = [...contactFormsData, ...purchaseFormsData]
+        this.data.forEach((data) => {
+          data.created_at = convertToHungarianTime(data.created_at)
+          data.updated_at = convertToHungarianTime(data.updated_at)
+        })
         this.isLoading = false
         if (this.data.length > this.perPage) {
           this.paginated = true

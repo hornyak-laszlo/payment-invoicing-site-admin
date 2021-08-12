@@ -235,10 +235,23 @@
                 <p><strong>Termék leírása:</strong> {{ product.description }}</p>
               </div>
               <div class="content">
-                <p><strong>Termék ára:</strong> {{ product.grossPrice }}</p>
+                <p>
+                  <strong>Termék ára:</strong>
+                  <b-input
+                    v-model="product.grossPrice"
+                    required
+                  />
+                </p>
               </div>
               <div class="content">
-                <p><strong>Rendelt mennyiség:</strong> {{ product.quantity }}</p>
+                <p>
+                  <strong>Rendelt mennyiség:</strong>
+                  <b-input
+                    v-model="product.quantity"
+                    type="number"
+                    required
+                  />
+                </p>
               </div>
             </div>
             <footer class="card-footer">
@@ -248,7 +261,7 @@
                 icon-pack="fas"
                 icon-left="trash-alt"
                 class="card-footer-item has-text-danger"
-                @click="deleteFunction(product.id)"
+                @click="deleteProduct(index)"
               />
             </footer>
           </b-collapse>
@@ -333,15 +346,12 @@ export default {
   },
   data () {
     return {
-      isOpen: false,
       isLoading: false,
       purchase: this.getClearFormObject(),
       addProduct: false,
-      deleteID: null,
       allProducts: [],
       plusProductId: 0,
-      plusProductQuantity: 1,
-      plusProduct: {}
+      plusProductQuantity: 1
     }
   },
   head () {
@@ -398,14 +408,8 @@ export default {
       this.purchase.products.push(plusProduct)
       this.addProduct = false
     },
-    deleteFunction (id) {
-      this.deleteID = id
-      this.confirmDelete()
-    },
-    deleteConfirm () {
-      this.purchase.products = this.purchase.products.filter(product => product.id !== this.deleteID)
-    },
-    confirmDelete () {
+
+    deleteProduct (index) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
         message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
@@ -416,12 +420,7 @@ export default {
         iconPack: 'fas',
         icon: 'trash-alt',
         onConfirm: () => {
-          this.deleteConfirm()
-          this.$buefy.toast.open({
-            message: 'Termék törölve',
-            type: 'is-success',
-            queue: false
-          })
+          this.purchase.products.splice(index, 1)
         }
       })
     },

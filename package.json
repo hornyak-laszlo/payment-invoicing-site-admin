@@ -16,6 +16,8 @@
     "@nuxtjs/strapi": "0.3.1",
     "chart.js": "2.9.4",
     "core-js": "3.13.0",
+    "date-fns": "2.23.0",
+    "date-fns-tz": "1.1.6",
     "dayjs": "1.10.5",
     "lodash": "4.17.21",
     "numeral": "2.0.6",

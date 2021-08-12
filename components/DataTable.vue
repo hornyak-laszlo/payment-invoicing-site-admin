@@ -36,13 +36,21 @@
         >
           {{ props.row[field.field] }}
         </b-table-column>
-        <b-table-column label="Létrehozva">
+        <b-table-column
+          label="Létrehozva"
+          field="created_at"
+          sortable
+        >
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.created_at"
           >{{ props.row.created_at }}</small>
         </b-table-column>
-        <b-table-column label="Módosítva">
+        <b-table-column
+          label="Módosítva"
+          field="updated_at"
+          sortable
+        >
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.updated_at"
@@ -124,6 +132,7 @@
 
 <script>
 import ModalBox from '@/components/common/ModalBox'
+import { convertToHungarianTime } from '../utils/dateHelpers'
 
 export default {
   name: 'DataTable',
@@ -191,6 +200,10 @@ export default {
         try {
           this.data = await this.$strapi.find(this.collection)
           this.isLoading = false
+          this.data.forEach((data) => {
+            data.created_at = convertToHungarianTime(data.created_at)
+            data.updated_at = convertToHungarianTime(data.updated_at)
+          })
           if (this.data.length > this.perPage) {
             this.paginated = true
           }

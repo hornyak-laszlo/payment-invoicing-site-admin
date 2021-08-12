@@ -7,17 +7,17 @@
       <tiles>
         <card-component title="Billingo" icon="file-invoice" class="tile is-child">
           <b-field label="Állapot">
-            <b-switch v-model="billingoIntegrated" type="is-success">
+            <b-switch v-model="billingoIntegrated" type="is-success" disabled>
               {{ billingoIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
             </b-switch>
           </b-field>
           <b-field v-if="billingoIntegrated" label="API Kulcs">
-            <b-input v-model="billingoApiKey" custom-class="is-static" readonly />
+            <b-input v-model="billingoApiKey" type="password" custom-class="is-static" readonly />
           </b-field>
         </card-component>
         <card-component title="Szamlazz.hu" icon="file-invoice" class="tile is-child">
           <b-field label="Állapot">
-            <b-switch v-model="szamlazzIntegrated" type="is-success">
+            <b-switch v-model="szamlazzIntegrated" type="is-success" disabled>
               {{ szamlazzIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
             </b-switch>
           </b-field>
@@ -29,7 +29,7 @@
       <tiles>
         <card-component title="OTP SimplePay" icon="money-check-alt" class="tile is-child">
           <b-field label="Állapot">
-            <b-switch v-model="simplePayIntegrated" type="is-success">
+            <b-switch v-model="simplePayIntegrated" type="is-success" disabled>
               {{ simplePayIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
             </b-switch>
           </b-field>
@@ -42,15 +42,21 @@
         </card-component>
         <card-component title="Stripe" icon="cc-stripe" icon-pack="fab" class="tile is-child">
           <b-field label="Állapot">
-            <b-switch v-model="stripeIntegrated" type="is-success">
+            <b-switch v-model="stripeIntegrated" type="is-success" disabled>
               {{ stripeIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
             </b-switch>
           </b-field>
           <b-field v-if="stripeIntegrated" label="Privát kulcs">
-            <b-input v-model="stripePrivateKey" custom-class="is-static" readonly />
+            <b-input v-model="stripePrivateKey" type="password" custom-class="is-static" readonly />
           </b-field>
           <b-field v-if="stripeIntegrated" label="Publikus kulcs">
-            <b-input v-model="stripePublicKey" custom-class="is-static" readonly />
+            <b-input v-model="stripePublicKey" type="password" custom-class="is-static" readonly />
+          </b-field>
+          <b-field v-if="stripeIntegrated" label="Webhook ID">
+            <b-input v-model="stripeWebhookId" custom-class="is-static" readonly />
+          </b-field>
+          <b-field v-if="stripeIntegrated" label="Webhook secret">
+            <b-input v-model="stripeWebhookSecret" type="password" custom-class="is-static" readonly />
           </b-field>
         </card-component>
       </tiles>
@@ -81,7 +87,9 @@ export default {
       simplePayPrivateKey: '',
       stripeIntegrated: false,
       stripePublicKey: '',
-      stripePrivateKey: ''
+      stripePrivateKey: '',
+      stripeWebhookId: '',
+      stripeWebhookSecret: ''
     }
   },
   head () {
@@ -97,6 +105,12 @@ export default {
         const companyId = (typeof this.$strapi.user.company === 'number') ? this.$strapi.user.company : this.$strapi.user.company.id
         const company = await this.$strapi.findOne('companies', companyId)
         this.stripeIntegrated = company.stripeIntegrated
+        this.stripePrivateKey = company.stripePrivateKey
+        this.stripePublicKey = company.stripePublicKey
+        this.stripeWebhookId = company.stripeWebhookId
+        this.stripeWebhookSecret = company.stripeWebhookSecret
+        this.billingoIntegrated = company.billingoIntegrated
+        this.billingoApiKey = company.billingoApiKey
       }
     } catch (err) {
       this.$buefy.toast.open({

@@ -264,7 +264,7 @@
                 icon-pack="fas"
                 icon-left="trash-alt"
                 class="card-footer-item has-text-danger"
-                @click="deleteFunction(product.id)"
+                @click="deleteProduct(index)"
               />
             </footer>
           </b-collapse>
@@ -350,15 +350,12 @@ export default {
   },
   data () {
     return {
-      isOpen: false,
       isLoading: false,
       purchase: this.getClearFormObject(),
       addProduct: false,
-      deleteID: null,
       allProducts: [],
       plusProductId: 0,
-      plusProductQuantity: 1,
-      plusProduct: {}
+      plusProductQuantity: 1
     }
   },
   head () {
@@ -368,7 +365,7 @@ export default {
   },
 
   async mounted () {
-    this.purchase = await this.getData()
+    await this.getData()
     this.allProducts = await this.$strapi.find('products')
   },
   methods: {
@@ -399,7 +396,7 @@ export default {
         company: {}
       }
     },
-    async addNewProduct () {
+    addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       const plusProduct = {
         productId: this.plusProductId,
@@ -414,37 +411,9 @@ export default {
         taxRatePercent: foundPlusProduct.taxRate.percent
       }
       this.purchase.products.push(plusProduct)
-      try {
-        this.isLoading = true
-
-        await this.$strapi.update('purchases', this.purchase.id, this.purchase)
-
-        await this.getData()
-        this.addProduct = false
-        this.isLoading = false
-        this.$buefy.snackbar.open({
-          message: 'Sikeresen mentve',
-          queue: false
-        })
-      } catch (err) {
-        this.isLoading = false
-        this.$buefy.snackbar.open({
-          message: `Error: ${err.message}`,
-          type: 'is-danger',
-          queue: false
-        })
-      }
+      this.addProduct = false
     },
-    deleteFunction (id) {
-      this.deleteID = id
-      this.confirmDelete()
-    },
-    async deleteConfirm () {
-      this.purchase.products = this.purchase.products.filter(product => product.id !== this.deleteID)
-      await this.$strapi.update('purchases', this.purchase.id, this.purchase)
-      await this.getData()
-    },
-    confirmDelete () {
+    deleteProduct (index) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
         message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
@@ -455,20 +424,14 @@ export default {
         iconPack: 'fas',
         icon: 'trash-alt',
         onConfirm: () => {
-          this.deleteConfirm()
-          this.$buefy.toast.open({
-            message: 'Termék törölve',
-            type: 'is-success',
-            queue: false
-          })
+          this.purchase.products.splice(index, 1)
         }
       })
     },
     async getData () {
       if (this.$route.params.id) {
         try {
-          const res = await this.$strapi.findOne('purchases', this.$route.params.id)
-          return res
+          this.purchase = await this.$strapi.findOne('purchases', this.$route.params.id)
         } catch (err) {
           this.$buefy.toast.open({
             message: `Error: ${err.message}`,
