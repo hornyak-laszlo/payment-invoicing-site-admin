@@ -16,112 +16,145 @@
         title="Új kontakt hozzáadása"
         icon="user"
       >
-        <form @submit.prevent="submit">
-          <b-field
-            label="Keresztnév"
-            message="A kontakt keresztneve"
-            horizontal
-          >
-            <b-input
-              v-model="contact.firstName"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Család név"
-            message="A kontakt vezetékneve"
-            horizontal
-          >
-            <b-input
-              v-model="contact.lastName"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Cégnév"
-            message="A kontakt cégneve"
-            horizontal
-          >
-            <b-input
-              v-model="contact.companyName"
-              required
-            />
-          </b-field>
+        <ValidationObserver v-slot="{ invalid }">
+          <form @submit.prevent="submit">
+            <b-field
+              label="Keresztnév"
+              message="A kontakt keresztneve"
+              horizontal
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Keresztnév"
+                rules="required"
+              >
+                <b-input
+                  v-model="contact.firstName"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+            <b-field
+              label="Család név"
+              message="A kontakt vezetékneve"
+              horizontal
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Család név"
+                rules="required"
+              >
+                <b-input
+                  v-model="contact.lastName"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+            <b-field
+              label="Cég név"
+              message="A kontakt cégének a neve"
+              horizontal
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Cég név"
+                rules="required"
+              >
+                <b-input
+                  v-model="contact.companyName"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
 
-          <b-field
-            label="Adatvédelmi nyilatkozat elfogadva"
-            message="Elfogadta-e a kontakt az adatvédelmi nyilatkozatot"
-            horizontal
-          >
-            <b-select
-              v-model="contact.isPrivacyPolicyAccepted"
-              required
+            <b-field
+              label="Adatvédelmi nyilatkozat elfogadva"
+              message="Elfogadta-e a kontakt az adatvédelmi nyilatkozatot"
+              horizontal
             >
-              <option :value="true">
-                igen
-              </option>
-              <option :value="false">
-                nem
-              </option>
-            </b-select>
-          </b-field>
-          <b-field
-            label="Hírlevélre feliratkozott-e"
-            message="A kontakt feliratkozott-e a hírlevélre"
-            horizontal
-          >
-            <b-select
-              v-model="contact.isNewsletterSubscribed"
-              required
+              <b-select
+                v-model="contact.isPrivacyPolicyAccepted"
+                required
+              >
+                <option :value="true">
+                  igen
+                </option>
+                <option :value="false">
+                  nem
+                </option>
+              </b-select>
+            </b-field>
+            <b-field
+              label="Hírlevélre feliratkozott-e"
+              message="A kontakt feliratkozott-e a hírlevélre"
+              horizontal
             >
-              <option :value="true">
-                igen
-              </option>
-              <option :value="false">
-                nem
-              </option>
-            </b-select>
-          </b-field>
-          <b-field
-            label="Telefonszám"
-            message="A kontakt telefonszáma"
-            horizontal
-          >
-            <b-input
-              v-model="contact.phoneNumber"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Email cím"
-            message="A kontakt email címe"
-            horizontal
-          >
-            <b-input
-              v-model="contact.email"
-              required
-            />
-          </b-field>
+              <b-select
+                v-model="contact.isNewsletterSubscribed"
+                required
+              >
+                <option :value="true">
+                  igen
+                </option>
+                <option :value="false">
+                  nem
+                </option>
+              </b-select>
+            </b-field>
+            <b-field
+              label="Telefonszám"
+              message="A kontakt telefonszáma"
+              horizontal
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Telefonszám"
+                rules="required"
+              >
+                <b-input
+                  v-model="contact.phoneNumber"
+                  type="number"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+            <b-field
+              label="Email cím"
+              message="A kontakt email címe"
+              horizontal
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Email"
+                rules="required|email"
+              >
+                <b-input
+                  v-model="contact.email"
+                  type="email"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
 
-          <hr>
-          <b-field horizontal>
-            <b-button
-              type="is-primary"
-              :loading="isLoading"
-              native-type="submit"
-              expanded
-            >
-              Mentés
-            </b-button>
-          </b-field>
-          <b-field horizontal>
-            <p
-              class="has-text-danger is-size-7"
-            >
-              Minden adatot meg kell adni!
-            </p>
-          </b-field>
-        </form>
+            <hr>
+            <b-field horizontal>
+              <b-button
+                type="is-primary"
+                :loading="isLoading"
+                native-type="submit"
+                expanded
+                :disabled="invalid"
+              >
+                Mentés
+              </b-button>
+            </b-field>
+          </form>
+        </ValidationObserver>
       </card-component>
     </section>
   </div>
