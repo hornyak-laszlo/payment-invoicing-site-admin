@@ -36,7 +36,7 @@
               </ValidationProvider>
             </b-field>
             <b-field
-              label="Család név"
+              label="Vezetéknév"
               message="A kontakt vezetékneve"
               horizontal
             >
