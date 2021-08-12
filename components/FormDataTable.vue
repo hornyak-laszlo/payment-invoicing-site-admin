@@ -87,6 +87,7 @@
 
 <script>
 import ModalBox from '@/components/common/ModalBox'
+import { convertToHungarianTime } from '../utils/dateHelpers'
 
 export default {
   name: 'DataTable',
@@ -155,6 +156,10 @@ export default {
         purchaseFormsData.forEach((data) => { data.type = 'purchase-forms' })
 
         this.data = [...contactFormsData, ...purchaseFormsData]
+        this.data.forEach((data) => {
+          data.created_at = convertToHungarianTime(data.created_at)
+          data.updated_at = convertToHungarianTime(data.updated_at)
+        })
         this.isLoading = false
         if (this.data.length > this.perPage) {
           this.paginated = true
