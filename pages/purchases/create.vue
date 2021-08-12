@@ -235,10 +235,23 @@
                 <p><strong>Termék leírása:</strong> {{ product.description }}</p>
               </div>
               <div class="content">
-                <p><strong>Termék ára:</strong> {{ product.grossPrice }}</p>
+                <p>
+                  <strong>Termék ára:</strong>
+                  <b-input
+                    v-model="product.grossPrice"
+                    required
+                  />
+                </p>
               </div>
               <div class="content">
-                <p><strong>Rendelt mennyiség:</strong> {{ product.quantity }}</p>
+                <p>
+                  <strong>Rendelt mennyiség:</strong>
+                  <b-input
+                    v-model="product.quantity"
+                    type="number"
+                    required
+                  />
+                </p>
               </div>
             </div>
             <footer class="card-footer">
@@ -248,7 +261,7 @@
                 icon-pack="fas"
                 icon-left="trash-alt"
                 class="card-footer-item has-text-danger"
-                @click="deleteProduct(product.id)"
+                @click="deleteProduct(index)"
               />
             </footer>
           </b-collapse>
@@ -396,7 +409,7 @@ export default {
       this.addProduct = false
     },
 
-    deleteProduct (id) {
+    deleteProduct (index) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
         message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
@@ -407,12 +420,7 @@ export default {
         iconPack: 'fas',
         icon: 'trash-alt',
         onConfirm: () => {
-          this.purchase.products = this.purchase.products.filter(product => product.id !== id)
-          this.$buefy.toast.open({
-            message: 'Termék törölve',
-            type: 'is-success',
-            queue: false
-          })
+          this.purchase.products.splice(index, 1)
         }
       })
     },

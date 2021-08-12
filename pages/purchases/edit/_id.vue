@@ -264,7 +264,7 @@
                 icon-pack="fas"
                 icon-left="trash-alt"
                 class="card-footer-item has-text-danger"
-                @click="deleteProduct(product.id)"
+                @click="deleteProduct(index)"
               />
             </footer>
           </b-collapse>
@@ -396,7 +396,7 @@ export default {
         company: {}
       }
     },
-    async addNewProduct () {
+    addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       const plusProduct = {
         productId: this.plusProductId,
@@ -411,28 +411,9 @@ export default {
         taxRatePercent: foundPlusProduct.taxRate.percent
       }
       this.purchase.products.push(plusProduct)
-      try {
-        this.isLoading = true
-
-        await this.$strapi.update('purchases', this.purchase.id, this.purchase)
-
-        await this.getData()
-        this.addProduct = false
-        this.isLoading = false
-        this.$buefy.snackbar.open({
-          message: 'Sikeresen mentve',
-          queue: false
-        })
-      } catch (err) {
-        this.isLoading = false
-        this.$buefy.snackbar.open({
-          message: `Error: ${err.message}`,
-          type: 'is-danger',
-          queue: false
-        })
-      }
+      this.addProduct = false
     },
-    deleteProduct (id) {
+    deleteProduct (index) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
         message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
@@ -442,15 +423,8 @@ export default {
         hasIcon: true,
         iconPack: 'fas',
         icon: 'trash-alt',
-        onConfirm: async () => {
-          this.purchase.products = this.purchase.products.filter(product => product.id !== id)
-          await this.$strapi.update('purchases', this.purchase.id, this.purchase)
-          await this.getData()
-          this.$buefy.toast.open({
-            message: 'Termék törölve',
-            type: 'is-success',
-            queue: false
-          })
+        onConfirm: () => {
+          this.purchase.products.splice(index, 1)
         }
       })
     },
