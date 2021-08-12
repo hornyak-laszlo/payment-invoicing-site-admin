@@ -46,23 +46,32 @@
               />
             </b-field>
             <b-field label="Új jelszó">
-              <b-input
-                v-model="newPassword"
-                type="password"
-              />
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="jelszó"
+                rules="required|confirmed:confirmation"
+              >
+                <b-input
+                  v-model="newPassword"
+                  type="password"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
             </b-field>
             <b-field label="Jelszó megerősítése">
-              <b-input
-                v-model="newPasswordConfirmation"
-                type="password"
-              />
+              <ValidationProvider
+                v-slot="{ errors }"
+                vid="confirmation"
+                name="jelszó megerősítése"
+              >
+                <b-input
+                  v-model="newPasswordConfirmation"
+                  type="password"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
             </b-field>
-            <p
-              v-if="!newPwMatch"
-              class="has-text-danger is-size-6"
-            >
-              A két új jelszónak egyeznie kell!
-            </p>
+
             <b-button
               type="is-primary is-outlined is-light"
               :loading="isLoading"
