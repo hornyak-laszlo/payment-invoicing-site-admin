@@ -9,7 +9,7 @@
         icon="user-lock"
         class="title is-child"
       >
-        <ValidationObserver>
+        <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
             <b-field label="Felhasználó név">
               <ValidationProvider
@@ -110,7 +110,7 @@
                     type="submit"
                     class="button is-primary is-fullwidth"
                     :class="{'is-loading': isLoading}"
-                    :disabled="!sendValid"
+                    :disabled="invalid"
                   >
                     Regisztráció
                   </button>
@@ -131,8 +131,6 @@ import CardComponent from '@/components/common/CardComponent'
 export default {
   components: {
     CardComponent
-    /* ValidationProvider,
-    ValidationObserver */
   },
   layout: 'unauthorized',
   data () {
@@ -144,7 +142,6 @@ export default {
       username: '',
       adatvedelem: false,
       aszf: false
-
     }
   },
   head () {
@@ -153,58 +150,37 @@ export default {
     }
   },
   computed: {
-
-    userValid () {
-      return this.username.length > 2
-    },
-
-    pwValid () {
-      return (this.password.length > 0 && this.password === this.password2)
-    },
-    formValid () {
-      return (this.adatvedelem && this.aszf)
-    },
-    emailValid () {
-      const reg = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i
-      return reg.test(this.email)
-    },
-    sendValid () {
-      return (this.emailValid && this.formValid && this.pwValid)
-    }
   },
   methods: {
 
     async submit () {
-      if (this.sendValid) {
-        this.allValid = true
-        this.isLoading = true
-        try {
-          await this.$strapi.register({
-            email: this.email,
-            password: this.password,
-            username: this.username
-          })
-          this.isLoading = false
-          this.$buefy.toast.open({
-            message: 'Sikeres Regisztráció',
-            type: 'is-success',
-            queue: false
-          })
+      this.isLoading = true
+      try {
+        await this.$strapi.register({
+          email: this.email,
+          password: this.password,
+          username: this.username
+        })
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: 'Sikeres Regisztráció',
+          type: 'is-success',
+          queue: false
+        })
 
-          this.$router.push('/login')
-        } catch (err) {
-          this.isLoading = false
+        this.$router.push('/login')
+      } catch (err) {
+        this.isLoading = false
 
-          // const error = (err && err.message) ? err.message : ''
-          // const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
+        // const error = (err && err.message) ? err.message : ''
+        // const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
 
-          // console.log(err)
-          this.$buefy.toast.open({
-            message: `${err.message} error code: ${err.statusCode}`,
-            type: 'is-danger',
-            queue: false
-          })
-        }
+        // console.log(err)
+        this.$buefy.toast.open({
+          message: `${err.message} error code: ${err.statusCode}`,
+          type: 'is-danger',
+          queue: false
+        })
       }
     }
   }
