@@ -26,13 +26,21 @@
         <b-table-column v-for="field in fields" :key="field.field" :label="field.title" :field="field.field" sortable>
           {{ props.row[field.field] }}
         </b-table-column>
-        <b-table-column label="Létrehozva">
+        <b-table-column
+          label="Létrehozva"
+          field="created_at"
+          sortable
+        >
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.created_at"
           >{{ props.row.created_at }}</small>
         </b-table-column>
-        <b-table-column label="Módosítva">
+        <b-table-column
+          label="Módosítva"
+          field="updated_at"
+          sortable
+        >
           <small
             class="has-text-grey is-abbr-like"
             :title="props.row.updated_at"
