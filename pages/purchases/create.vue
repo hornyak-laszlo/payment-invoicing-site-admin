@@ -157,8 +157,8 @@
               </ValidationProvider>
             </b-field>
             <b-field
-              label="Kiszállítási cím"
-              message="Ahova a terméket szállítani kell"
+              label="Számlázási cím"
+              message="A számlán szereplő cím"
               horizontal
             >
               <ValidationProvider
@@ -167,7 +167,7 @@
                 rules="required"
               >
                 <b-input
-                  v-model="purchase.deliveryCountry"
+                  v-model="purchase.invoiceCountry"
                   placeholder="Ország"
                   required
                 />
@@ -180,7 +180,7 @@
                 rules="required"
               >
                 <b-input
-                  v-model="purchase.deliveryZip"
+                  v-model="purchase.invoiceZip"
                   placeholder="Irányítószám"
                   required
                   type="number"
@@ -194,7 +194,7 @@
                 rules="required"
               >
                 <b-input
-                  v-model="purchase.deliveryCity"
+                  v-model="purchase.invoiceCity"
                   placeholder="Város"
                   required
                 />
@@ -207,7 +207,7 @@
                 rules="required"
               >
                 <b-input
-                  v-model="purchase.deliveryStreetNo"
+                  v-model="purchase.invoiceStreetNo"
                   placeholder="Utca és házszám"
                   required
                 />
@@ -216,28 +216,28 @@
             </b-field>
 
             <b-field
-              label="Számlázási cím"
-              message="A számlán szereplő cím"
+              label="Kiszállítási cím"
+              message="Ahova a terméket szállítani kell"
               horizontal
             >
               <b-input
-                v-model="purchase.invoiceCountry"
+                v-model="purchase.deliveryCountry"
                 placeholder="Ország"
                 required
               />
               <b-input
-                v-model="purchase.invoiceZip"
+                v-model="purchase.deliveryZip"
                 placeholder="Irányítószám"
                 type="number"
                 required
               />
               <b-input
-                v-model="purchase.invoiceCity"
+                v-model="purchase.deliveryCity"
                 placeholder="Város"
                 required
               />
               <b-input
-                v-model="purchase.invoiceStreetNo"
+                v-model="purchase.deliveryStreetNo"
                 placeholder="Utca és házszám"
                 required
               />
