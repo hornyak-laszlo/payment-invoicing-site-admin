@@ -24,13 +24,13 @@
               horizontal
             >
               <b-input
-                v-model="purchase.firstName"
-                placeholder="Keresztnév"
+                v-model="purchase.lastName"
+                placeholder="Vezetéknév"
                 required
               />
               <b-input
-                v-model="purchase.lastName"
-                placeholder="Vezetéknév"
+                v-model="purchase.firstName"
+                placeholder="Keresztnév"
                 required
               />
             </b-field>
