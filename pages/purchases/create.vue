@@ -161,28 +161,60 @@
               message="Ahova a terméket szállítani kell"
               horizontal
             >
-              <b-input
-                v-model="purchase.deliveryCountry"
-                placeholder="Ország"
-                required
-              />
-              <b-input
-                v-model="purchase.deliveryZip"
-                placeholder="Irányítószám"
-                required
-                type="number"
-              />
-              <b-input
-                v-model="purchase.deliveryCity"
-                placeholder="Város"
-                required
-              />
-              <b-input
-                v-model="purchase.deliveryStreetNo"
-                placeholder="Utca és házszám"
-                required
-              />
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Ország"
+                rules="required"
+              >
+                <b-input
+                  v-model="purchase.deliveryCountry"
+                  placeholder="Ország"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Irányítószám"
+                rules="required"
+              >
+                <b-input
+                  v-model="purchase.deliveryZip"
+                  placeholder="Irányítószám"
+                  required
+                  type="number"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Város"
+                rules="required"
+              >
+                <b-input
+                  v-model="purchase.deliveryCity"
+                  placeholder="Város"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Utca és házszám"
+                rules="required"
+              >
+                <b-input
+                  v-model="purchase.deliveryStreetNo"
+                  placeholder="Utca és házszám"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
             </b-field>
+
             <b-field
               label="Számlázási cím"
               message="A számlán szereplő cím"
