@@ -44,10 +44,10 @@ export default {
         field: 'companyName',
         title: 'Cégnév'
       }, {
-        field: 'firstName',
+        field: 'lastName',
         title: 'Vezetéknév'
       }, {
-        field: 'lastName',
+        field: 'firstName',
         title: 'Keresztnév'
       }, {
         field: 'email',

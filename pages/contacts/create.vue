@@ -19,23 +19,6 @@
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
             <b-field
-              label="Keresztnév"
-              message="A kontakt keresztneve"
-              horizontal
-            >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Keresztnév"
-                rules="required"
-              >
-                <b-input
-                  v-model="contact.firstName"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
-            <b-field
               label="Vezetéknév"
               message="A kontakt vezetékneve"
               horizontal
@@ -47,6 +30,23 @@
               >
                 <b-input
                   v-model="contact.lastName"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+            <b-field
+              label="Keresztnév"
+              message="A kontakt keresztneve"
+              horizontal
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Keresztnév"
+                rules="required"
+              >
+                <b-input
+                  v-model="contact.firstName"
                   required
                 />
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
@@ -116,7 +116,6 @@
               >
                 <b-input
                   v-model="contact.phoneNumber"
-                  type="number"
                   required
                 />
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
