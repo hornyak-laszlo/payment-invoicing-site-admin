@@ -41,10 +41,10 @@ export default {
     return {
       collection: 'purchases',
       fields: [{
-        field: 'firstName',
+        field: 'lastName',
         title: 'Vezetéknév'
       }, {
-        field: 'lastName',
+        field: 'firstName',
         title: 'Keresztnév'
       }, {
         field: 'paymentMethod',

@@ -23,6 +23,7 @@
     "numeral": "2.0.6",
     "nuxt": "2.15.6",
     "nuxt-buefy": "0.3.31",
+    "vee-validate": "^3.4.11",
     "vue-chartjs": "3.5.1"
   },
   "devDependencies": {

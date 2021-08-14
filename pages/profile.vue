@@ -39,38 +39,49 @@
           class="tile is-child"
         >
           <form>
-            <b-field label="Régi jelszó">
-              <b-input
-                v-model="password"
-                type="password"
-              />
-            </b-field>
-            <b-field label="Új jelszó">
-              <b-input
-                v-model="newPassword"
-                type="password"
-              />
-            </b-field>
-            <b-field label="Jelszó megerősítése">
-              <b-input
-                v-model="newPasswordConfirmation"
-                type="password"
-              />
-            </b-field>
-            <p
-              v-if="!newPwMatch"
-              class="has-text-danger is-size-6"
-            >
-              A két új jelszónak egyeznie kell!
-            </p>
-            <b-button
-              type="is-primary is-outlined is-light"
-              :loading="isLoading"
-              :disabled="!btnEnabled"
-              @click="changePassword"
-            >
-              Jelszó módosítása
-            </b-button>
+            <ValidationObserver v-slot="{invalid}">
+              <b-field label="Régi jelszó">
+                <b-input
+                  v-model="password"
+                  type="password"
+                />
+              </b-field>
+              <b-field label="Új jelszó">
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="jelszó"
+                  rules="required|confirmed:confirmation"
+                >
+                  <b-input
+                    v-model="newPassword"
+                    type="password"
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-field label="Jelszó megerősítése">
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  vid="confirmation"
+                  name="jelszó megerősítése"
+                >
+                  <b-input
+                    v-model="newPasswordConfirmation"
+                    type="password"
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+
+              <b-button
+                type="is-primary is-outlined is-light"
+                :loading="isLoading"
+                :disabled="invalid"
+                @click="changePassword"
+              >
+                Jelszó módosítása
+              </b-button>
+            </ValidationObserver>
           </form>
         </card-component>
       </tiles>
@@ -112,12 +123,6 @@ export default {
     },
     role () {
       return this.$strapi.user ? this.$strapi.user.role.name : ''
-    },
-    btnEnabled () {
-      return this.password.length > 0 && this.newPassword.length > 0 && this.newPasswordConfirmation.length > 0 && this.newPassword === this.newPasswordConfirmation
-    },
-    newPwMatch () {
-      return this.newPassword === this.newPasswordConfirmation
     }
   },
   methods: {

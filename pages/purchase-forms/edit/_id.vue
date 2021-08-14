@@ -16,60 +16,63 @@
         icon="columns"
         class="tile is-child"
       >
-        <form @submit.prevent="submit">
-          <b-field
-            label="Név"
-            message="Űrlap neve"
-            horizontal
-          >
-            <b-input
-              v-model="purchaseForm.name"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Link"
-            message="Link ahol elérhető lesz az űrlap"
-            horizontal
-          >
-            <b-input
-              v-model="purchaseForm.link"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Sikeres link"
-            message="Sikeres kapcsolatfevétel linkje"
-            horizontal
-          >
-            <b-input
-              v-model="purchaseForm.successLink"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Sikeres szöveg"
-            message="Sikeres kapcsolatfevétel szövege"
-            horizontal
-          >
-            <b-input
-              v-model="purchaseForm.successText"
-              type="textarea"
-              required
-            />
-          </b-field>
-          <hr>
-          <b-field horizontal>
-            <b-button
-              type="is-primary"
-              :loading="isLoading"
-              native-type="submit"
-              expanded
+        <ValidationObserver v-slot="{ invalid }">
+          <form @submit.prevent="submit">
+            <b-field
+              label="Név"
+              message="Űrlap neve"
+              horizontal
             >
-              Mentés
-            </b-button>
-          </b-field>
-        </form>
+              <b-input
+                v-model="purchaseForm.name"
+                required
+              />
+            </b-field>
+            <b-field
+              label="Link"
+              message="Link ahol elérhető lesz az űrlap"
+              horizontal
+            >
+              <b-input
+                v-model="purchaseForm.link"
+                required
+              />
+            </b-field>
+            <b-field
+              label="Sikeres link"
+              message="Sikeres kapcsolatfevétel linkje"
+              horizontal
+            >
+              <b-input
+                v-model="purchaseForm.successLink"
+                required
+              />
+            </b-field>
+            <b-field
+              label="Sikeres szöveg"
+              message="Sikeres kapcsolatfevétel szövege"
+              horizontal
+            >
+              <b-input
+                v-model="purchaseForm.successText"
+                type="textarea"
+                required
+              />
+            </b-field>
+            <hr>
+            <b-field horizontal>
+              <b-button
+                type="is-primary"
+                :loading="isLoading"
+                native-type="submit"
+                expanded
+                :disabled="invalid"
+              >
+                Mentés
+              </b-button>
+            </b-field>
+          </form>
+        </ValidationObserver>
       </card-component>
     </section>
   </div>
