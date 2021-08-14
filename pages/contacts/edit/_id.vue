@@ -19,7 +19,7 @@
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
             <b-field
-              label="Keresztnév"
+              label="Vezetéknév"
               message="A kontakt vezetékneve"
               horizontal
             >
