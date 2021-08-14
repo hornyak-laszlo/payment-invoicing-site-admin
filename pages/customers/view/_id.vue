@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Kontakt szerkesztése
+      Vásárló szerkesztése
       <nuxt-link
         slot="right"
         to="/customers"
@@ -16,111 +16,106 @@
         :title="`Vásárló - ID: ${$route.params.id}`"
         icon="user"
       >
-        <ValidationObserver v-slot="{ invalid }">
-          <form @submit.prevent="submit">
-            <b-field
-              label="Keresztnév"
-              message="A kontakt vezetékneve"
-              horizontal
+        <form @submit.prevent="submit">
+          <b-field
+            label="Vezetéknév"
+            message="A vásárló vezetékneve"
+            horizontal
+          >
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="Vezetéknév"
+              rules="required"
             >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Vezetéknév"
-                rules="required"
-              >
-                <b-input
-                  v-model="customer.lastName"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
-            <b-field
-              label="Keresztnév"
-              message="A kontakt keresztneve"
-              horizontal
+              <b-input
+                v-model="customer.purchases[0].lastName"
+                required
+              />
+              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </b-field>
+          <b-field
+            label="Keresztnév"
+            message="A vásárló keresztneve"
+            horizontal
+          >
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="Család név"
+              rules="required"
             >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Család név"
-                rules="required"
-              >
-                <b-input
-                  v-model="customer.firstName"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
-            <b-field
-              label="Cégnév"
-              message="A kontakt cégneve"
-              horizontal
+              <b-input
+                v-model="customer.purchases[0].firstName"
+                required
+              />
+              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </b-field>
+          <b-field
+            label="Cégnév"
+            message="A vásárló cégneve"
+            horizontal
+          >
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="Cég név"
+              rules="required"
             >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Cég név"
-                rules="required"
-              >
-                <b-input
-                  v-model="customer.companyName"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
+              <b-input
+                v-model="customer.purchases[0].companyName"
+                required
+              />
+              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </b-field>
 
-            <b-field
-              label="Telefonszám"
-              message="A kontakt telefonszáma"
-              horizontal
+          <b-field
+            label="Telefonszám"
+            message="A vásárló telefonszáma"
+            horizontal
+          >
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="Telefonszám"
+              rules="required"
             >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Telefonszám"
-                rules="required"
-              >
-                <b-input
-                  v-model="customer.phoneNumber"
-                  type="number"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
-            <b-field
-              label="Email cím"
-              message="A kontakt email címe"
-              horizontal
+              <b-input
+                v-model="customer.purchases[0].phoneNumber"
+                type="number"
+                required
+              />
+              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </b-field>
+          <b-field
+            label="Email cím"
+            message="A vásárló email címe"
+            horizontal
+          >
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="Email"
+              rules="required|email"
             >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Email"
-                rules="required|email"
-              >
-                <b-input
-                  v-model="customer.email"
-                  type="email"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
+              <b-input
+                v-model="customer.email"
+                type="email"
+                required
+              />
+              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </b-field>
 
-            <hr>
-            <b-field horizontal>
-              <b-button
-                type="is-primary"
-                :loading="isLoading"
-                native-type="submit"
-                expanded
-                :disabled="invalid"
-              >
-                Mentés
-              </b-button>
-            </b-field>
-          </form>
-        </ValidationObserver>
+          <hr>
+          <b-field horizontal>
+            <nuxt-link
+              to="/customers"
+              class="button is-primary is-outlined"
+            >
+              Vissza a vásárlókhoz
+            </nuxt-link>
+          </b-field>
+        </form>
       </card-component>
     </section>
   </div>
@@ -141,7 +136,10 @@ export default {
     return {
       isLoading: false,
       collection: 'customers',
-      customer: this.getClearFormObject()
+      customer: {
+        email: '',
+        purchases: [{ products: [] }]
+      }
     }
   },
   head () {
@@ -153,7 +151,15 @@ export default {
 
   },
   async mounted () {
-    this.customer = await this.getData()
+    try {
+      this.customer = await this.$strapi.findOne(this.collection, this.$route.params.id)
+    } catch (err) {
+      this.$buefy.toast.open({
+        message: `Error: ${err.message}`,
+        type: 'is-danger',
+        queue: false
+      })
+    }
     console.log(this.customer.purchases[0].firstName)
   },
   methods: {
@@ -164,8 +170,8 @@ export default {
         companyName: '',
         phoneNumber: '',
         email: '',
-        lastPurchaseDate: '',
-        lastPurchaseName: ''
+
+        purchases: []
 
       }
     },
