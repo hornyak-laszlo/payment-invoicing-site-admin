@@ -20,24 +20,24 @@
           <form @submit.prevent="submit">
             <b-field
               label="Keresztnév"
-              message="A kontakt keresztneve"
+              message="A kontakt vezetékneve"
               horizontal
             >
               <ValidationProvider
                 v-slot="{ errors }"
-                name="Keresztnév"
+                name="Vezetéknév"
                 rules="required"
               >
                 <b-input
-                  v-model="contact.firstName"
+                  v-model="contact.lastName"
                   required
                 />
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
             </b-field>
             <b-field
-              label="Vezetéknév"
-              message="A kontakt vezetékneve"
+              label="Keresztnév"
+              message="A kontakt keresztneve"
               horizontal
             >
               <ValidationProvider
@@ -46,7 +46,7 @@
                 rules="required"
               >
                 <b-input
-                  v-model="contact.lastName"
+                  v-model="contact.firstName"
                   required
                 />
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
