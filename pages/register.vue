@@ -112,7 +112,6 @@
 
 <script>
 import CardComponent from '@/components/common/CardComponent'
-// import { ValidationProvider, ValidationObserver } from 'vee-validate/dist/vee-validate.full.esm'
 
 export default {
   components: {
@@ -125,7 +124,6 @@ export default {
       email: '',
       password: '',
       password2: '',
-      username: '',
       adatvedelem: false,
       aszf: false
     }
@@ -138,15 +136,15 @@ export default {
   computed: {
   },
   methods: {
-
     async submit () {
       this.isLoading = true
       try {
         await this.$strapi.register({
           email: this.email,
           password: this.password,
-          username: this.username
+          username: this.email
         })
+
         this.isLoading = false
         this.$buefy.toast.open({
           message: 'Sikeres Regisztráció',
@@ -157,11 +155,6 @@ export default {
         this.$router.push('/login')
       } catch (err) {
         this.isLoading = false
-
-        // const error = (err && err.message) ? err.message : ''
-        // const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
-
-        // console.log(err)
         this.$buefy.toast.open({
           message: `${err.message} error code: ${err.statusCode}`,
           type: 'is-danger',
