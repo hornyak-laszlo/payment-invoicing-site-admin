@@ -11,20 +11,6 @@
       >
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
-            <b-field label="Felhasználó név">
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="felhasznaló név"
-                rules="required|min:4|alpha_num"
-              >
-                <b-input
-                  v-model="username"
-                  type="text"
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
-
             <b-field label="Email cím">
               <ValidationProvider
                 v-slot="{ errors }"
