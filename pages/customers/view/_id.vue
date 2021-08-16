@@ -22,51 +22,33 @@
             message="A vásárló vezetékneve"
             horizontal
           >
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="Vezetéknév"
-              rules="required"
-            >
-              <b-input
-                v-model="customer.purchases[0].lastName"
-                required
-              />
-              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <b-input
+              v-model="customer.purchases[0].lastName"
+              readonly="true"
+              required
+            />
           </b-field>
           <b-field
             label="Keresztnév"
             message="A vásárló keresztneve"
             horizontal
           >
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="Család név"
-              rules="required"
-            >
-              <b-input
-                v-model="customer.purchases[0].firstName"
-                required
-              />
-              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <b-input
+              v-model="customer.purchases[0].firstName"
+              readonly="true"
+              required
+            />
           </b-field>
           <b-field
             label="Cégnév"
             message="A vásárló cégneve"
             horizontal
           >
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="Cég név"
-              rules="required"
-            >
-              <b-input
-                v-model="customer.purchases[0].companyName"
-                required
-              />
-              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <b-input
+              v-model="customer.purchases[0].companyName"
+              readonly="true"
+              required
+            />
           </b-field>
 
           <b-field
@@ -74,43 +56,177 @@
             message="A vásárló telefonszáma"
             horizontal
           >
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="Telefonszám"
-              rules="required"
-            >
-              <b-input
-                v-model="customer.purchases[0].phoneNumber"
-                type="number"
-                required
-              />
-              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <b-input
+              v-model="customer.purchases[0].phoneNumber"
+              readonly="true"
+              type="number"
+              required
+            />
           </b-field>
           <b-field
             label="Email cím"
             message="A vásárló email címe"
             horizontal
           >
+            <b-input
+              v-model="customer.email"
+              readonly="true"
+              type="email"
+              required
+            />
+          </b-field>
+
+          <b-field
+            label="Legutóbbi számlázási cím"
+            message="A legutóbbi számlán szereplő cím"
+            horizontal
+          >
             <ValidationProvider
               v-slot="{ errors }"
-              name="Email"
-              rules="required|email"
+              name="Ország"
+              rules="required"
             >
               <b-input
-                v-model="customer.email"
-                type="email"
+                v-model="customer.purchases[0].invoiceCountry"
+                readonly="true"
+                placeholder="Ország"
+                required
+              />
+              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+            </ValidationProvider>
+
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="Irányítószám"
+              rules="required"
+            >
+              <b-input
+                v-model="customer.purchases[0].invoiceZip"
+                readonly="true"
+                placeholder="Irányítószám"
+                required
+                type="number"
+              />
+              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+            </ValidationProvider>
+
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="Város"
+              rules="required"
+            >
+              <b-input
+                v-model="customer.purchases[0].invoiceCity"
+                readonly="true"
+                placeholder="Város"
+                required
+              />
+              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+            </ValidationProvider>
+
+            <ValidationProvider
+              v-slot="{ errors }"
+              name="Utca és házszám"
+              rules="required"
+            >
+              <b-input
+                v-model="customer.purchases[0].invoiceStreetNo"
+                readonly="true"
+                placeholder="Utca és házszám"
                 required
               />
               <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
             </ValidationProvider>
           </b-field>
 
+          <b-field
+            label="Legutóbbi szállítási cím"
+            message="Ahova a terméket legutóbb szállítani kellett"
+            horizontal
+          >
+            <b-input
+              v-model="customer.purchases[0].deliveryCountry"
+              placeholder="Ország"
+              required
+              readonly="true"
+            />
+            <b-input
+              v-model="customer.purchases[0].deliveryZip"
+              placeholder="Irányítószám"
+              required
+              readonly="true"
+            />
+            <b-input
+              v-model="customer.purchases[0].deliveryCity"
+              placeholder="Város"
+              required
+              readonly="true"
+            />
+            <b-input
+              v-model="customer.purchases[0].deliveryStreetNo"
+              placeholder="Utca és házszám"
+              required
+              readonly="true"
+            />
+          </b-field>
+
+          <b-collapse
+            v-for="(purchase, index) of customer.purchases"
+            :key="index"
+            style="max-width: 80%; margin-left: 19%;"
+            class="card"
+            animation="slide"
+          >
+            <template #trigger="props">
+              <div
+                class="card-header"
+                role="button"
+              >
+                <p class="card-header-title">
+                  Rendelés {{ purchase.created_at }}-kor
+                </p>
+                <a class="card-header-icon">
+                  <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
+                </a>
+              </div>
+            </template>
+            <div class="card-content">
+              <div class="content">
+                <p>
+                  <strong>Rendelés összege:</strong>
+                  {{ purchase.sumOfPurchase }}
+                </p>
+              </div>
+              <div class="content">
+                <p>
+                  <strong>Rendelés státusza:</strong>
+                  {{ purchase.status }}
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <!-- <b-button
+                style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
+                label="Termék törlése"
+                icon-pack="fas"
+                icon-left="trash-alt"
+                class="card-footer-item has-text-danger"
+                @click="deleteProduct(index)"
+              /> -->
+              <nuxt-link
+                :to="`/purchases/edit/${purchase.id}`"
+                class="button is-primary"
+              >
+                Vásárlás szerkesztése
+              </nuxt-link>
+            </footer>
+          </b-collapse>
+
           <hr>
           <b-field horizontal>
             <nuxt-link
               to="/customers"
-              class="button is-primary is-outlined"
+              class="button is-primary"
             >
               Vissza a vásárlókhoz
             </nuxt-link>
