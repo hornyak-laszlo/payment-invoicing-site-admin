@@ -202,7 +202,8 @@
                   <strong>Rendelés státusza:</strong>
                   <span v-if="purchase.status === 'payed'">Fizetve</span>
                   <span v-else-if="purchase.status === 'ordered'">Megrendelve</span>
-                  <span v-if="purchase.status === 'shipped'">Kiszállítva</span>
+                  <span v-else-if="purchase.status === 'shipped'">Kiszállítva</span>
+                  <span v-else>Nincs státusza</span>
                 </p>
               </div>
             </div>
