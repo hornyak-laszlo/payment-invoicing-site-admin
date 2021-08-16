@@ -29,7 +29,7 @@
               <ValidationProvider
                 v-slot="{ errors }"
                 name="jelszó"
-                rules="required|confirmed:confirmation"
+                vid="confirmation"
               >
                 <b-input
                   v-model="password"
@@ -41,8 +41,8 @@
             <b-field label="Jelszó megerősítése">
               <ValidationProvider
                 v-slot="{ errors }"
-                vid="confirmation"
                 name="jelszó megerősítése"
+                rules="required|confirmed:confirmation"
               >
                 <b-input
                   v-model="password2"
