@@ -200,7 +200,9 @@
               <div class="content">
                 <p>
                   <strong>Rendelés státusza:</strong>
-                  {{ purchase.status }}
+                  <span v-if="purchase.status === 'payed'">Fizetve</span>
+                  <span v-else-if="purchase.status === 'ordered'">Megrendelve</span>
+                  <span v-if="purchase.status === 'shipped'">Kiszállítva</span>
                 </p>
               </div>
             </div>
