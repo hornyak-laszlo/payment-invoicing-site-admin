@@ -215,9 +215,20 @@
               /> -->
               <nuxt-link
                 :to="`/purchases/edit/${purchase.id}`"
-                class="button is-primary"
+                style="width: 100%"
               >
-                Vásárlás szerkesztése
+                <b-button
+                  expanded
+                  outlined
+                  type="is-primary"
+                  style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
+                  label="Vásárlás szerkesztése"
+                  icon-pack="fas"
+                  icon-left="list"
+                  class="card-footer-item"
+                >
+                  Vásárlás szerkesztése
+                </b-button>
               </nuxt-link>
             </footer>
           </b-collapse>
