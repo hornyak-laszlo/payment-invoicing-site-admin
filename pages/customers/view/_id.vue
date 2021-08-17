@@ -208,14 +208,6 @@
               </div>
             </div>
             <footer class="card-footer">
-              <!-- <b-button
-                style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                label="Termék törlése"
-                icon-pack="fas"
-                icon-left="trash-alt"
-                class="card-footer-item has-text-danger"
-                @click="deleteProduct(index)"
-              /> -->
               <nuxt-link
                 :to="`/purchases/edit/${purchase.id}`"
                 style="width: 100%"
