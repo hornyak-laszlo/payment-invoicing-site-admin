@@ -59,6 +59,67 @@
                 required
               />
             </b-field>
+            <b-field
+              label="Űrlaphoz tartozó termékek"
+              horizontal
+            >
+              <p>Az űrlaphoz tartozó termékek listája:</p>
+            </b-field>
+
+            <b-collapse
+              v-for="(product, index) of purchaseForm.products"
+              :key="index"
+              style="max-width: 80%; margin-left: 19%;"
+              class="card"
+              animation="slide"
+            >
+              <template #trigger="props">
+                <div
+                  class="card-header"
+                  role="button"
+                >
+                  <p class="card-header-title">
+                    Termék ID: {{ product.id }}
+                  </p>
+                  <a class="card-header-icon">
+                    <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
+                  </a>
+                </div>
+              </template>
+              <div class="card-content">
+                <div class="content">
+                  <p>
+                    <strong>Termék ára:</strong>
+                    {{ product.grossPrice }}
+                  </p>
+                </div>
+                <div class="content">
+                  <p>
+                    <strong>Termék leírása:</strong>
+                    {{ product.description }}
+                  </p>
+                </div>
+              </div>
+              <footer class="card-footer">
+                <nuxt-link
+                  :to="`/products/edit/${product.id}`"
+                  style="width: 100%"
+                >
+                  <b-button
+                    expanded
+                    outlined
+                    type="is-primary"
+                    style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
+                    label="Termék szerkesztése"
+                    icon-pack="fas"
+                    icon-left="tag"
+                    class="card-footer-item"
+                  >
+                    Termék szerkesztése
+                  </b-button>
+                </nuxt-link>
+              </footer>
+            </b-collapse>
             <hr>
             <b-field horizontal>
               <b-button
