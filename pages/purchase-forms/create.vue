@@ -59,6 +59,7 @@
             />
           </b-field>
           <b-field
+            v-if="subscriptionProducts || oneTimeProducts"
             label="Termék típusa"
             message="Milyen típusú terméket lehet itt rendelni"
             horizontal
@@ -79,7 +80,10 @@
             v-if="productType === 'subscription'"
             horizontal
           >
-            <b-select required>
+            <b-select
+              v-model="plusProductId"
+              required
+            >
               <option
                 v-for="product in subscriptionProducts"
                 :key="product.id"
@@ -88,6 +92,14 @@
                 {{ product.name }}
               </option>
             </b-select>
+            <b-button
+              style="border-radius: 5px"
+              type="is-primary"
+              label="Hozzáadás"
+              size="is-small"
+              :loading="isLoading"
+              @click="addNewProduct()"
+            />
           </b-field>
           <hr>
           <b-field horizontal>
@@ -122,6 +134,7 @@ export default {
       purchaseForm: this.getClearFormObject(),
       allProducts: [],
       productType: '',
+      plusProductId: 0,
       subProd: this.subscriptionProducts
     }
   },
@@ -142,6 +155,7 @@ export default {
     this.allProducts = await this.$strapi.find('products')
     console.log(this.allProducts)
   },
+
   methods: {
     getClearFormObject () {
       return {
@@ -153,6 +167,11 @@ export default {
         products: [],
         company: {}
       }
+    },
+
+    addNewProduct () {
+      const plusProduct = this.allProducts.filter(product => product.id === this.plusProductId)
+      this.purchaseForm.products.push(plusProduct)
     },
 
     async submit () {
