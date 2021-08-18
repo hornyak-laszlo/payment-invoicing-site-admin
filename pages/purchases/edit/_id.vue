@@ -23,16 +23,30 @@
               message="Vásárló neve"
               horizontal
             >
-              <b-input
-                v-model="purchase.lastName"
-                placeholder="Vezetéknév"
-                required
-              />
-              <b-input
-                v-model="purchase.firstName"
-                placeholder="Keresztnév"
-                required
-              />
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Vezetéknév"
+                rules="required"
+              >
+                <b-input
+                  v-model="purchase.lastName"
+                  placeholder="Vezetéknév"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Keresztnév"
+                rules="required"
+              >
+                <b-input
+                  v-model="purchase.firstName"
+                  placeholder="Keresztnév"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
             </b-field>
             <b-field
               label="Email"
@@ -108,10 +122,17 @@
               message="Vásárló telefonszáma"
               horizontal
             >
-              <b-input
-                v-model="purchase.phoneNumber"
-                required
-              />
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Telefonszám"
+                rules="required"
+              >
+                <b-input
+                  v-model="purchase.phoneNumber"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
             </b-field>
 
             <b-field
@@ -180,22 +201,19 @@
               <b-input
                 v-model="purchase.deliveryCountry"
                 placeholder="Ország"
-                required
               />
               <b-input
                 v-model="purchase.deliveryZip"
                 placeholder="Irányítószám"
-                required
+                type="number"
               />
               <b-input
                 v-model="purchase.deliveryCity"
                 placeholder="Város"
-                required
               />
               <b-input
                 v-model="purchase.deliveryStreetNo"
                 placeholder="Utca és házszám"
-                required
               />
             </b-field>
 
@@ -204,10 +222,18 @@
               message="Mennyiért vásárolt a vevő"
               horizontal
             >
-              <b-input
-                v-model="purchase.sumOfPurchase"
-                required
-              />
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Vásárlás összege"
+                rules="required"
+              >
+                <b-input
+                  v-model="purchase.sumOfPurchase"
+                  required
+                  type="number"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
             </b-field>
             <b-field
               label="Fizetési mód"
@@ -285,6 +311,7 @@
                     <strong>Termék ára:</strong>
                     <b-input
                       v-model="product.grossPrice"
+                      type="number"
                       required
                     />
                   </p>

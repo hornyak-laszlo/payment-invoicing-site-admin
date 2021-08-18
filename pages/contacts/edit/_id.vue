@@ -42,7 +42,7 @@
             >
               <ValidationProvider
                 v-slot="{ errors }"
-                name="Család név"
+                name="Keresztnév"
                 rules="required"
               >
                 <b-input
@@ -116,7 +116,6 @@
               >
                 <b-input
                   v-model="contact.phoneNumber"
-                  type="number"
                   required
                 />
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
