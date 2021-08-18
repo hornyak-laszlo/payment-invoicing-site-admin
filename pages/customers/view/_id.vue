@@ -23,7 +23,7 @@
             horizontal
           >
             <b-input
-              v-model="customer.purchases[0].lastName"
+              v-model="lastPurchase.lastName"
               readonly="true"
               required
             />
@@ -34,7 +34,7 @@
             horizontal
           >
             <b-input
-              v-model="customer.purchases[0].firstName"
+              v-model="lastPurchase.firstName"
               readonly="true"
               required
             />
@@ -45,7 +45,7 @@
             horizontal
           >
             <b-input
-              v-model="customer.purchases[0].companyName"
+              v-model="lastPurchase.companyName"
               readonly="true"
               required
             />
@@ -57,7 +57,7 @@
             horizontal
           >
             <b-input
-              v-model="customer.purchases[0].phoneNumber"
+              v-model="lastPurchase.phoneNumber"
               readonly="true"
               type="number"
               required
@@ -69,7 +69,7 @@
             horizontal
           >
             <b-input
-              v-model="customer.email"
+              v-model="email"
               readonly="true"
               type="email"
               required
@@ -81,62 +81,34 @@
             message="A legutóbbi számlán szereplő cím"
             horizontal
           >
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="Ország"
-              rules="required"
-            >
-              <b-input
-                v-model="customer.purchases[0].invoiceCountry"
-                readonly="true"
-                placeholder="Ország"
-                required
-              />
-              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <b-input
+              v-model="lastPurchase.invoiceCountry"
+              readonly="true"
+              placeholder="Ország"
+              required
+            />
 
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="Irányítószám"
-              rules="required"
-            >
-              <b-input
-                v-model="customer.purchases[0].invoiceZip"
-                readonly="true"
-                placeholder="Irányítószám"
-                required
-                type="number"
-              />
-              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <b-input
+              v-model="lastPurchase.invoiceZip"
+              readonly="true"
+              placeholder="Irányítószám"
+              required
+              type="number"
+            />
 
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="Város"
-              rules="required"
-            >
-              <b-input
-                v-model="customer.purchases[0].invoiceCity"
-                readonly="true"
-                placeholder="Város"
-                required
-              />
-              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <b-input
+              v-model="lastPurchase.invoiceCity"
+              readonly="true"
+              placeholder="Város"
+              required
+            />
 
-            <ValidationProvider
-              v-slot="{ errors }"
-              name="Utca és házszám"
-              rules="required"
-            >
-              <b-input
-                v-model="customer.purchases[0].invoiceStreetNo"
-                readonly="true"
-                placeholder="Utca és házszám"
-                required
-              />
-              <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-            </ValidationProvider>
+            <b-input
+              v-model="lastPurchase.invoiceStreetNo"
+              readonly="true"
+              placeholder="Utca és házszám"
+              required
+            />
           </b-field>
 
           <b-field
@@ -145,105 +117,116 @@
             horizontal
           >
             <b-input
-              v-model="customer.purchases[0].deliveryCountry"
+              v-model="lastPurchase.deliveryCountry"
               placeholder="Ország"
               required
               readonly="true"
             />
             <b-input
-              v-model="customer.purchases[0].deliveryZip"
+              v-model="lastPurchase.deliveryZip"
               placeholder="Irányítószám"
               required
               readonly="true"
             />
             <b-input
-              v-model="customer.purchases[0].deliveryCity"
+              v-model="lastPurchase.deliveryCity"
               placeholder="Város"
               required
               readonly="true"
             />
             <b-input
-              v-model="customer.purchases[0].deliveryStreetNo"
+              v-model="lastPurchase.deliveryStreetNo"
               placeholder="Utca és házszám"
               required
               readonly="true"
             />
           </b-field>
-
-          <b-collapse
-            v-for="(purchase, index) of customer.purchases"
-            :key="index"
-            style="max-width: 80%; margin-left: 19%;"
-            class="card"
-            animation="slide"
+          <b-field
+            label="Rendelések"
+            horizontal
           >
-            <template #trigger="props">
-              <div
-                class="card-header"
-                role="button"
-              >
-                <p class="card-header-title">
-                  Rendelés {{ purchase.created_at }}-kor
-                </p>
-                <a class="card-header-icon">
-                  <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
-                </a>
-              </div>
-            </template>
-            <div class="card-content">
-              <div class="content">
-                <p>
-                  <strong>Rendelés összege:</strong>
-                  {{ purchase.sumOfPurchase }}
-                </p>
-              </div>
-              <div class="content">
-                <p>
-                  <strong>Rendelés státusza:</strong>
-                  <span v-if="purchase.status === 'payed'">Fizetve</span>
-                  <span v-else-if="purchase.status === 'ordered'">Megrendelve</span>
-                  <span v-else-if="purchase.status === 'shipped'">Kiszállítva</span>
-                  <span v-else>Nincs státusza</span>
-                </p>
-              </div>
-            </div>
-            <footer class="card-footer">
-              <!-- <b-button
-                style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                label="Termék törlése"
-                icon-pack="fas"
-                icon-left="trash-alt"
-                class="card-footer-item has-text-danger"
-                @click="deleteProduct(index)"
-              /> -->
-              <nuxt-link
-                :to="`/purchases/edit/${purchase.id}`"
-                style="width: 100%"
-              >
-                <b-button
-                  expanded
-                  outlined
-                  type="is-primary"
-                  style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                  label="Vásárlás szerkesztése"
-                  icon-pack="fas"
-                  icon-left="list"
-                  class="card-footer-item"
-                >
-                  Vásárlás szerkesztése
-                </b-button>
-              </nuxt-link>
-            </footer>
-          </b-collapse>
-
-          <hr>
-          <b-field horizontal>
-            <nuxt-link
-              to="/customers"
-              class="button is-primary"
+            <b-table
+              :striped="true"
+              :hoverable="true"
+              default-sort="id"
+              :data="purchases"
             >
-              Vissza a vásárlókhoz
-            </nuxt-link>
+              <template slot-scope="props">
+                <b-table-column
+                  label="Id"
+                  field="id"
+                  sortable
+                >
+                  {{ props.row.id }}
+                </b-table-column>
+                <b-table-column
+                  label="Státusza"
+                  field="status"
+                  sortable
+                >
+                  {{ props.row.status }}
+                </b-table-column>
+                <b-table-column
+                  label="Rendelés összege"
+                  field="sumOfPurchase"
+                  sortable
+                >
+                  {{ props.row.sumOfPurchase }}
+                </b-table-column>
+                <b-table-column
+                  label="Létrehozva"
+                  field="created_at"
+                  sortable
+                >
+                  {{ props.row.created_at }}
+                </b-table-column>
+                <b-table-column
+                  custom-key="actions"
+                  class="is-actions-cell"
+                >
+                  <div class="buttons is-right">
+                    <nuxt-link
+                      :to="`/purchases/edit/${props.row.id}`"
+                      class="button is-small is-primary"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="eye"
+                        size="is-small"
+                      />
+                    </nuxt-link>
+                  </div>
+                </b-table-column>
+              </template>
+
+              <section
+                slot="empty"
+                class="section"
+              >
+                <div class="content has-text-grey has-text-centered">
+                  <template v-if="isLoading">
+                    <p>
+                      <b-icon
+                        pack="fas"
+                        icon="ellipsis-h"
+                        size="is-large"
+                      />
+                    </p>
+                    <p>Adatok betöltése...</p>
+                  </template>
+                  <template v-else>
+                    <p>
+                      <b-icon
+                        pack="fas"
+                        icon="frown"
+                        size="is-large"
+                      />
+                    </p>
+                    <p>Nem található adat&hellip;</p>
+                  </template>
+                </div>
+              </section>
+            </b-table>
           </b-field>
         </form>
       </card-component>
@@ -255,6 +238,7 @@
 
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
+import { convertToHungarianTime } from '@/utils/dateHelpers'
 
 export default {
 
@@ -265,10 +249,26 @@ export default {
   data () {
     return {
       isLoading: false,
-      collection: 'customers',
-      customer: {
-        email: '',
-        purchases: [{ products: [] }]
+      statuses: {
+        payed: 'Fizetve',
+        ordered: 'Megrendelve',
+        shipped: 'Kiszállítva'
+      },
+      email: '',
+      purchases: [],
+      lastPurchase: {
+        lastName: '',
+        firstName: '',
+        companyName: '',
+        phoneNumber: '',
+        invoiceCountry: '',
+        invoiceZip: '',
+        invoiceCity: '',
+        invoiceStreetNo: '',
+        deliveryCountry: '',
+        deliveryZip: '',
+        deliveryCity: '',
+        deliveryStreetNo: ''
       }
     }
   },
@@ -278,11 +278,19 @@ export default {
     }
   },
   computed: {
-
   },
   async mounted () {
     try {
-      this.customer = await this.$strapi.findOne(this.collection, this.$route.params.id)
+      const customer = await this.$strapi.findOne('customers', this.$route.params.id)
+      customer.purchases.forEach((p) => {
+        p.status = this.statuses[p.status] || 'Nincs státusza'
+        p.created_at = convertToHungarianTime(p.created_at)
+      })
+      this.email = customer.email
+      this.purchases = customer.purchases
+      if (customer.purchases.length) {
+        this.lastPurchase = customer.purchases[customer.purchases.length - 1]
+      }
     } catch (err) {
       this.$buefy.toast.open({
         message: `Error: ${err.message}`,
@@ -290,62 +298,8 @@ export default {
         queue: false
       })
     }
-    console.log(this.customer.purchases[0].firstName)
   },
   methods: {
-    getClearFormObject () {
-      return {
-        firstName: '',
-        lastName: '',
-        companyName: '',
-        phoneNumber: '',
-        email: '',
-
-        purchases: []
-
-      }
-    },
-    async getData () {
-      if (this.$route.params.id) {
-        try {
-          const res = await this.$strapi.findOne(this.collection, this.$route.params.id)
-          return res
-        } catch (err) {
-          this.$buefy.toast.open({
-            message: `Error: ${err.message}`,
-            type: 'is-danger',
-            queue: false
-          })
-        }
-      }
-    },
-    async submit () {
-      try {
-        this.isLoading = true
-
-        await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.contact)
-
-        this.isLoading = false
-        /* this.$buefy.toast.open({
-          message: 'Sikeresen mentve',
-          type: 'is-primary'
-          queue: false
-        }) */
-        this.$buefy.snackbar.open({
-          message: 'Sikeresen mentve',
-          type: 'is-white has-text-white has-background-primary',
-          queue: false
-        })
-        this.$router.push('/contacts')
-      } catch (err) {
-        this.isLoading = false
-        this.$buefy.toast.open({
-          message: `Error: ${err.message}`,
-          type: 'is-danger',
-          queue: false
-        })
-      }
-    }
   }
 }
 </script>
