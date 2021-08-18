@@ -47,8 +47,8 @@ export default {
         field: 'firstName',
         title: 'Keresztnév'
       }, {
-        field: 'paymentMethod',
-        title: 'Fizetési mód'
+        field: 'status',
+        title: 'Vásárlás státusza'
       }, {
         field: 'sumOfPurchase',
         title: 'Vásárlás értéke'
