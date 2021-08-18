@@ -25,7 +25,7 @@
             >
               <ValidationProvider
                 v-slot="{ errors }"
-                name="Család név"
+                name="Vezetéknév"
                 rules="required"
               >
                 <b-input
