@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Űrlap hozzáadása
+      Vásárlás űrlap hozzáadása
       <nuxt-link
         slot="right"
         to="/forms"
@@ -58,6 +58,37 @@
               type="textarea"
             />
           </b-field>
+          <b-field
+            label="Termék típusa"
+            message="Milyen típusú terméket lehet itt rendelni"
+            horizontal
+          >
+            <b-select
+              v-model="productType"
+              required
+            >
+              <option value="subscription">
+                Előfizetéses
+              </option>
+              <option value="one_time">
+                Egyszeri vásárlás
+              </option>
+            </b-select>
+          </b-field>
+          <b-field
+            v-if="productType === 'subscription'"
+            horizontal
+          >
+            <b-select required>
+              <option
+                v-for="product in subscriptionProducts"
+                :key="product.id"
+                :value="product.id"
+              >
+                {{ product.name }}
+              </option>
+            </b-select>
+          </b-field>
           <hr>
           <b-field horizontal>
             <b-button
@@ -88,13 +119,28 @@ export default {
   data () {
     return {
       isLoading: false,
-      purchaseForm: this.getClearFormObject()
+      purchaseForm: this.getClearFormObject(),
+      allProducts: [],
+      productType: '',
+      subProd: this.subscriptionProducts
     }
   },
   head () {
     return {
       title: 'Űrlap hozzáadása'
     }
+  },
+  computed: {
+    subscriptionProducts () {
+      return this.allProducts.filter(product => product.type === 'subscription')
+    },
+    oneTimeProducts () {
+      return this.allProducts.filter(product => product.type === 'one_time')
+    }
+  },
+  async mounted () {
+    this.allProducts = await this.$strapi.find('products')
+    console.log(this.allProducts)
   },
   methods: {
     getClearFormObject () {
@@ -103,9 +149,12 @@ export default {
         name: '',
         link: '',
         successLink: '',
-        successText: ''
+        successText: '',
+        products: [],
+        company: {}
       }
     },
+
     async submit () {
       try {
         this.isLoading = true
