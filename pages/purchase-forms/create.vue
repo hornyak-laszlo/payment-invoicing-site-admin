@@ -60,6 +60,13 @@
             />
           </b-field>
           <b-field
+            v-if="subProductAdded"
+            label="Hozzáadott termékek"
+            horizontal
+          >
+            <p><strong>Előfizetéses termék:</strong> {{ purchaseForm.products[0].name }} hozzáadva az űrlaphoz</p>
+          </b-field>
+          <b-field
             v-if="addProduct"
             label="Termék típusa"
             message="Milyen típusú terméket lehet itt rendelni"
@@ -136,7 +143,9 @@ export default {
       allProducts: [],
       productType: '',
       plusProductId: 0,
-      addProduct: true
+      addProduct: true,
+      subProductAdded: false,
+      oneTimeProductAdded: false
     }
   },
   head () {
@@ -174,6 +183,7 @@ export default {
       const plusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       this.purchaseForm.products.push(plusProduct)
       this.addProduct = false
+      this.subProductAdded = true
       this.$buefy.snackbar.open({
         message: 'Termék sikeresen hozzáadva',
         queue: false
