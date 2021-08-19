@@ -145,8 +145,7 @@ export default {
       allProducts: [],
       productType: '',
       plusProductId: 0,
-      addProduct: true,
-      subProd: this.subscriptionProducts
+      addProduct: true
     }
   },
   head () {
@@ -181,7 +180,7 @@ export default {
     },
 
     addNewProduct () {
-      const plusProduct = this.allProducts.filter(product => product.id === this.plusProductId)
+      const plusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       this.purchaseForm.products.push(plusProduct)
       this.addProduct = false
       this.$buefy.snackbar.open({
