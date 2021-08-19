@@ -48,6 +48,16 @@
             />
           </b-field>
           <b-field
+            label="Cégnév"
+            message="A cég neve"
+            horizontal
+          >
+            <b-input
+              v-model="purchaseForm.company"
+              required
+            />
+          </b-field>
+          <b-field
             label="Sikeres szöveg"
             message="Sikeres kapcsolatfevétel szövege"
             horizontal
@@ -59,7 +69,7 @@
             />
           </b-field>
           <b-field
-            v-if="subscriptionProducts || oneTimeProducts"
+            v-if="addProduct"
             label="Termék típusa"
             message="Milyen típusú terméket lehet itt rendelni"
             horizontal
@@ -77,7 +87,7 @@
             </b-select>
           </b-field>
           <b-field
-            v-if="productType === 'subscription'"
+            v-if="productType === 'subscription' && addProduct"
             horizontal
           >
             <b-select
@@ -135,6 +145,7 @@ export default {
       allProducts: [],
       productType: '',
       plusProductId: 0,
+      addProduct: true,
       subProd: this.subscriptionProducts
     }
   },
@@ -165,13 +176,18 @@ export default {
         successLink: '',
         successText: '',
         products: [],
-        company: {}
+        company: ''
       }
     },
 
     addNewProduct () {
       const plusProduct = this.allProducts.filter(product => product.id === this.plusProductId)
       this.purchaseForm.products.push(plusProduct)
+      this.addProduct = false
+      this.$buefy.snackbar.open({
+        message: 'Termék sikeresen hozzáadva',
+        queue: false
+      })
     },
 
     async submit () {
@@ -185,12 +201,13 @@ export default {
         this.isLoading = false
         this.$buefy.snackbar.open({
           message: 'Létrehozás sikeres',
+          type: 'is-white has-text-white has-background-primary',
           queue: false
         })
         this.$router.push('/forms')
       } catch (err) {
         this.isLoading = false
-        this.$buefy.toast.open({
+        this.$buefy.snackbar.open({
           message: `Error: ${err.message}`,
           type: 'is-danger',
           queue: false
