@@ -59,13 +59,20 @@
               type="textarea"
             />
           </b-field>
+
           <b-field
-            v-if="subProductAdded"
+            v-if="oneTimeProductAdded || subProductAdded"
             label="Hozzáadott termékek"
             horizontal
           >
-            <p><strong>Előfizetéses termék:</strong> {{ purchaseForm.products[0].name }} hozzáadva az űrlaphoz</p>
+            <p
+              v-for="(product, index) of purchaseForm.products"
+              :key="index"
+            >
+              <strong> {{ product.name }} </strong> hozzáadva az űrlaphoz
+            </p>
           </b-field>
+
           <b-field
             v-if="addProduct"
             label="Termék típusa"
@@ -106,9 +113,38 @@
               label="Hozzáadás"
               size="is-small"
               :loading="isLoading"
-              @click="addNewProduct()"
+              @click="addNewSubProduct()"
             />
           </b-field>
+
+          <b-field
+            v-if="productType === 'one_time' && addProduct"
+            horizontal
+          >
+            <b-select
+              v-model="selectedProductIDs"
+              multiple
+              native-size="4"
+              required
+            >
+              <option
+                v-for="product in oneTimeProducts"
+                :key="product.id"
+                :value="product.id"
+              >
+                {{ product.name }}
+              </option>
+            </b-select>
+            <b-button
+              style="border-radius: 5px"
+              type="is-primary"
+              label="Hozzáadás"
+              size="is-small"
+              :loading="isLoading"
+              @click="addNewOneProduct()"
+            />
+          </b-field>
+
           <hr>
           <b-field horizontal>
             <b-button
@@ -141,6 +177,7 @@ export default {
       isLoading: false,
       purchaseForm: this.getClearFormObject(),
       allProducts: [],
+      selectedProductIDs: [],
       productType: '',
       plusProductId: 0,
       addProduct: true,
@@ -179,13 +216,24 @@ export default {
       }
     },
 
-    addNewProduct () {
+    addNewSubProduct () {
       const plusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       this.purchaseForm.products.push(plusProduct)
       this.addProduct = false
       this.subProductAdded = true
       this.$buefy.snackbar.open({
         message: 'Termék sikeresen hozzáadva',
+        queue: false
+      })
+    },
+
+    addNewOneProduct () {
+      this.purchaseForm.products = this.allProducts.filter(({ id }) => this.selectedProductIDs.includes(id))
+      this.addProduct = false
+      this.oneTimeProductAdded = true
+      console.log(this.purchaseForm.products)
+      this.$buefy.snackbar.open({
+        message: 'Termék(ek) sikeresen hozzáadva',
         queue: false
       })
     },
