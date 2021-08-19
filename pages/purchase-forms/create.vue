@@ -121,7 +121,7 @@
             v-if="productType === 'one_time' && addProduct"
             horizontal
           >
-            <b-select
+            <!-- <b-select
               v-model="selectedProductIDs"
               multiple
               native-size="4"
@@ -134,7 +134,15 @@
               >
                 {{ product.name }}
               </option>
-            </b-select>
+            </b-select> -->
+            <b-checkbox
+              v-for="product in oneTimeProducts"
+              :key="product.id"
+              v-model="selectedProductIDs"
+              :native-value="product.id"
+            >
+              {{ product.name }}
+            </b-checkbox>
             <b-button
               style="border-radius: 5px"
               type="is-primary"
