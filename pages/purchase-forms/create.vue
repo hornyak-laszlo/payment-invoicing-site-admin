@@ -121,6 +121,7 @@
             v-if="productType === 'one_time' && addProduct"
             horizontal
           >
+            //TODO figure out mobile multi-select
             <!-- <b-select
               v-model="selectedProductIDs"
               multiple
