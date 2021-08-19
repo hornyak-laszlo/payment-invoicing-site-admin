@@ -47,16 +47,7 @@
               required
             />
           </b-field>
-          <b-field
-            label="Cégnév"
-            message="A cég neve"
-            horizontal
-          >
-            <b-input
-              v-model="purchaseForm.company"
-              required
-            />
-          </b-field>
+
           <b-field
             label="Sikeres szöveg"
             message="Sikeres kapcsolatfevétel szövege"
