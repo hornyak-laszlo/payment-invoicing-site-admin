@@ -102,8 +102,7 @@ export default {
   async mounted () {
     try {
       if (this.$strapi.user) {
-        const companyId = (typeof this.$strapi.user.company === 'number') ? this.$strapi.user.company : this.$strapi.user.company.id
-        const company = await this.$strapi.findOne('companies', companyId)
+        const company = await this.$strapi.$http.$get('/companies/own/integrations')
         this.stripeIntegrated = company.stripeIntegrated
         this.stripePrivateKey = company.stripePrivateKey
         this.stripePublicKey = company.stripePublicKey

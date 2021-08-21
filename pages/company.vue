@@ -192,7 +192,7 @@
                 message="SWIFT szám utaláshoz (opcionális)"
                 horizontal
               >
-                <b-input v-model="company.companyRegistrationNumber" />
+                <b-input v-model="company.swift" />
               </b-field>
 
               <b-field
@@ -200,7 +200,7 @@
                 message="IBAN szám utaláshoz (opcionális)"
                 horizontal
               >
-                <b-input v-model="company.companyRegistrationNumber" />
+                <b-input v-model="company.iban" />
               </b-field>
 
               <hr>
@@ -265,14 +265,7 @@ export default {
   },
   async mounted () {
     try {
-      if (this.$strapi.user) {
-        const companyId = (typeof this.$strapi.user.company === 'number') ? this.$strapi.user.company : this.$strapi.user.company.id
-        const company = await this.$strapi.findOne('companies', companyId)
-        this.company = {
-          name: company.name,
-          taxNumber: company.taxNumber
-        }
-      }
+      this.company = await this.$strapi.$http.$get('/companies/own/data')
     } catch (err) {
       this.$buefy.toast.open({
         message: 'Nem sikerült betölteni a cég adatait',
@@ -286,7 +279,7 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update('companies', this.$strapi.user.company.id, this.company)
+        await this.$strapi.$http.$put('/companies/own/data', this.company)
 
         this.isLoading = false
         this.$buefy.snackbar.open({
