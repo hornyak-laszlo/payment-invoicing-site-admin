@@ -48,6 +48,43 @@
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
+              <b-field
+                label="Értesítési email"
+                message="Értesítési email cím"
+                horizontal
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Értesítési email"
+                  rules="required|email"
+                >
+                  <b-input
+                    v-model="company.notificationEmail"
+                    type="email"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+
+              <b-field
+                label="Weboldal"
+                message="A cég weboldalának linkje"
+                horizontal
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Weboldal"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="company.websiteLink"
+                    type="text"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
 
               <b-field
                 label="Telefonszám"
@@ -243,6 +280,8 @@ export default {
         bankAccountNumber: '',
         phoneNumber: '',
         email: '',
+        notificationEmail: '',
+        websiteLink: '',
         formOfEnterprise: '',
         city: '',
         zip: '',
@@ -286,7 +325,6 @@ export default {
           message: 'Sikeresen mentve',
           queue: false
         })
-        this.$router.push('/purchases')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({
