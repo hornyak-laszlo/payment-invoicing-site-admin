@@ -124,7 +124,8 @@
                   type="is-danger"
                   style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
                   label="Termék törlése"
-                  icon-left="delete"
+                  icon-pack="fas"
+                  icon-left="trash-alt"
                   class="card-footer-item"
                   @click="deleteProduct(product.id)"
                 >
@@ -189,6 +190,8 @@ export default {
     },
     deleteProduct (id) {
       console.log(id)
+      this.purchaseForm.products = this.purchaseForm.products.filter(product => product.id !== id)
+      console.log(this.purchaseForm.products)
     },
     async getData () {
       if (this.$route.params.id) {
