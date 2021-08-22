@@ -118,6 +118,18 @@
                     Termék szerkesztése
                   </b-button>
                 </nuxt-link>
+                <b-button
+                  expanded
+                  outlined
+                  type="is-danger"
+                  style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
+                  label="Termék törlése"
+                  icon-left="delete"
+                  class="card-footer-item"
+                  @click="deleteProduct(product.id)"
+                >
+                  Termék törlése
+                </b-button>
               </footer>
             </b-collapse>
             <hr>
@@ -174,6 +186,9 @@ export default {
         products: [],
         company: {}
       }
+    },
+    deleteProduct (id) {
+      console.log(id)
     },
     async getData () {
       if (this.$route.params.id) {
