@@ -148,10 +148,7 @@
               multiple
             >
               <template #trigger>
-                <b-button
-                  type="is-primary"
-                  icon-right="menu-down"
-                >
+                <b-button icon-right="menu-down">
                   {{ selectedProductIDs.length }} termék kiválasztva
                 </b-button>
               </template>
