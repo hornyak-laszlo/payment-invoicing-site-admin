@@ -61,7 +61,7 @@
           </b-field>
 
           <b-field
-            v-if="oneTimeProductAdded || subProductAdded"
+            v-if="!addProduct"
             label="Hozzáadott termékek"
             horizontal
           >
@@ -71,6 +71,14 @@
             >
               <strong> {{ product.name }} </strong> hozzáadva az űrlaphoz
             </p>
+            <b-button
+              outlined
+              style="border-radius: 5px"
+              type="is-primary"
+              size="is-small"
+              label="Másik termék választás"
+              @click="addProduct = true"
+            />
           </b-field>
 
           <b-field
@@ -121,7 +129,6 @@
             v-if="productType === 'one_time' && addProduct"
             horizontal
           >
-            //TODO figure out mobile multi-select
             <!-- <b-select
               v-model="selectedProductIDs"
               multiple
@@ -136,14 +143,28 @@
                 {{ product.name }}
               </option>
             </b-select> -->
-            <b-checkbox
-              v-for="product in oneTimeProducts"
-              :key="product.id"
+            <b-dropdown
               v-model="selectedProductIDs"
-              :native-value="product.id"
+              multiple
             >
-              {{ product.name }}
-            </b-checkbox>
+              <template #trigger>
+                <b-button
+                  type="is-primary"
+                  icon-right="menu-down"
+                >
+                  {{ selectedProductIDs.length }} termék kiválasztva
+                </b-button>
+              </template>
+              <b-dropdown-item
+                v-for="product in oneTimeProducts"
+                :key="product.id"
+                :value="product.id"
+              >
+                <span>
+                  {{ product.name }}
+                </span>
+              </b-dropdown-item>
+            </b-dropdown>
             <b-button
               style="border-radius: 5px"
               type="is-primary"
@@ -189,6 +210,7 @@ export default {
       selectedProductIDs: [],
       productType: '',
       plusProductId: 0,
+      plusProduct: [],
       addProduct: true,
       subProductAdded: false,
       oneTimeProductAdded: false
@@ -226,10 +248,12 @@ export default {
     },
 
     addNewSubProduct () {
-      const plusProduct = this.allProducts.find(product => product.id === this.plusProductId)
-      this.purchaseForm.products.push(plusProduct)
+      this.plusProduct = []
+      this.plusProduct.push(this.allProducts.find(product => product.id === this.plusProductId))
+      this.purchaseForm.products = this.plusProduct
       this.addProduct = false
       this.subProductAdded = true
+      console.log(this.purchaseForm.products)
       this.$buefy.snackbar.open({
         message: 'Termék sikeresen hozzáadva',
         queue: false
@@ -237,7 +261,9 @@ export default {
     },
 
     addNewOneProduct () {
-      this.purchaseForm.products = this.allProducts.filter(({ id }) => this.selectedProductIDs.includes(id))
+      this.plusProduct = []
+      this.plusProduct = this.allProducts.filter(product => this.selectedProductIDs.includes(product.id))
+      this.purchaseForm.products = this.plusProduct
       this.addProduct = false
       this.oneTimeProductAdded = true
       console.log(this.purchaseForm.products)
