@@ -129,20 +129,6 @@
             v-if="productType === 'one_time' && addProduct"
             horizontal
           >
-            <!-- <b-select
-              v-model="selectedProductIDs"
-              multiple
-              native-size="4"
-              required
-            >
-              <option
-                v-for="product in oneTimeProducts"
-                :key="product.id"
-                :value="product.id"
-              >
-                {{ product.name }}
-              </option>
-            </b-select> -->
             <b-dropdown
               v-model="selectedProductIDs"
               multiple
