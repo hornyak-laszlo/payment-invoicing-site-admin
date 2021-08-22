@@ -189,9 +189,24 @@ export default {
       }
     },
     deleteProduct (id) {
-      console.log(id)
-      this.purchaseForm.products = this.purchaseForm.products.filter(product => product.id !== id)
-      console.log(this.purchaseForm.products)
+      this.$buefy.dialog.confirm({
+        title: 'Termék törlése',
+        message: 'Biztos, hogy el akarod távolítani ezt a terméket?',
+        confirmText: 'Termék törlése',
+        cancelText: 'Mégse',
+        type: 'is-danger',
+        hasIcon: true,
+        iconPack: 'fas',
+        icon: 'trash-alt',
+        onConfirm: () => {
+          this.purchaseForm.products = this.purchaseForm.products.filter(product => product.id !== id)
+          console.log(this.purchaseForm.products)
+          this.$buefy.snackbar.open({
+            message: 'Sikeresen törölve',
+            queue: false
+          })
+        }
+      })
     },
     async getData () {
       if (this.$route.params.id) {
