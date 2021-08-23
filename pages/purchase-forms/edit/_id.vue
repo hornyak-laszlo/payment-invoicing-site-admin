@@ -133,6 +133,15 @@
                 </b-button>
               </footer>
             </b-collapse>
+            <b-field horizontal>
+              <b-button
+                outlined
+                type="is-primary"
+                label="Termék hozzáadása"
+                :loading="isLoading"
+                @click="addNewProduct()"
+              />
+            </b-field>
             <hr>
             <b-field horizontal>
               <b-button
@@ -207,6 +216,9 @@ export default {
           })
         }
       })
+    },
+    addNewProduct: () => {
+      console.log(this.purchaseForm.products.some(product => product.type === 'one_time'))
     },
     async getData () {
       if (this.$route.params.id) {
