@@ -218,24 +218,6 @@
             </b-field>
 
             <b-field
-              label="Rendelés összege"
-              message="Mennyiért vásárolt a vevő"
-              horizontal
-            >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Vásárlás összege"
-                rules="required"
-              >
-                <b-input
-                  v-model="purchase.sumOfPurchase"
-                  required
-                  type="number"
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
-            <b-field
               label="Fizetési mód"
               message="Hogy fizet a vevő"
               horizontal
@@ -329,11 +311,14 @@
               </div>
               <footer class="card-footer">
                 <b-button
+                  expanded
+                  outlined
+                  type="is-danger"
                   style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
                   label="Termék törlése"
                   icon-pack="fas"
                   icon-left="trash-alt"
-                  class="card-footer-item has-text-danger"
+                  class="card-footer-item"
                   @click="deleteProduct(index)"
                 />
               </footer>

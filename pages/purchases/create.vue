@@ -237,24 +237,7 @@
                 placeholder="Utca és házszám"
               />
             </b-field>
-            <b-field
-              label="Rendelés összege"
-              message="Mennyiért vásárolt a vevő"
-              horizontal
-            >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Vásárlás összege"
-                rules="required"
-              >
-                <b-input
-                  v-model="purchase.sumOfPurchase"
-                  required
-                  type="number"
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
+
             <b-field
               label="Fizetési mód"
               message="Hogy fizet a vevő"
