@@ -60,13 +60,17 @@ export default {
     async submit () {
       this.isLoading = true
       try {
-        await this.$strapi.login({
+        const { user } = await this.$strapi.login({
           identifier: this.email,
           password: this.password
         })
         this.isLoading = false
 
-        this.$router.push('/')
+        if (!user.company) {
+          this.$router.push('/create-company')
+        } else {
+          this.$router.push('/')
+        }
       } catch (err) {
         this.isLoading = false
 
