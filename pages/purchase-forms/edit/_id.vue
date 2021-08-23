@@ -217,7 +217,7 @@ export default {
         }
       })
     },
-    addNewProduct: () => {
+    addNewProduct () {
       console.log(this.purchaseForm.products.some(product => product.type === 'one_time'))
     },
     async getData () {
