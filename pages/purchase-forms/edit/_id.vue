@@ -123,13 +123,13 @@
                   outlined
                   type="is-danger"
                   style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                  label="Termék törlése"
+                  label="Törlés"
                   icon-pack="fas"
                   icon-left="trash-alt"
                   class="card-footer-item"
                   @click="deleteProduct(product.id)"
                 >
-                  Termék törlése
+                  Törlés
                 </b-button>
               </footer>
             </b-collapse>
@@ -137,7 +137,7 @@
               <b-button
                 outlined
                 type="is-primary"
-                label="Termék hozzáadása"
+                label="Űrlaphoz tartozó termékek szerkesztése"
                 :loading="isLoading"
                 @click="addNewProduct()"
               />
@@ -184,6 +184,13 @@
                 :loading="isLoading"
                 @click="addNewSubProduct()"
               />
+              <b-button
+                style="border-radius: 5px"
+                label="Mégse"
+                size="is-small"
+                :loading="isLoading"
+                @click="addProduct = false"
+              />
             </b-field>
 
             <b-field
@@ -216,6 +223,13 @@
                 size="is-small"
                 :loading="isLoading"
                 @click="addNewOneProduct()"
+              />
+              <b-button
+                style="border-radius: 5px"
+                label="Mégse"
+                size="is-small"
+                :loading="isLoading"
+                @click="addProduct = false"
               />
             </b-field>
             <hr>
@@ -254,7 +268,9 @@ export default {
       allProducts: [],
       addProduct: false,
       productType: '',
-      plusProductId: 0
+      plusProductId: 0,
+      selectedProductIDs: [],
+      plusProduct: []
     }
   },
   head () {
@@ -268,14 +284,23 @@ export default {
     },
     oneTimeProducts () {
       return this.allProducts.filter(product => product.type === 'one_time')
-    },
-    selectedProductIDs () {
-      return this.purchaseForm.products.map(product => product.id)
     }
+    /* selectedProductIDs: {
+      get () {
+        return this.purchaseForm.products.map(product => product.id)
+      },
+      set (value) {
+        this.selectedProductIDs = value
+      }
+    } */
+
   },
   async mounted () {
     this.purchaseForm = await this.getData()
     this.allProducts = await this.$strapi.find('products')
+    if (this.purchaseForm.products.length > 0) {
+      this.selectedProductIDs = this.purchaseForm.products.map(product => product.id)
+    }
   },
   methods: {
     getClearFormObject () {
@@ -333,6 +358,31 @@ export default {
           })
         }
       }
+    },
+    addNewSubProduct () {
+      this.plusProduct = []
+      this.plusProduct.push(this.allProducts.find(product => product.id === this.plusProductId))
+      this.purchaseForm.products = this.plusProduct
+      this.addProduct = false
+      this.subProductAdded = true
+      console.log(this.purchaseForm.products)
+      this.$buefy.snackbar.open({
+        message: 'Termék sikeresen hozzáadva',
+        queue: false
+      })
+    },
+
+    addNewOneProduct () {
+      this.plusProduct = []
+      this.plusProduct = this.allProducts.filter(product => this.selectedProductIDs.includes(product.id))
+      this.purchaseForm.products = this.plusProduct
+      this.addProduct = false
+      this.oneTimeProductAdded = true
+      console.log(this.purchaseForm.products)
+      this.$buefy.snackbar.open({
+        message: 'Termék(ek) sikeresen hozzáadva',
+        queue: false
+      })
     },
     async submit () {
       try {

@@ -62,24 +62,74 @@
 
           <b-field
             v-if="!addProduct"
-            label="Hozzáadott termékek"
+            label="Űrlaphpz tartozó termékek"
             horizontal
           >
-            <p
-              v-for="(product, index) of purchaseForm.products"
-              :key="index"
-            >
-              <strong> {{ product.name }} </strong> hozzáadva az űrlaphoz
-            </p>
+            <p>Az űrlaphoz tartozó termékek listája:</p>
+
             <b-button
               outlined
               style="border-radius: 5px"
               type="is-primary"
               size="is-small"
-              label="Másik termék választás"
+              label="Űrlaphoz tartozó termékek szerkesztése"
               @click="addProduct = true"
             />
           </b-field>
+          <b-collapse
+            v-for="(product, index) of purchaseForm.products"
+            :key="index"
+            style="max-width: 80%; margin-left: 19%;"
+            class="card"
+            animation="slide"
+          >
+            <template #trigger="props">
+              <div
+                class="card-header"
+                role="button"
+              >
+                <p class="card-header-title">
+                  Termék ID: {{ product.id }}, {{ product.name }}
+                </p>
+                <a class="card-header-icon">
+                  <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
+                </a>
+              </div>
+            </template>
+            <div class="card-content">
+              <div class="content">
+                <p>
+                  <strong>Termék ára:</strong>
+                  {{ product.grossPrice }}
+                </p>
+              </div>
+              <div class="content">
+                <p>
+                  <strong>Termék leírása:</strong>
+                  {{ product.description }}
+                </p>
+              </div>
+            </div>
+            <footer class="card-footer">
+              <nuxt-link
+                :to="`/products/edit/${product.id}`"
+                style="width: 100%"
+              >
+                <b-button
+                  expanded
+                  outlined
+                  type="is-primary"
+                  style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
+                  label="Termék szerkesztése"
+                  icon-pack="fas"
+                  icon-left="tag"
+                  class="card-footer-item"
+                >
+                  Termék szerkesztése
+                </b-button>
+              </nuxt-link>
+            </footer>
+          </b-collapse>
 
           <b-field
             v-if="addProduct"
@@ -123,6 +173,13 @@
               :loading="isLoading"
               @click="addNewSubProduct()"
             />
+            <b-button
+              style="border-radius: 5px"
+              label="Mégse"
+              size="is-small"
+              :loading="isLoading"
+              @click="addProduct = false"
+            />
           </b-field>
 
           <b-field
@@ -155,6 +212,13 @@
               size="is-small"
               :loading="isLoading"
               @click="addNewOneProduct()"
+            />
+            <b-button
+              style="border-radius: 5px"
+              label="Mégse"
+              size="is-small"
+              :loading="isLoading"
+              @click="addProduct = false"
             />
           </b-field>
 
