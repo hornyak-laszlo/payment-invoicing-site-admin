@@ -174,7 +174,10 @@ export default {
   data () {
     return {
       isLoading: false,
-      purchaseForm: this.getClearFormObject()
+      purchaseForm: this.getClearFormObject(),
+      allProducts: [],
+      addProduct: false,
+      productType: ''
     }
   },
   head () {
@@ -182,8 +185,17 @@ export default {
       title: 'Vásárlás űrlap szerkesztése'
     }
   },
+  computed: {
+    subscriptionProducts () {
+      return this.allProducts.filter(product => product.type === 'subscription')
+    },
+    oneTimeProducts () {
+      return this.allProducts.filter(product => product.type === 'one_time')
+    }
+  },
   async mounted () {
     this.purchaseForm = await this.getData()
+    this.allProducts = await this.$strapi.find('products')
   },
   methods: {
     getClearFormObject () {
@@ -218,7 +230,13 @@ export default {
       })
     },
     addNewProduct () {
-      console.log(this.purchaseForm.products.some(product => product.type === 'one_time'))
+      if (this.purchaseForm.products.some(product => product.type === 'subscription')) {
+        this.$buefy.snackbar.open({
+          message: 'Már egy előfizetéses termék szerepel az űrlapon',
+          type: 'is-danger',
+          queue: false
+        })
+      }
     },
     async getData () {
       if (this.$route.params.id) {
