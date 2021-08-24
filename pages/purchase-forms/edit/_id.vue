@@ -79,7 +79,7 @@
                   role="button"
                 >
                   <p class="card-header-title">
-                    Termék ID: {{ product.id }}
+                    Termék ID: {{ product.id }}, {{ product.name }}
                   </p>
                   <a class="card-header-icon">
                     <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
@@ -142,6 +142,82 @@
                 @click="addNewProduct()"
               />
             </b-field>
+            <b-field
+              v-if="addProduct"
+              label="Termék típusa"
+              message="Milyen típusú terméket lehet itt rendelni"
+              horizontal
+            >
+              <b-select
+                v-model="productType"
+                required
+              >
+                <option value="subscription">
+                  Előfizetéses
+                </option>
+                <option value="one_time">
+                  Egyszeri vásárlás
+                </option>
+              </b-select>
+            </b-field>
+            <b-field
+              v-if="productType === 'subscription' && addProduct"
+              horizontal
+            >
+              <b-select
+                v-model="plusProductId"
+                required
+              >
+                <option
+                  v-for="product in subscriptionProducts"
+                  :key="product.id"
+                  :value="product.id"
+                >
+                  {{ product.name }}
+                </option>
+              </b-select>
+              <b-button
+                style="border-radius: 5px"
+                type="is-primary"
+                label="Hozzáadás"
+                size="is-small"
+                :loading="isLoading"
+                @click="addNewSubProduct()"
+              />
+            </b-field>
+
+            <b-field
+              v-if="productType === 'one_time' && addProduct"
+              horizontal
+            >
+              <b-dropdown
+                v-model="selectedProductIDs"
+                multiple
+              >
+                <template #trigger>
+                  <b-button icon-right="menu-down">
+                    {{ selectedProductIDs.length }} termék kiválasztva
+                  </b-button>
+                </template>
+                <b-dropdown-item
+                  v-for="product in oneTimeProducts"
+                  :key="product.id"
+                  :value="product.id"
+                >
+                  <span>
+                    {{ product.name }}
+                  </span>
+                </b-dropdown-item>
+              </b-dropdown>
+              <b-button
+                style="border-radius: 5px"
+                type="is-primary"
+                label="Hozzáadás"
+                size="is-small"
+                :loading="isLoading"
+                @click="addNewOneProduct()"
+              />
+            </b-field>
             <hr>
             <b-field horizontal>
               <b-button
@@ -177,7 +253,8 @@ export default {
       purchaseForm: this.getClearFormObject(),
       allProducts: [],
       addProduct: false,
-      productType: ''
+      productType: '',
+      plusProductId: 0
     }
   },
   head () {
@@ -191,6 +268,9 @@ export default {
     },
     oneTimeProducts () {
       return this.allProducts.filter(product => product.type === 'one_time')
+    },
+    selectedProductIDs () {
+      return this.purchaseForm.products.map(product => product.id)
     }
   },
   async mounted () {
@@ -236,6 +316,8 @@ export default {
           type: 'is-danger',
           queue: false
         })
+      } else {
+        this.addProduct = true
       }
     },
     async getData () {
