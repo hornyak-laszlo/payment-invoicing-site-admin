@@ -216,7 +216,7 @@
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="Adószám"
-                  rules="required"
+                  rules="required|min:4"
                 >
                   <b-input
                     v-model="company.taxNumber"
