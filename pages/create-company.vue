@@ -209,6 +209,24 @@
               </b-field>
 
               <b-field
+                label="Adószám"
+                message="A vállalkozás adószáma"
+                horizontal
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Adószám"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="company.taxNumber"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+
+              <b-field
                 v-if="company.formOfEnterprise === 'self_employed'"
                 label="Nyilvántartási szám"
                 message="Egyéni vállalkozó nyilvántartási száma (opcionális)"
@@ -291,7 +309,8 @@ export default {
         companyRegistrationNumber: '',
         registrationNumber: '',
         swift: '',
-        iban: ''
+        iban: '',
+        users: []
       },
       isLoading: false
     }
@@ -303,7 +322,10 @@ export default {
   },
   computed: {
   },
-  async mounted () {
+  /*  async mounted () {
+    await console.log(this.$strapi.user)
+  }, */
+  /*   async mounted () {
     try {
       this.company = await this.$strapi.$http.$get('/companies/own/data')
     } catch (err) {
@@ -312,13 +334,13 @@ export default {
         type: 'is-danger'
       })
     }
-  },
+  }, */
 
   methods: {
     async submit () {
       try {
         this.isLoading = true
-
+        this.company.users.push({ id: this.$strapi.user.id })
         await this.$strapi.create('companies', this.company)
 
         this.isLoading = false

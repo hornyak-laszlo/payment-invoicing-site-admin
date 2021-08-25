@@ -209,6 +209,24 @@
               </b-field>
 
               <b-field
+                label="Adószám"
+                message="A vállalkozás adószáma"
+                horizontal
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Adószám"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="company.taxNumber"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+
+              <b-field
                 v-if="company.formOfEnterprise === 'self_employed'"
                 label="Nyilvántartási szám"
                 message="Egyéni vállalkozó nyilvántartási száma (opcionális)"
