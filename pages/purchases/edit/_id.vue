@@ -447,10 +447,8 @@ export default {
         invoiceCity: '',
         invoiceZip: '',
         invoiceStreetNo: '',
-        sumOfPurchase: '',
         products: [],
-        status: '',
-        company: {}
+        status: ''
       }
     },
     addNewProduct () {
