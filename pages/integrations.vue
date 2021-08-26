@@ -10,51 +10,85 @@
           icon="file-invoice"
           class="tile is-child"
         >
-          <b-field label="Állapot">
-            <b-switch
-              v-model="company.billingoIntegrated"
-              type="is-success"
-              disabled
-            >
-              {{ company.billingoIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
-            </b-switch>
-          </b-field>
-          <b-field
-            v-if="company.billingoIntegrated"
-            label="API Kulcs"
-          >
-            <b-input
-              v-model="company.billingoApiKey"
-              type="password"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
+          <ValidationObserver v-slot="{ invalid }">
+            <form @submit.prevent="submit">
+              <b-field label="Állapot">
+                <b-switch
+                  v-model="company.billingoIntegrated"
+                  type="is-success"
+                >
+                  {{ company.billingoIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
+                </b-switch>
+              </b-field>
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Billingo API kulcs"
+                rules="required|min:5"
+              >
+                <b-field
+                  v-if="company.billingoIntegrated"
+                  label="API Kulcs"
+                >
+                  <b-input
+                    v-model="company.billingoApiKey"
+                    type="password"
+                  />
+                </b-field>
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+              <b-button
+                v-if="company.billingoIntegrated"
+                type="is-primary"
+                :loading="isLoading"
+                expanded
+                :disabled="invalid"
+                native-type="submit"
+              >
+                Mentés
+              </b-button>
+            </form>
+          </ValidationObserver>
         </card-component>
         <card-component
           title="Szamlazz.hu"
           icon="file-invoice"
           class="tile is-child"
         >
-          <b-field label="Állapot">
-            <b-switch
-              v-model="company.szamlazzIntegrated"
-              type="is-success"
-              disabled
-            >
-              {{ company.szamlazzIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
-            </b-switch>
-          </b-field>
-          <b-field
-            v-if="company.szamlazzIntegrated"
-            label="Auth Token"
-          >
-            <b-input
-              v-model="company.szamlazzAuthToken"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
+          <ValidationObserver v-slot="{ invalid }">
+            <form @submit.prevent="submit">
+              <b-field label="Állapot">
+                <b-switch
+                  v-model="company.szamlazzIntegrated"
+                  type="is-success"
+                >
+                  {{ company.szamlazzIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
+                </b-switch>
+              </b-field>
+              <b-field
+                v-if="company.szamlazzIntegrated"
+                label="Auth Token"
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Szamlazz Auth Token"
+                  rules="required|min:5"
+                >
+                  <b-input v-model="company.szamlazzAuthToken" />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-button
+                v-if="company.szamlazzIntegrated"
+                type="is-primary"
+                :loading="isLoading"
+                expanded
+                :disabled="invalid"
+                native-type="submit"
+              >
+                Mentés
+              </b-button>
+            </form>
+          </ValidationObserver>
         </card-component>
       </tiles>
       <tiles>
@@ -63,35 +97,54 @@
           icon="money-check-alt"
           class="tile is-child"
         >
-          <b-field label="Állapot">
-            <b-switch
-              v-model="company.simplePayIntegrated"
-              type="is-success"
-              disabled
-            >
-              {{ company.simplePayIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
-            </b-switch>
-          </b-field>
-          <b-field
-            v-if="company.simplePayIntegrated"
-            label="Privát kulcs"
-          >
-            <b-input
-              v-model="company.simplePayPrivateKey"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
-          <b-field
-            v-if="company.simplePayIntegrated"
-            label="Publikus kulcs"
-          >
-            <b-input
-              v-model="company.simplePayPublicKey"
-              custom-class="is-static"
-              readonly
-            />
-          </b-field>
+          <ValidationObserver v-slot="{ invalid }">
+            <form @submit.prevent="submit">
+              <b-field label="Állapot">
+                <b-switch
+                  v-model="company.simplePayIntegrated"
+                  type="is-success"
+                >
+                  {{ company.simplePayIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
+                </b-switch>
+              </b-field>
+              <b-field
+                v-if="company.simplePayIntegrated"
+                label="Privát kulcs"
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="SimplePay privát kulcs"
+                  rules="required|min:5"
+                >
+                  <b-input v-model="company.simplePayPrivateKey" />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-field
+                v-if="company.simplePayIntegrated"
+                label="Publikus kulcs"
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="SimplePay publikus kulcs"
+                  rules="required|min:5"
+                >
+                  <b-input v-model="company.simplePayPublicKey" />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-button
+                v-if="company.simplePayIntegrated"
+                type="is-primary"
+                :loading="isLoading"
+                expanded
+                :disabled="invalid"
+                native-type="submit"
+              >
+                Mentés
+              </b-button>
+            </form>
+          </ValidationObserver>
         </card-component>
         <card-component
           title="Stripe"
@@ -157,10 +210,12 @@
                 </ValidationProvider>
               </b-field>
               <b-button
+                v-if="company.stripeIntegrated"
                 type="is-primary"
                 :loading="isLoading"
                 expanded
                 :disabled="invalid"
+                native-type="submit"
               >
                 Mentés
               </b-button>
@@ -233,6 +288,7 @@ export default {
     async submit () {
       try {
         this.isLoading = true
+        console.log(this.company)
 
         await this.$strapi.$http.$put('/companies/owm/integrations', this.company)
 
