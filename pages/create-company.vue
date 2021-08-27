@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Cégadatok
+      Regisztráld a céged
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
@@ -291,6 +291,7 @@ export default {
     CardComponent
   },
   layout: 'unauthorized',
+  middleware: 'auth',
   data () {
     return {
       company: {
@@ -309,38 +310,27 @@ export default {
         companyRegistrationNumber: '',
         registrationNumber: '',
         swift: '',
-        iban: '',
-        users: []
+        iban: ''
       },
       isLoading: false
     }
   },
   head () {
     return {
-      title: 'Cégadatok'
+      title: 'Cég regisztráció'
     }
   },
   computed: {
   },
-  /*  async mounted () {
-    await console.log(this.$strapi.user)
-  }, */
-  /*   async mounted () {
-    try {
-      this.company = await this.$strapi.$http.$get('/companies/own/data')
-    } catch (err) {
-      this.$buefy.toast.open({
-        message: 'Nem sikerült betölteni a cég adatait',
-        type: 'is-danger'
-      })
+  mounted () {
+    if (this.$strapi.user.company) {
+      this.$router.push('/company')
     }
-  }, */
-
+  },
   methods: {
     async submit () {
       try {
         this.isLoading = true
-        this.company.users.push({ id: this.$strapi.user.id })
         await this.$strapi.create('companies', this.company)
 
         this.isLoading = false

@@ -267,16 +267,14 @@ export default {
   },
   async mounted () {
     try {
-      if (this.$strapi.user.company >= 0) {
-        const data = await this.$strapi.$http.$get('/companies/own/integrations')
-        this.company.stripeIntegrated = data.stripeIntegrated
-        this.company.stripePrivateKey = data.stripePrivateKey
-        this.company.stripePublicKey = data.stripePublicKey
-        this.company.stripeWebhookId = data.stripeWebhookId
-        this.company.stripeWebhookSecret = data.stripeWebhookSecret
-        this.company.billingoIntegrated = data.billingoIntegrated
-        this.company.billingoApiKey = data.billingoApiKey
-      }
+      const data = await this.$strapi.$http.$get('/companies/own/integrations')
+      this.company.stripeIntegrated = data.stripeIntegrated
+      this.company.stripePrivateKey = data.stripePrivateKey
+      this.company.stripePublicKey = data.stripePublicKey
+      this.company.stripeWebhookId = data.stripeWebhookId
+      this.company.stripeWebhookSecret = data.stripeWebhookSecret
+      this.company.billingoIntegrated = data.billingoIntegrated
+      this.company.billingoApiKey = data.billingoApiKey
     } catch (err) {
       this.$buefy.toast.open({
         message: 'Nem sikerült betölteni az integrációs adatokat',
