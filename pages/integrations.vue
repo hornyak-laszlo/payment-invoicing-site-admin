@@ -296,7 +296,7 @@ export default {
           message: 'Sikeresen mentve',
           queue: false
         })
-        this.$router.push('/')
+        this.$router.push('/integrations')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({
