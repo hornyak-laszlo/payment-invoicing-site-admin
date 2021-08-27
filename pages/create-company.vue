@@ -1,7 +1,7 @@
 <template>
   <div>
     <hero-bar>
-      Cégadatok
+      Regisztráld a céged
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
@@ -284,12 +284,14 @@ import HeroBar from '@/components/common/HeroBar'
 import Tiles from '@/components/common/Tiles'
 
 export default {
-  name: 'Company',
+  name: 'CreateCompany',
   components: {
     Tiles,
     HeroBar,
     CardComponent
   },
+  layout: 'unauthorized',
+  middleware: 'auth',
   data () {
     return {
       company: {
@@ -315,34 +317,28 @@ export default {
   },
   head () {
     return {
-      title: 'Cégadatok'
+      title: 'Cég regisztráció'
     }
   },
   computed: {
   },
-  async mounted () {
-    try {
-      this.company = await this.$strapi.$http.$get('/companies/own/data')
-    } catch (err) {
-      this.$buefy.toast.open({
-        message: 'Nem sikerült betölteni a cég adatait',
-        type: 'is-danger'
-      })
+  mounted () {
+    if (this.$strapi.user.company) {
+      this.$router.push('/company')
     }
   },
-
   methods: {
     async submit () {
       try {
         this.isLoading = true
-
-        await this.$strapi.$http.$put('/companies/own/data', this.company)
+        await this.$strapi.create('companies', this.company)
 
         this.isLoading = false
         this.$buefy.snackbar.open({
           message: 'Sikeresen mentve',
           queue: false
         })
+        this.$router.push('/')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({
