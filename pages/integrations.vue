@@ -288,9 +288,8 @@ export default {
     async submit () {
       try {
         this.isLoading = true
-        console.log(this.company)
 
-        await this.$strapi.$http.$put('/companies/owm/integrations', this.company)
+        await this.$strapi.$http.$put('/companies/own/integrations', this.company)
 
         this.isLoading = false
         this.$buefy.snackbar.open({
