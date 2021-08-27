@@ -90,7 +90,9 @@ export default {
   },
   computed: {
   },
-  mounted () {
+  async mounted () {
+    const dummyData = await this.$strapi.$http.$get('/purchases/dashboard')
+    console.log(dummyData)
     this.fillChartData()
 
     this.$buefy.snackbar.open({

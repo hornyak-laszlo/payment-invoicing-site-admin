@@ -27,6 +27,11 @@ export default {
         'Ügyfelek',
         [
           {
+            to: '/',
+            label: 'Dashboard',
+            icon: 'chart-line'
+          },
+          {
             to: '/contacts',
             label: 'Kontaktok',
             icon: 'user'
