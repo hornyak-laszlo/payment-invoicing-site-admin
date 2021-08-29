@@ -2,3 +2,4 @@
 nuxt.config.js
 plugins/
 plugins/vee-validate.js
+components/Charts/chart.config.js
