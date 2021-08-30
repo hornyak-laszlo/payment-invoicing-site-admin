@@ -52,7 +52,13 @@ export default {
       }, {
         field: 'sumOfPurchase',
         title: 'Vásárlás értéke'
-      }]
+      },
+      {
+        field: this.typeCheck,
+        title: 'Termék típusa'
+      }],
+      purchases: [{ products: [] }],
+      type: ''
     }
   },
   head () {
@@ -61,8 +67,14 @@ export default {
     }
   },
   computed: {
+    typeCheck () {
+      return 'products[0].type'
+    }
   },
-  mounted () {
+  async mounted () {
+    this.purchases = await this.$strapi.find('purchases')
+    this.type = this.purchases[0].products[0].type
+    console.log(this.type)
   },
   methods: {
   }
