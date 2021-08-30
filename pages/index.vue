@@ -9,34 +9,38 @@
           class="tile is-child"
           type="is-primary"
           icon="account-multiple"
-          :number="512"
-          label="Clients"
+          :number="contacts.length"
+          suffix=" db"
+          label="Kontaktok"
         />
         <card-widget
           class="tile is-child"
           type="is-info"
           icon="cart-outline"
-          :number="7770"
+          :number="salesNumber"
           prefix="$"
-          label="Sales"
+          label="Összes bevétel"
         />
         <card-widget
           class="tile is-child"
           type="is-success"
-          icon="chart-timeline-variant"
-          :number="256"
-          suffix="%"
-          label="Performance"
+          icon="account-check"
+          :number="customers.length"
+          suffix=" db"
+          label="Vásárlók száma"
         />
       </tiles>
 
       <card-component
-        title="Performance"
+        title="Havi vásárlások"
         icon="wallet"
         header-icon="reload"
         @header-icon-click="fillChartData"
       >
-        <div v-if="defaultChart.chartData" class="chart-area">
+        <div
+          v-if="defaultChart.chartData"
+          class="chart-area"
+        >
           <line-chart
             ref="bigChart"
             style="height: 100%;"
@@ -47,10 +51,14 @@
         </div>
       </card-component>
 
-      <card-component title="Clients" class="has-table has-mobile-sort-spaced">
-        <!--clients-table-sample
-          :data-url="`${$router.options.base}data-sources/clients.json`"
-        /-->
+      <card-component
+        title="Legutóbbi vásárlások"
+        class="has-table has-mobile-sort-spaced"
+      >
+        <data-table
+          :fields="fields"
+          :collection="collection"
+        />
       </card-component>
     </section>
   </div>
@@ -64,6 +72,7 @@ import Tiles from '@/components/common/Tiles'
 import CardWidget from '@/components/common/CardWidget'
 import CardComponent from '@/components/common/CardComponent'
 import LineChart from '@/components/Charts/LineChart'
+import DataTable from '@/components/DataTable'
 // import ClientsTableSample from '@/components/ClientsTableSample'
 export default {
   name: 'Home',
@@ -73,14 +82,34 @@ export default {
     CardComponent,
     CardWidget,
     Tiles,
-    HeroBar
+    HeroBar,
+    DataTable
   },
   data () {
     return {
       defaultChart: {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain
-      }
+      },
+      dummyData: { oneTimePayments: [], subscriptionPayments: [] },
+      salesNumber: null,
+      customers: [],
+      contacts: [],
+      collection: 'purchases',
+      fields: [{
+        field: 'lastName',
+        title: 'Vezetéknév'
+      }, {
+        field: 'firstName',
+        title: 'Keresztnév'
+      }, {
+        field: 'status',
+        title: 'Vásárlás státusza'
+      }, {
+        field: 'sumOfPurchase',
+        title: 'Vásárlás értéke'
+      }]
+      /* monthlySum: [] */
     }
   },
   head () {
@@ -89,11 +118,22 @@ export default {
     }
   },
   computed: {
+    sumByMonth () {
+      return this.dummyData.oneTimePayments.map((payment, index) => payment + this.dummyData.subscriptionPayments[index])
+    }
+
   },
+
   async mounted () {
-    const dummyData = await this.$strapi.$http.$get('/purchases/dashboard')
-    console.log(dummyData)
+    this.dummyData = await this.$strapi.$http.$get('/purchases/dashboard')
+    this.customers = await this.$strapi.find('customers')
+    this.contacts = await this.$strapi.find('contacts')
+    console.log(this.customers)
+    console.log(this.dummyData)
     this.fillChartData()
+    const { oneTimePayments, subscriptionPayments } = this.dummyData
+    const sumPayments = paymentArr => paymentArr.reduce((acc, curr) => acc + curr)
+    this.salesNumber = sumPayments(oneTimePayments) + sumPayments(subscriptionPayments)
 
     this.$buefy.snackbar.open({
       message: 'Welcome back',
@@ -105,11 +145,12 @@ export default {
       const data = []
 
       for (let i = 0; i < n; i++) {
-        data.push(Math.round(Math.random() * 200))
+        data.push(Math.round(Math.random() * 50000))
       }
 
       return data
     },
+
     fillChartData () {
       this.defaultChart.chartData = {
         datasets: [
@@ -126,7 +167,8 @@ export default {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: this.randomChartData(9)
+            data: this.dummyData.oneTimePayments,
+            label: 'Egyszeri vásárlások'
           },
           {
             fill: false,
@@ -141,7 +183,8 @@ export default {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: this.randomChartData(9)
+            data: this.dummyData.subscriptionPayments,
+            label: 'Előfizetéses vásárlások'
           },
           {
             fill: false,
@@ -156,10 +199,11 @@ export default {
             pointHoverRadius: 4,
             pointHoverBorderWidth: 15,
             pointRadius: 4,
-            data: this.randomChartData(9)
+            data: this.sumByMonth,
+            label: 'Havi vásárlások összesen'
           }
         ],
-        labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09']
+        labels: Array.from(Array(12), (_, i) => i + 1)
       }
     }
   }
