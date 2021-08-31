@@ -198,9 +198,13 @@ export default {
       if (this.collection) {
         this.isLoading = true
         try {
+          const customFunctions = this.fields.filter(f => f.customFn)
           this.data = await this.$strapi.find(this.collection)
           this.isLoading = false
           this.data.forEach((data) => {
+            customFunctions.forEach((e) => {
+              data[e.field] = e.customFn(data)
+            })
             data.created_at = convertToHungarianTime(data.created_at)
             data.updated_at = convertToHungarianTime(data.updated_at)
           })

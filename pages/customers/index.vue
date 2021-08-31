@@ -24,6 +24,7 @@
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 import DataTable from '@/components/DataTable'
+import { convertToHungarianTime } from '@/utils/dateHelpers'
 export default {
   name: 'Customers',
   components: {
@@ -44,6 +45,7 @@ export default {
         field: 'sumOfPurchases',
         title: 'Összes vásárlás összege'
       }, {
+        customFn: data => convertToHungarianTime(data.lastPurchaseDate),
         field: 'lastPurchaseDate',
         title: 'Legutóbbi vásárlás'
       }]
