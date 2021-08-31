@@ -54,7 +54,7 @@ export default {
         title: 'Vásárlás értéke'
       },
       {
-        field: this.typeCheck,
+        field: 'products',
         title: 'Termék típusa'
       }],
       purchases: [{ products: [] }],
