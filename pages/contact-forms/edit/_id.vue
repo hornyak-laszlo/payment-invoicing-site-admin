@@ -6,7 +6,7 @@
         icon="columns"
         size="is-small"
         style="margin: 1rem"
-      /> Űrlap szerkesztése ID:{{ contactForm.id }}
+      /> Űrlap szerkesztése ID: {{ contactForm.id }}
       <nuxt-link
         slot="right"
         to="/forms"

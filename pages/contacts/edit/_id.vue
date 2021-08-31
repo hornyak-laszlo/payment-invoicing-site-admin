@@ -1,7 +1,13 @@
 <template>
   <div>
     <hero-bar>
-      Kontakt szerkesztése
+      <b-icon
+        pack="fas"
+        icon="user"
+        size="is-small"
+        style="margin: 1rem"
+      />
+      Kontakt szerkesztése ID: {{ $route.params.id }}
       <nuxt-link
         slot="right"
         to="/contacts"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        class="tile is-child"
-        :title="`Kontakt - ID: ${$route.params.id}`"
-        icon="user"
-      >
+      <card-component>
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
             <b-field
