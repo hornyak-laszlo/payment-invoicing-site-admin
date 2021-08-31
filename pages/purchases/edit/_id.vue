@@ -1,7 +1,13 @@
 <template>
   <div>
     <hero-bar>
-      Vásárlás szerkesztése
+      <b-icon
+        pack="fas"
+        icon="shopping-basket"
+        size="is-small"
+        style="margin: 1rem"
+      />
+      Vásárlás szerkesztése, ID: {{ $route.params.id }}
       <nuxt-link
         slot="right"
         to="/purchases"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        :title="`Vásárlás - ID: ${purchase.id}`"
-        icon="shopping-basket"
-        class="tile is-child"
-      >
+      <card-component>
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
             <b-field

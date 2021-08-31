@@ -17,7 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component>
+      <card-component class="has-table">
         <data-table
           :fields="fields"
           :collection="collection"

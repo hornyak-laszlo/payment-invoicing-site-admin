@@ -1,6 +1,12 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="columns"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Űrlapok
       <nuxt-link
         slot="right"
@@ -19,11 +25,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        class="has-table"
-        title="Űrlapok"
-        icon="columns"
-      >
+      <card-component class="has-table">
         <form-data-table />
       </card-component>
     </section>

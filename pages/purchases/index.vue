@@ -1,6 +1,12 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="shopping-basket"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Vásárlások
       <nuxt-link
         slot="right"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        class="has-table"
-        title="Vásárlások"
-        icon="shopping-basket"
-      >
+      <card-component class="has-table">
         <data-table
           :fields="fields"
           :collection="collection"

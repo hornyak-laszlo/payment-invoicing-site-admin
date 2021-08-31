@@ -1,6 +1,12 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="columns"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Vásárlás űrlap hozzáadása
       <nuxt-link
         slot="right"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        title="Új űrlap"
-        icon="columns"
-        class="tile is-child"
-      >
+      <card-component>
         <form @submit.prevent="submit">
           <b-field
             label="Név"

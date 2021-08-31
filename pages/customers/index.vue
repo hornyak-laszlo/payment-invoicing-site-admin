@@ -1,14 +1,16 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="user-tag"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Vásárlók
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        class="has-table"
-        title="Vásárlók"
-        icon="user-tag"
-      >
+      <card-component class="has-table">
         <data-table
           :fields="fields"
           :collection="collection"
