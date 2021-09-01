@@ -19,32 +19,33 @@
     <section class="section is-main-section">
       <card-component>
         <form @submit.prevent="submit">
-          <b-field
-            label="Vezetéknév"
-            message="A vásárló vezetékneve"
-            horizontal
-          >
-            <b-input
-              v-model="lastPurchase.lastName"
-              readonly="true"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Keresztnév"
-            message="A vásárló keresztneve"
-            horizontal
-          >
-            <b-input
-              v-model="lastPurchase.firstName"
-              readonly="true"
-              required
-            />
+          <b-field grouped>
+            <b-field
+              label="Vezetéknév"
+              message="A vásárló vezetékneve"
+              expanded
+            >
+              <b-input
+                v-model="lastPurchase.lastName"
+                readonly="true"
+                required
+              />
+            </b-field>
+            <b-field
+              label="Keresztnév"
+              message="A vásárló keresztneve"
+              expanded
+            >
+              <b-input
+                v-model="lastPurchase.firstName"
+                readonly="true"
+                required
+              />
+            </b-field>
           </b-field>
           <b-field
             label="Cégnév"
             message="A vásárló cégneve"
-            horizontal
           >
             <b-input
               v-model="lastPurchase.companyName"
@@ -56,7 +57,6 @@
           <b-field
             label="Telefonszám"
             message="A vásárló telefonszáma"
-            horizontal
           >
             <b-input
               v-model="lastPurchase.phoneNumber"
@@ -68,7 +68,6 @@
           <b-field
             label="Email cím"
             message="A vásárló email címe"
-            horizontal
           >
             <b-input
               v-model="email"
@@ -78,71 +77,108 @@
             />
           </b-field>
 
-          <b-field
-            label="Legutóbbi számlázási cím"
-            message="A legutóbbi számlán szereplő cím"
-            horizontal
-          >
-            <b-input
-              v-model="lastPurchase.invoiceCountry"
-              readonly="true"
-              placeholder="Ország"
-              required
-            />
+          <b-field label="Legutóbbi számlázási cím" />
+          <b-field grouped>
+            <b-field
+              label="Ország"
+              message="A legutóbbi számlán szereplő ország"
+            >
+              <b-input
+                v-model="lastPurchase.invoiceCountry"
+                readonly="true"
+                placeholder="Ország"
+                required
+              />
+            </b-field>
+            <b-field
+              label="Irányítószám"
+              message="A legutóbbi számlán szereplő irányítószám"
+            >
+              <b-input
+                v-model="lastPurchase.invoiceZip"
+                readonly="true"
+                placeholder="Irányítószám"
+                required
+                type="number"
+              />
+            </b-field>
 
-            <b-input
-              v-model="lastPurchase.invoiceZip"
-              readonly="true"
-              placeholder="Irányítószám"
-              required
-              type="number"
-            />
+            <b-field
+              label="Város"
+              message="A legutóbbi számlán szereplő város"
+            >
+              <b-input
+                v-model="lastPurchase.invoiceCity"
+                readonly="true"
+                placeholder="Város"
+                required
+              />
+            </b-field>
 
-            <b-input
-              v-model="lastPurchase.invoiceCity"
-              readonly="true"
-              placeholder="Város"
-              required
-            />
-
-            <b-input
-              v-model="lastPurchase.invoiceStreetNo"
-              readonly="true"
-              placeholder="Utca és házszám"
-              required
-            />
+            <b-field
+              label="Utca és házszám"
+              message="A legutóbbi számlán szereplő utca és házszám"
+            >
+              <b-input
+                v-model="lastPurchase.invoiceStreetNo"
+                readonly="true"
+                placeholder="Utca és házszám"
+                required
+              />
+            </b-field>
           </b-field>
 
-          <b-field
-            label="Legutóbbi szállítási cím"
-            message="Ahova a terméket legutóbb szállítani kellett"
-            horizontal
-          >
-            <b-input
-              v-model="lastPurchase.deliveryCountry"
-              placeholder="Ország"
-              required
-              readonly="true"
-            />
-            <b-input
-              v-model="lastPurchase.deliveryZip"
-              placeholder="Irányítószám"
-              required
-              readonly="true"
-            />
-            <b-input
-              v-model="lastPurchase.deliveryCity"
-              placeholder="Város"
-              required
-              readonly="true"
-            />
-            <b-input
-              v-model="lastPurchase.deliveryStreetNo"
-              placeholder="Utca és házszám"
-              required
-              readonly="true"
-            />
+          <b-field label="Legutóbbi szállítási cím" />
+          <b-field grouped>
+            <b-field
+              label="Ország"
+              message="A legutóbbi számlán szereplő ország"
+            >
+              <b-input
+                v-model="lastPurchase.deliveryCountry"
+                readonly="true"
+                placeholder="Ország"
+                required
+              />
+            </b-field>
+            <b-field
+              label="Irányítószám"
+              message="A legutóbbi számlán szereplő irányítószám"
+            >
+              <b-input
+                v-model="lastPurchase.deliveryZip"
+                readonly="true"
+                placeholder="Irányítószám"
+                required
+                type="number"
+              />
+            </b-field>
+
+            <b-field
+              label="Város"
+              message="A legutóbbi számlán szereplő város"
+            >
+              <b-input
+                v-model="lastPurchase.deliveryCity"
+                readonly="true"
+                placeholder="Város"
+                required
+              />
+            </b-field>
+
+            <b-field
+              label="Utca és házszám"
+              message="A legutóbbi számlán szereplő utca és házszám"
+            >
+              <b-input
+                v-model="lastPurchase.deliveryStreetNo"
+                readonly="true"
+                placeholder="Utca és házszám"
+                required
+              />
+            </b-field>
           </b-field>
+
           <b-field
             label="Rendelések"
             horizontal
