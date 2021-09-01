@@ -64,8 +64,15 @@ export default {
         title: 'Vásárlás értéke'
       },
       {
-        field: 'products',
-        title: 'Termék típusa'
+        customFn: (data) => {
+          const productTypes = {
+            one_time: 'Egyszeri',
+            subscription: 'Előfizetéses'
+          }
+          return productTypes[data.products[0].type]
+        },
+        field: 'purchaseType',
+        title: 'Vásárlás típusa'
       }],
       purchases: [{ products: [] }],
       type: ''
@@ -77,14 +84,9 @@ export default {
     }
   },
   computed: {
-    typeCheck () {
-      return 'products[0].type'
-    }
   },
   async mounted () {
     this.purchases = await this.$strapi.find('purchases')
-    this.type = this.purchases[0].products[0].type
-    console.log(this.type)
   },
   methods: {
   }
