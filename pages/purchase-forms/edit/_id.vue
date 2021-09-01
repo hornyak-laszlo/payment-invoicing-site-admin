@@ -1,7 +1,13 @@
 <template>
   <div>
     <hero-bar>
-      Űrlap szerkesztése
+      <b-icon
+        pack="fas"
+        icon="columns"
+        size="is-small"
+        style="margin: 1rem"
+      />
+      Űrlap szerkesztése, ID: {{ $route.params.id }}
       <nuxt-link
         slot="right"
         to="/forms"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        :title="`Űrlap - ID: ${purchaseForm.id}`"
-        icon="columns"
-        class="tile is-child"
-      >
+      <card-component class="tile is-child">
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
             <b-field

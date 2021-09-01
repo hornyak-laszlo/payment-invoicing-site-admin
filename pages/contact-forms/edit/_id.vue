@@ -1,7 +1,12 @@
 <template>
   <div>
     <hero-bar>
-      Űrlap szerkesztése
+      <b-icon
+        pack="fas"
+        icon="columns"
+        size="is-small"
+        style="margin: 1rem"
+      /> Űrlap szerkesztése, ID: {{ contactForm.id }}
       <nuxt-link
         slot="right"
         to="/forms"
@@ -11,11 +16,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        :title="`Űrlap - ID: ${contactForm.id}`"
-        icon="columns"
-        class="tile is-child"
-      >
+      <card-component>
         <form @submit.prevent="submit">
           <b-field
             label="Név"

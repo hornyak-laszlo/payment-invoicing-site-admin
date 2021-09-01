@@ -1,14 +1,17 @@
 
 <template>
   <div>
-    <hero-bar> Profil </hero-bar>
+    <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="id-card"
+        size="is-small"
+        style="margin: 1rem"
+      /> Profil
+    </hero-bar>
     <section class="section is-main-section">
       <tiles>
-        <card-component
-          title="Profil"
-          icon="id-card"
-          class="tile is-child"
-        >
+        <card-component class="tile is-child">
           <b-field label="Felhasználónév">
             <b-input
               :value="username"

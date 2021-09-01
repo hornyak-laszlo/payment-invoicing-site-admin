@@ -24,7 +24,13 @@ export const chartOptionsMain = {
     xPadding: 12,
     mode: 'nearest',
     intersect: 0,
-    position: 'nearest'
+    position: 'nearest',
+    callbacks: {
+      label (tooltipItems, data) {
+        return tooltipItems.yLabel + ' Ft'
+      }
+    }
+
   },
   scales: {
     yAxes: [

@@ -1,6 +1,12 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="user"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Kontaktok
       <nuxt-link
         slot="right"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        class="has-table"
-        title="Kontaktok"
-        icon="user"
-      >
+      <card-component class="has-table">
         <data-table
           :fields="fields"
           :collection="collection"

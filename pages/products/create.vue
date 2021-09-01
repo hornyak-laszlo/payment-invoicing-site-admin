@@ -1,6 +1,12 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="tags"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Termék Hozzáadása
       <nuxt-link
         slot="right"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        class="tile is-child"
-        title="Új termék"
-        icon="tags"
-      >
+      <card-component>
         <form @submit.prevent="submit">
           <b-field
             label="Név"
@@ -141,11 +143,6 @@
             >
               Mentés
             </b-button>
-          </b-field>
-          <b-field horizontal>
-            <p class="has-text-danger is-size-7">
-              Minden adatot meg kell adni!
-            </p>
           </b-field>
         </form>
       </card-component>

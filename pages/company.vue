@@ -1,15 +1,17 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="building"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Cégadatok
     </hero-bar>
     <section class="section is-main-section">
       <tiles>
-        <card-component
-          title="Cég"
-          icon="building"
-          class="tile is-child"
-        >
+        <card-component>
           <ValidationObserver v-slot="{ invalid }">
             <form @submit.prevent="submit">
               <b-field

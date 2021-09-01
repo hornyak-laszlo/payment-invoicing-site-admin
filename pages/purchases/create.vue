@@ -1,6 +1,12 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="shopping-basket"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Vásárlás hozzáadása
       <nuxt-link
         slot="right"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        :title="`Vásárlás hozzáadása`"
-        icon="shopping-basket"
-        class="tile is-child"
-      >
+      <card-component>
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
             <b-field

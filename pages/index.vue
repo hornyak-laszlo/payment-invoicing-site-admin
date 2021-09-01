@@ -18,7 +18,7 @@
           type="is-info"
           icon="cart-outline"
           :number="salesNumber"
-          prefix="$"
+          suffix=" Ft"
           label="Összes bevétel"
         />
         <card-widget

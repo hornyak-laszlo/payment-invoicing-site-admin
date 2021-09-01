@@ -1,7 +1,13 @@
 <template>
   <div>
     <hero-bar>
-      Vásárló szerkesztése
+      <b-icon
+        pack="fas"
+        icon="user-tag"
+        size="is-small"
+        style="margin: 1rem"
+      />
+      Vásárló megtekintése, ID: {{ $route.params.id }}
       <nuxt-link
         slot="right"
         to="/customers"
@@ -11,11 +17,7 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component
-        class="tile is-child"
-        :title="`Vásárló - ID: ${$route.params.id}`"
-        icon="user"
-      >
+      <card-component>
         <form @submit.prevent="submit">
           <b-field
             label="Vezetéknév"
