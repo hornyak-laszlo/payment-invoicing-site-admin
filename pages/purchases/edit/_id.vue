@@ -20,40 +20,47 @@
       <card-component>
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
-            <b-field
-              label="Név"
-              message="Vásárló neve"
-              horizontal
-            >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Vezetéknév"
-                rules="required"
+            <b-field grouped>
+              <b-field
+                expanded
+                label="Vezetéknév"
+                message="Vásárló vezetéknéve"
               >
-                <b-input
-                  v-model="purchase.lastName"
-                  placeholder="Vezetéknév"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Keresztnév"
-                rules="required"
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Vezetéknév"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="purchase.lastName"
+                    placeholder="Vezetéknév"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-field
+                expanded
+                label="Keresztnév"
+                message="Vásárló keresztneve"
               >
-                <b-input
-                  v-model="purchase.firstName"
-                  placeholder="Keresztnév"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Keresztnév"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="purchase.firstName"
+                    placeholder="Keresztnév"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
             </b-field>
             <b-field
               label="Email"
               message="Vásárló e-mail címe"
-              horizontal
             >
               <ValidationProvider
                 v-slot="{ errors }"
