@@ -25,21 +25,21 @@
 @import "../css/animate.min.css";
 
 h1 {
-  font-family: 'NunitoSans', sans-serif;
+  font-family: "NunitoSans", sans-serif;
 }
 
 input {
-  background-color: #F8F8F8 !important;
+  background-color: #f8f8f8 !important;
   border-radius: 2px !important;
 }
 
 textarea {
-  background-color: #F8F8F8 !important;
+  background-color: #f8f8f8 !important;
   border-radius: 2px !important;
 }
 
 select {
-  background-color: #F8F8F8 !important;
+  background-color: #f8f8f8 !important;
   border-radius: 2px !important;
 }
 
@@ -51,6 +51,38 @@ td {
   vertical-align: middle !important;
 }
 
-#app > div > section.section.is-main-section > div > div > div > div > div.field.table-mobile-sort > div > div.control.is-expanded > span > select {
+#app
+  > div
+  > section.section.is-main-section
+  > div
+  > div
+  > div
+  > div
+  > div.field.table-mobile-sort
+  > div
+  > div.control.is-expanded
+  > span
+  > select {
   height: 55px !important;
+}
+
+@media screen and (max-width: 767px) {
+  .buttons {
+    min-width: 290px;
+    max-width: 520px;
+    width: 100%;
+  }
+
+  .t-button-wrapper {
+    min-width: 290px;
+    max-width: 520px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .button {
+      width: 49%;
+    }
+  }
 }
