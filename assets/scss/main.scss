@@ -50,3 +50,7 @@ select {
 td {
   vertical-align: middle !important;
 }
+
+#app > div > section.section.is-main-section > div > div > div > div > div.field.table-mobile-sort > div > div.control.is-expanded > span > select {
+  height: 55px !important;
+}

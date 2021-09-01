@@ -59,6 +59,7 @@
         <b-table-column
           custom-key="actions"
           class="is-actions-cell"
+          style="display: flex;justify-content: space-around;"
         >
           <div class="buttons is-right">
             <nuxt-link
@@ -83,7 +84,7 @@
                 size="is-small"
               />
             </nuxt-link>
-            <button
+            <b-button
               v-if="!readOnly"
               class="button is-small is-danger"
               type="button"
@@ -94,7 +95,7 @@
                 icon="trash-alt"
                 size="is-small"
               />
-            </button>
+            </b-button>
           </div>
         </b-table-column>
       </template>
