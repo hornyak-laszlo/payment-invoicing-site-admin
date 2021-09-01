@@ -11,7 +11,7 @@
       <nuxt-link
         slot="right"
         to="/contact-forms/create"
-        class="button"
+        class="button is-primary"
         style="marginRight: 1rem"
       >
         <p>Új <strong>kontakt</strong> űrlap</p>
@@ -19,7 +19,7 @@
       <nuxt-link
         slot="right"
         to="/purchase-forms/create"
-        class="button"
+        class="button is-primary"
       >
         <p>Új <strong>vásárlási</strong> űrlap</p>
       </nuxt-link>

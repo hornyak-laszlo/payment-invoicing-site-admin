@@ -11,7 +11,7 @@
       <nuxt-link
         slot="right"
         to="/customers"
-        class="button"
+        class="button is-primary"
       >
         Vissza a vásárlókhoz
       </nuxt-link>

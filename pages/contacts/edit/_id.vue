@@ -11,7 +11,7 @@
       <nuxt-link
         slot="right"
         to="/contacts"
-        class="button"
+        class="button is-primary"
       >
         Vissza a kontaktokhoz
       </nuxt-link>

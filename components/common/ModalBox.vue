@@ -13,12 +13,12 @@
         <p>A műveletet nem lehet visszavonni.</p>
       </section>
       <footer class="modal-card-foot">
-        <button class="button" type="button" @click="cancel">
-          Mégse
-        </button>
-        <button class="button is-danger" @click="confirm">
+        <b-button class="button is-danger" expanded @click="confirm">
           Törlés
-        </button>
+        </b-button>
+        <b-button class="button" type="button" expanded @click="cancel">
+          Mégse
+        </b-button>
       </footer>
     </div>
   </b-modal>

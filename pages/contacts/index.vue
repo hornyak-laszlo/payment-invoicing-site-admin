@@ -11,7 +11,7 @@
       <nuxt-link
         slot="right"
         to="/contacts/create"
-        class="button"
+        class="button is-primary"
       >
         Új kontakt hozzáadása
       </nuxt-link>

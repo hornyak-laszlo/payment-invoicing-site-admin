@@ -11,7 +11,7 @@
       <nuxt-link
         slot="right"
         to="/products"
-        class="button"
+        class="button is-primary"
       >
         Vissza a termékekhez
       </nuxt-link>
