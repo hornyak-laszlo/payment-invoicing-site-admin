@@ -149,7 +149,7 @@
             </b-field>
 
             <hr>
-            <b-field horizontal>
+            <b-field>
               <b-button
                 type="is-primary"
                 :loading="isLoading"
@@ -231,11 +231,7 @@ export default {
         await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.contact)
 
         this.isLoading = false
-        /* this.$buefy.toast.open({
-          message: 'Sikeresen mentve',
-          type: 'is-primary'
-          queue: false
-        }) */
+
         this.$buefy.snackbar.open({
           message: 'Sikeresen mentve',
           type: 'is-white has-text-white has-background-primary',
