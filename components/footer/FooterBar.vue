@@ -4,8 +4,8 @@
       <div class="level">
         <div class="level-left">
           <div class="level-item">
-            <div class="footer-copyright">
-              <b>&copy; {{ year }}, Payment Invoicing Admin</b>
+            <div class="footer-copyright is-size-7">
+              <b>&copy; {{ year }}, DeelPay</b>
               <span class="tag">v1.0.0</span>
             </div>
           </div>
