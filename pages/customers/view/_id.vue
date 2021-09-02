@@ -18,7 +18,7 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component>
-        <form @submit.prevent="submit">
+        <form>
           <b-field grouped>
             <b-field
               label="Vezetéknév"
@@ -186,92 +186,92 @@
               />
             </b-field>
           </b-field>
-
-          <b-field label="Rendelések" />
-          <b-table
-            :striped="true"
-            :hoverable="true"
-            default-sort="id"
-            :data="purchases"
-          >
-            <template slot-scope="props">
-              <b-table-column
-                label="Id"
-                field="id"
-                sortable
-              >
-                {{ props.row.id }}
-              </b-table-column>
-              <b-table-column
-                label="Státusza"
-                field="status"
-                sortable
-              >
-                {{ props.row.status }}
-              </b-table-column>
-              <b-table-column
-                label="Rendelés összege"
-                field="sumOfPurchase"
-                sortable
-              >
-                {{ props.row.sumOfPurchase }}
-              </b-table-column>
-              <b-table-column
-                label="Létrehozva"
-                field="created_at"
-                sortable
-              >
-                {{ props.row.created_at }}
-              </b-table-column>
-              <b-table-column
-                custom-key="actions"
-                class="is-actions-cell"
-              >
-                <div class="buttons is-right">
-                  <nuxt-link
-                    :to="`/purchases/edit/${props.row.id}`"
-                    class="button is-small"
-                  >
-                    <b-icon
-                      pack="fas"
-                      icon="eye"
-                      size="is-small"
-                      type="is-primary"
-                    />
-                  </nuxt-link>
-                </div>
-              </b-table-column>
-            </template>
-
-            <section
-              slot="empty"
-              class="section"
-            >
-              <div class="content has-text-grey has-text-centered">
-                <template v-if="isLoading">
-                  <p>
-                    <b-icon
-                      pack="fas"
-                      icon="ellipsis-h"
-                      size="is-large"
-                    />
-                  </p>
-                  <p>Adatok betöltése...</p>
-                </template>
-                <template v-else>
-                  <p>
-                    <b-icon
-                      pack="fas"
-                      icon="frown"
-                      size="is-large"
-                    />
-                  </p>
-                  <p>Nem található adat&hellip;</p>
-                </template>
-              </div>
-            </section>
-          </b-table>
         </form>
+
+        <b-field label="Rendelések" />
+        <b-table
+          :striped="true"
+          :hoverable="true"
+          default-sort="id"
+          :data="purchases"
+        >
+          <template slot-scope="props">
+            <b-table-column
+              label="Id"
+              field="id"
+              sortable
+            >
+              {{ props.row.id }}
+            </b-table-column>
+            <b-table-column
+              label="Státusza"
+              field="status"
+              sortable
+            >
+              {{ props.row.status }}
+            </b-table-column>
+            <b-table-column
+              label="Rendelés összege"
+              field="sumOfPurchase"
+              sortable
+            >
+              {{ props.row.sumOfPurchase }}
+            </b-table-column>
+            <b-table-column
+              label="Létrehozva"
+              field="created_at"
+              sortable
+            >
+              {{ props.row.created_at }}
+            </b-table-column>
+            <b-table-column
+              custom-key="actions"
+              class="is-actions-cell"
+            >
+              <div class="buttons is-right">
+                <nuxt-link
+                  :to="`/purchases/edit/${props.row.id}`"
+                  class="button is-small"
+                >
+                  <b-icon
+                    pack="fas"
+                    icon="eye"
+                    size="is-small"
+                    type="is-primary"
+                  />
+                </nuxt-link>
+              </div>
+            </b-table-column>
+          </template>
+
+          <section
+            slot="empty"
+            class="section"
+          >
+            <div class="content has-text-grey has-text-centered">
+              <template v-if="isLoading">
+                <p>
+                  <b-icon
+                    pack="fas"
+                    icon="ellipsis-h"
+                    size="is-large"
+                  />
+                </p>
+                <p>Adatok betöltése...</p>
+              </template>
+              <template v-else>
+                <p>
+                  <b-icon
+                    pack="fas"
+                    icon="frown"
+                    size="is-large"
+                  />
+                </p>
+                <p>Nem található adat&hellip;</p>
+              </template>
+            </div>
+          </section>
+        </b-table>
       </card-component>
     </section>
   </div>
