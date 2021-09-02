@@ -66,28 +66,30 @@
               <nuxt-link
                 v-if="readOnly"
                 :to="`/${collection}/view/${props.row.id}`"
-                class="button is-small is-primary"
+                class="button is-small"
               >
                 <b-icon
                   pack="fas"
                   icon="eye"
                   size="is-small"
+                  type="is-primary"
                 />
               </nuxt-link>
               <nuxt-link
                 v-if="!readOnly"
                 :to="`/${collection}/edit/${props.row.id}`"
-                class="button is-small is-primary"
+                class="button is-small"
               >
                 <b-icon
                   pack="fas"
                   icon="eye"
                   size="is-small"
+                  type="is-primary"
                 />
               </nuxt-link>
               <b-button
                 v-if="!readOnly"
-                class="button is-small is-danger"
+                class="button is-small"
                 type="button"
                 @click.prevent="trashModal(props.row)"
               >
@@ -95,6 +97,7 @@
                   pack="fas"
                   icon="trash-alt"
                   size="is-small"
+                  type="is-danger"
                 />
               </b-button>
             </div>

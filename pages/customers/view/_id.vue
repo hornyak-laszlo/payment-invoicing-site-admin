@@ -230,12 +230,13 @@
                 <div class="buttons is-right">
                   <nuxt-link
                     :to="`/purchases/edit/${props.row.id}`"
-                    class="button is-small is-primary"
+                    class="button is-small"
                   >
                     <b-icon
                       pack="fas"
                       icon="eye"
                       size="is-small"
+                      type="is-primary"
                     />
                   </nuxt-link>
                 </div>

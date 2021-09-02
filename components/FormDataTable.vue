@@ -63,16 +63,17 @@
           <div class="buttons is-right">
             <nuxt-link
               :to="`/${props.row.type}/edit/${props.row.id}`"
-              class="button is-small is-primary"
+              class="button is-small"
             >
               <b-icon
                 pack="fas"
                 icon="eye"
                 size="is-small"
+                type="is-primary"
               />
             </nuxt-link>
             <button
-              class="button is-small is-danger"
+              class="button is-small"
               type="button"
               @click.prevent="trashModal(props.row)"
             >
@@ -80,6 +81,7 @@
                 pack="fas"
                 icon="trash-alt"
                 size="is-small"
+                type="is-danger"
               />
             </button>
           </div>
