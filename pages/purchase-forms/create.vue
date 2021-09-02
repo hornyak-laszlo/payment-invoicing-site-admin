@@ -22,7 +22,6 @@
           <b-field
             label="Név"
             message="Űrlap neve"
-            horizontal
           >
             <b-input
               v-model="purchaseForm.name"
@@ -32,7 +31,6 @@
           <b-field
             label="Link"
             message="Link ahol elérhető lesz az űrlap"
-            horizontal
           >
             <b-input
               v-model="purchaseForm.link"
@@ -42,7 +40,6 @@
           <b-field
             label="Sikeres link"
             message="Sikeres kapcsolatfevétel linkje"
-            horizontal
           >
             <b-input
               v-model="purchaseForm.successLink"
@@ -53,7 +50,6 @@
           <b-field
             label="Sikeres szöveg"
             message="Sikeres kapcsolatfevétel szövege"
-            horizontal
           >
             <b-input
               v-model="purchaseForm.successText"
@@ -65,10 +61,10 @@
           <b-field
             v-if="!addProduct"
             label="Űrlaphpz tartozó termékek"
-            horizontal
           >
             <p>Az űrlaphoz tartozó termékek listája:</p>
-
+          </b-field>
+          <b-field v-if="!addProduct">
             <b-button
               outlined
               style="border-radius: 5px"
@@ -137,11 +133,11 @@
             v-if="addProduct"
             label="Termék típusa"
             message="Milyen típusú terméket lehet itt rendelni"
-            horizontal
           >
             <b-select
               v-model="productType"
               required
+              expanded
             >
               <option value="subscription">
                 Előfizetéses
