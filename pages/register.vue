@@ -152,7 +152,7 @@ export default {
           queue: false
         })
 
-        this.$router.push('/login')
+        this.$router.push('/confirm')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({
