@@ -22,7 +22,6 @@
           <b-field
             label="Név"
             message="A termék neve"
-            horizontal
           >
             <b-input
               v-model="product.name"
@@ -32,7 +31,6 @@
           <b-field
             label="Leírás"
             message="A termék leírása"
-            horizontal
           >
             <b-input
               v-model="product.description"
@@ -43,7 +41,6 @@
           <b-field
             label="Bruttó ár"
             message="A termék bruttó ára"
-            horizontal
           >
             <b-input
               v-model="product.grossPrice"
@@ -53,11 +50,11 @@
           <b-field
             label="Áfa tartalom"
             message="A termék áfa tartalma"
-            horizontal
           >
             <b-select
               v-model="product.taxRate"
               required
+              expanded
             >
               <option
                 v-for="taxRate in taxRates"
@@ -71,7 +68,6 @@
           <b-field
             label="Számlázási név"
             message="A termék számlázási neve"
-            horizontal
           >
             <b-input
               v-model="product.nameInvoice"
@@ -81,11 +77,11 @@
           <b-field
             label="Szállítható-e"
             message="A termék szállítható?"
-            horizontal
           >
             <b-select
               v-model="product.isShippable"
               required
+              expanded
             >
               <option :value="false">
                 Nem
@@ -98,11 +94,11 @@
           <b-field
             label="Egyszeri vagy előfizetés"
             message="A terméknek egyszeri ára van, vagy előfizetéses?"
-            horizontal
           >
             <b-select
               v-model="product.type"
               required
+              expanded
             >
               <option :value="'one_time'">
                 Egyszeri
@@ -116,11 +112,11 @@
             v-if="subscription"
             label="Előfizetés gyakorisága"
             message="Milyen gyakran kell fizetni az előfizetést"
-            horizontal
           >
             <b-select
               v-model="product.period"
               required
+              expanded
             >
               <option :value="'weekly'">
                 Heti
@@ -134,7 +130,7 @@
             </b-select>
           </b-field>
           <hr>
-          <b-field horizontal>
+          <b-field>
             <b-button
               type="is-primary"
               :loading="isLoading"
