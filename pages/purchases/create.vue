@@ -20,40 +20,48 @@
       <card-component>
         <ValidationObserver v-slot="{ invalid }">
           <form @submit.prevent="submit">
-            <b-field
-              label="Név"
-              message="Vásárló neve"
-              horizontal
-            >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Vezetéknév"
-                rules="required"
+            <b-field grouped>
+              <b-field
+                label="Vezetéknév"
+                message="Vásárló vezetékneve"
+                expanded
               >
-                <b-input
-                  v-model="purchase.lastName"
-                  placeholder="Vezetéknév"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Keresztnév"
-                rules="required"
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Vezetéknév"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="purchase.lastName"
+                    placeholder="Vezetéknév"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-field
+                expanded
+                label="Keresztnév"
+                message="Vásárló keresztneve"
               >
-                <b-input
-                  v-model="purchase.firstName"
-                  placeholder="Keresztnév"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Keresztnév"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="purchase.firstName"
+                    placeholder="Keresztnév"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
             </b-field>
+
             <b-field
               label="Email"
               message="Vásárló e-mail címe"
-              horizontal
             >
               <ValidationProvider
                 v-slot="{ errors }"
@@ -68,82 +76,10 @@
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
             </b-field>
-            <b-field
-              label="Hírlevélre feliratkozott"
-              message="A vásárló feliratkozott a hírlevélre"
-              horizontal
-            >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Hírlevél"
-                rules="required"
-              >
-                <b-select
-                  v-model="purchase.isNewsletterSubscribed"
-                  required
-                >
-                  <option :value="true">
-                    igen
-                  </option>
-                  <option :value="false">
-                    nem
-                  </option>
-                </b-select>
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
-            <b-field
-              label="Feltételeket elfogadta"
-              message="A vásárló elfogadta az általános feltételeket"
-              horizontal
-            >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Feltételek"
-                rules="required"
-              >
-                <b-select
-                  v-model="purchase.isGTCaccepted"
-                  required
-                >
-                  <option :value="true">
-                    igen
-                  </option>
-                  <option :value="false">
-                    nem
-                  </option>
-                </b-select>
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
-            <b-field
-              label="Adatkezelést elfogadta"
-              message="A vásárló elfogadta az adatkezelési feltételeket"
-              horizontal
-            >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Adatkezelés"
-                rules="required"
-              >
-                <b-select
-                  v-model="purchase.isPrivacyPolicyAccepted"
-                  required
-                >
-                  <option :value="true">
-                    igen
-                  </option>
-                  <option :value="false">
-                    nem
-                  </option>
-                </b-select>
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-            </b-field>
+
             <b-field
               label="Telefonszám"
               message="Vásárló telefonszáma"
-              horizontal
             >
               <ValidationProvider
                 v-slot="{ errors }"
@@ -157,93 +93,208 @@
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
             </b-field>
+
             <b-field
-              label="Számlázási cím"
-              message="A számlán szereplő cím"
-              horizontal
+              label="Cégnév"
+              message="Vásárló cég neve"
             >
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Ország"
-                rules="required"
-              >
-                <b-input
-                  v-model="purchase.invoiceCountry"
-                  placeholder="Ország"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Irányítószám"
-                rules="required"
-              >
-                <b-input
-                  v-model="purchase.invoiceZip"
-                  placeholder="Irányítószám"
-                  required
-                  type="number"
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Város"
-                rules="required"
-              >
-                <b-input
-                  v-model="purchase.invoiceCity"
-                  placeholder="Város"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
-
-              <ValidationProvider
-                v-slot="{ errors }"
-                name="Utca és házszám"
-                rules="required"
-              >
-                <b-input
-                  v-model="purchase.invoiceStreetNo"
-                  placeholder="Utca és házszám"
-                  required
-                />
-                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-              </ValidationProvider>
+              <b-input v-model="purchase.companyName" />
             </b-field>
 
-            <b-field
-              label="Kiszállítási cím"
-              message="Ahova a terméket szállítani kell"
-              horizontal
-            >
-              <b-input
-                v-model="purchase.deliveryCountry"
-                placeholder="Ország"
-              />
-              <b-input
-                v-model="purchase.deliveryZip"
-                placeholder="Irányítószám"
-                type="number"
-              />
-              <b-input
-                v-model="purchase.deliveryCity"
-                placeholder="Város"
-              />
-              <b-input
-                v-model="purchase.deliveryStreetNo"
-                placeholder="Utca és házszám"
-              />
+            <b-field label="Számlázási cím" />
+            <b-field grouped>
+              <b-field
+                label="Ország"
+                expanded
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Ország"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="purchase.invoiceCountry"
+                    placeholder="Ország"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-field
+                label="Irányítószám"
+                expanded
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Irányítószám"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="purchase.invoiceZip"
+                    placeholder="Irányítószám"
+                    required
+                    type="number"
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-field
+                label="Város"
+                expanded
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Város"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="purchase.invoiceCity"
+                    placeholder="Város"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-field
+                label="Utca és házszám"
+                expanded
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Utca és házszám"
+                  rules="required"
+                >
+                  <b-input
+                    v-model="purchase.invoiceStreetNo"
+                    placeholder="Utca és házszám"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+            </b-field>
+
+            <b-field label="Kiszállítási cím" />
+            <b-field grouped>
+              <b-field
+                label="Ország"
+                expanded
+              >
+                <b-input
+                  v-model="purchase.deliveryCountry"
+                  placeholder="Ország"
+                />
+              </b-field>
+              <b-field
+                expanded
+                label="Irányítószám"
+              >
+                <b-input
+                  v-model="purchase.deliveryZip"
+                  placeholder="Irányítószám"
+                  type="number"
+                />
+              </b-field>
+              <b-field
+                expanded
+                label="Város"
+              >
+                <b-input
+                  v-model="purchase.deliveryCity"
+                  placeholder="Város"
+                />
+              </b-field>
+              <b-field
+                label="Utca és házszám"
+                expanded
+              >
+                <b-input
+                  v-model="purchase.deliveryStreetNo"
+                  placeholder="Utca és házszám"
+                />
+              </b-field>
+            </b-field>
+
+            <b-field grouped>
+              <b-field
+                label="Feltételeket elfogadta"
+                message="A vásárló elfogadta az általános feltételeket"
+                expanded
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Feltételek"
+                  rules="required"
+                >
+                  <b-select
+                    v-model="purchase.isGTCaccepted"
+                    required
+                  >
+                    <option :value="true">
+                      igen
+                    </option>
+                    <option :value="false">
+                      nem
+                    </option>
+                  </b-select>
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+              <b-field
+                label="Adatkezelést elfogadta"
+                message="A vásárló elfogadta az adatkezelési feltételeket"
+                expanded
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Adatkezelés"
+                  rules="required"
+                >
+                  <b-select
+                    v-model="purchase.isPrivacyPolicyAccepted"
+                    required
+                  >
+                    <option :value="true">
+                      igen
+                    </option>
+                    <option :value="false">
+                      nem
+                    </option>
+                  </b-select>
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+
+              <b-field
+                label="Hírlevélre feliratkozott"
+                message="A vásárló feliratkozott a hírlevélre"
+                expanded
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Hírlevél"
+                  rules="required"
+                >
+                  <b-select
+                    v-model="purchase.isNewsletterSubscribed"
+                    required
+                  >
+                    <option :value="true">
+                      igen
+                    </option>
+                    <option :value="false">
+                      nem
+                    </option>
+                  </b-select>
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
             </b-field>
 
             <b-field
               label="Fizetési mód"
               message="Hogy fizet a vevő"
-              horizontal
+              expanded
             >
               <ValidationProvider
                 v-slot="{ errors }"
@@ -253,6 +304,7 @@
                 <b-select
                   v-model="purchase.paymentMethod"
                   required
+                  expanded
                 >
                   <option value="transfer">
                     Átutalás
@@ -267,7 +319,7 @@
             <b-field
               label="Rendelés státusza"
               message="Hol tart a rendelés"
-              horizontal
+              expanded
             >
               <ValidationProvider
                 v-slot="{ errors }"
@@ -277,6 +329,7 @@
                 <b-select
                   v-model="purchase.status"
                   required
+                  expanded
                 >
                   <option value="ordered">
                     Megrendelve
@@ -292,10 +345,7 @@
               </ValidationProvider>
             </b-field>
             <hr>
-            <b-field
-              horizontal
-              label="Rendelt termékek"
-            >
+            <b-field label="Rendelt termékek">
               Vásárló által rendelt termékek listája:
             </b-field>
             <b-collapse
@@ -407,7 +457,7 @@
               />
             </b-field>
             <hr>
-            <b-field horizontal>
+            <b-field>
               <b-button
                 type="is-primary"
                 :loading="isLoading"
