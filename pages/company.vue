@@ -17,7 +17,6 @@
               <b-field
                 label="Név"
                 message="A cég neve"
-                horizontal
               >
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -35,7 +34,6 @@
               <b-field
                 label="Email"
                 message="A cég e-mail címe"
-                horizontal
               >
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -53,7 +51,6 @@
               <b-field
                 label="Értesítési email"
                 message="Értesítési email cím"
-                horizontal
               >
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -72,7 +69,6 @@
               <b-field
                 label="Weboldal"
                 message="A cég weboldalának linkje"
-                horizontal
               >
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -91,7 +87,6 @@
               <b-field
                 label="Telefonszám"
                 message="Kapcsolattartó telefonszáma"
-                horizontal
               >
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -105,11 +100,8 @@
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
-              <b-field
-                label="Székhely"
-                message="A cég székhelye"
-                horizontal
-              >
+              <b-field label="Székhely" />
+              <b-field grouped>
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="Ország"
@@ -122,7 +114,6 @@
                   />
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
-
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="Irányítószám"
@@ -136,7 +127,6 @@
                   />
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
-
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="Város"
@@ -149,7 +139,6 @@
                   />
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
-
                 <ValidationProvider
                   v-slot="{ errors }"
                   name="Utca és házszám"
@@ -167,7 +156,6 @@
               <b-field
                 label="Bankszámla"
                 message="A cég bankszámlaszáma"
-                horizontal
               >
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -185,7 +173,6 @@
               <b-field
                 label="Vállalkozás formája"
                 message="Cég, egyéni vállalkozó vagy magánszemély"
-                horizontal
               >
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -195,6 +182,7 @@
                   <b-select
                     v-model="company.formOfEnterprise "
                     required
+                    expanded
                   >
                     <option value="company">
                       Cég
@@ -213,7 +201,6 @@
               <b-field
                 label="Adószám"
                 message="A vállalkozás adószáma"
-                horizontal
               >
                 <ValidationProvider
                   v-slot="{ errors }"
@@ -232,7 +219,6 @@
                 v-if="company.formOfEnterprise === 'self_employed'"
                 label="Nyilvántartási szám"
                 message="Egyéni vállalkozó nyilvántartási száma (opcionális)"
-                horizontal
               >
                 <b-input v-model="company.registrationNumber" />
               </b-field>
@@ -240,14 +226,12 @@
                 v-if="company.formOfEnterprise === 'company'"
                 label="Cégjegyzék szám"
                 message="Cég nyilvántartási száma (opcionális)"
-                horizontal
               >
                 <b-input v-model="company.companyRegistrationNumber" />
               </b-field>
               <b-field
                 label="SWIFT szám"
                 message="SWIFT szám utaláshoz (opcionális)"
-                horizontal
               >
                 <b-input v-model="company.swift" />
               </b-field>
@@ -255,13 +239,12 @@
               <b-field
                 label="IBAN szám"
                 message="IBAN szám utaláshoz (opcionális)"
-                horizontal
               >
                 <b-input v-model="company.iban" />
               </b-field>
 
               <hr>
-              <b-field horizontal>
+              <b-field>
                 <b-button
                   type="is-primary"
                   :loading="isLoading"
