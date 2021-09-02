@@ -38,33 +38,7 @@
               required
             />
           </b-field>
-          <b-field
-            label="Bruttó ár"
-            message="A termék bruttó ára"
-          >
-            <b-input
-              v-model="product.grossPrice"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Áfa tartalom"
-            message="A termék áfa tartalma"
-          >
-            <b-select
-              v-model="product.taxRate"
-              required
-              expanded
-            >
-              <option
-                v-for="taxRate in taxRates"
-                :key="taxRate.id"
-                :value="taxRate.id"
-              >
-                {{ taxRate.name }}
-              </option>
-            </b-select>
-          </b-field>
+
           <b-field
             label="Számlázási név"
             message="A termék számlázási neve"
@@ -74,23 +48,39 @@
               required
             />
           </b-field>
-          <b-field
-            label="Szállítható-e"
-            message="A termék szállítható?"
-          >
-            <b-select
-              v-model="product.isShippable"
-              required
+
+          <b-field grouped>
+            <b-field
+              label="Bruttó ár"
+              message="A termék bruttó ára"
               expanded
             >
-              <option :value="false">
-                Nem
-              </option>
-              <option :value="true">
-                Igen
-              </option>
-            </b-select>
+              <b-input
+                v-model="product.grossPrice"
+                required
+              />
+            </b-field>
+            <b-field
+              label="Áfa tartalom"
+              message="A termék áfa tartalma"
+              expanded
+            >
+              <b-select
+                v-model="product.taxRate"
+                required
+                expanded
+              >
+                <option
+                  v-for="taxRate in taxRates"
+                  :key="taxRate.id"
+                  :value="taxRate.id"
+                >
+                  {{ taxRate.name }}
+                </option>
+              </b-select>
+            </b-field>
           </b-field>
+
           <b-field
             label="Egyszeri vagy előfizetés"
             message="A terméknek egyszeri ára van, vagy előfizetéses?"
@@ -129,6 +119,25 @@
               </option>
             </b-select>
           </b-field>
+
+          <b-field
+            label="Szállítható-e"
+            message="A termék szállítható?"
+          >
+            <b-select
+              v-model="product.isShippable"
+              required
+              expanded
+            >
+              <option :value="false">
+                Nem
+              </option>
+              <option :value="true">
+                Igen
+              </option>
+            </b-select>
+          </b-field>
+
           <hr>
           <b-field>
             <b-button
