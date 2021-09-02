@@ -2,7 +2,7 @@
   <aside v-show="isAsideVisible" class="aside is-placed-left is-expanded">
     <aside-tools :is-main-menu="true">
       <span slot="label">
-        <img src="/logo.png" alt="logo" width="60%">
+        <img src="/logo.png" alt="logo" width="82">
       </span>
     </aside-tools>
     <div class="menu is-menu-main">
