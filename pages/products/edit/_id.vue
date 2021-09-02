@@ -138,15 +138,16 @@
           </b-field>
 
           <hr>
-          >
-          <b-button
-            type="is-primary"
-            expanded
-            :loading="isLoading"
-            native-type="submit"
-          >
-            Mentés
-          </b-button>
+
+          <b-field>
+            <b-button
+              type="is-primary"
+              expanded
+              :loading="isLoading"
+              native-type="submit"
+            >
+              Mentés
+            </b-button>
           </b-field>
         </form>
       </card-component>
