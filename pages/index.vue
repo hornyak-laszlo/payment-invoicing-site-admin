@@ -1,6 +1,12 @@
 <template>
   <div>
     <hero-bar :has-right-visible="false">
+      <b-icon
+        pack="fas"
+        icon="chart-line"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Dashboard
     </hero-bar>
     <section class="section is-main-section">

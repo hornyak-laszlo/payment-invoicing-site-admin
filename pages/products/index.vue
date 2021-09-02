@@ -11,7 +11,7 @@
       <nuxt-link
         slot="right"
         to="/products/create"
-        class="button"
+        class="button is-primary"
       >
         Termék hozzáadása
       </nuxt-link>

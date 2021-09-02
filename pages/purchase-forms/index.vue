@@ -2,7 +2,7 @@
   <div>
     <hero-bar>
       Vásárlási űrlapok
-      <nuxt-link slot="right" to="/client" class="button">
+      <nuxt-link slot="right" to="/client" class="button is-primary">
         Űrlap hozzáadása
       </nuxt-link>
     </hero-bar>

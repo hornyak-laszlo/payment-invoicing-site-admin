@@ -11,7 +11,7 @@
       <nuxt-link
         slot="right"
         to="/purchases"
-        class="button"
+        class="button is-primary"
       >
         Vissza a vásárlásokhoz
       </nuxt-link>

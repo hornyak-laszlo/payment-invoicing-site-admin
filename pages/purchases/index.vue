@@ -11,7 +11,7 @@
       <nuxt-link
         slot="right"
         to="/purchases/create"
-        class="button"
+        class="button is-primary"
       >
         Új vásárlás
       </nuxt-link>

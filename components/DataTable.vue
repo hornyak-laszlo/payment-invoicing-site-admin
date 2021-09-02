@@ -59,42 +59,45 @@
         <b-table-column
           custom-key="actions"
           class="is-actions-cell"
+          style="display: flex;justify-content: space-around;"
         >
           <div class="buttons is-right">
-            <nuxt-link
-              v-if="readOnly"
-              :to="`/${collection}/view/${props.row.id}`"
-              class="button is-small is-primary"
-            >
-              <b-icon
-                pack="fas"
-                icon="eye"
-                size="is-small"
-              />
-            </nuxt-link>
-            <nuxt-link
-              v-if="!readOnly"
-              :to="`/${collection}/edit/${props.row.id}`"
-              class="button is-small is-primary"
-            >
-              <b-icon
-                pack="fas"
-                icon="eye"
-                size="is-small"
-              />
-            </nuxt-link>
-            <button
-              v-if="!readOnly"
-              class="button is-small is-danger"
-              type="button"
-              @click.prevent="trashModal(props.row)"
-            >
-              <b-icon
-                pack="fas"
-                icon="trash-alt"
-                size="is-small"
-              />
-            </button>
+            <div class="t-button-wrapper">
+              <nuxt-link
+                v-if="readOnly"
+                :to="`/${collection}/view/${props.row.id}`"
+                class="button is-small is-primary"
+              >
+                <b-icon
+                  pack="fas"
+                  icon="eye"
+                  size="is-small"
+                />
+              </nuxt-link>
+              <nuxt-link
+                v-if="!readOnly"
+                :to="`/${collection}/edit/${props.row.id}`"
+                class="button is-small is-primary"
+              >
+                <b-icon
+                  pack="fas"
+                  icon="eye"
+                  size="is-small"
+                />
+              </nuxt-link>
+              <b-button
+                v-if="!readOnly"
+                class="button is-small is-danger"
+                type="button"
+                @click.prevent="trashModal(props.row)"
+              >
+                <b-icon
+                  pack="fas"
+                  icon="trash-alt"
+                  size="is-small"
+                />
+              </b-button>
+            </div>
           </div>
         </b-table-column>
       </template>

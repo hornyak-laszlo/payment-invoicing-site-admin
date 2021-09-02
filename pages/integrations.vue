@@ -1,6 +1,12 @@
 <template>
   <div>
     <hero-bar>
+      <b-icon
+        pack="fas"
+        icon="key"
+        size="is-small"
+        style="margin: 1rem"
+      />
       Integrációk
     </hero-bar>
     <section class="section is-main-section">

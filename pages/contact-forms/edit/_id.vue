@@ -10,7 +10,7 @@
       <nuxt-link
         slot="right"
         to="/forms"
-        class="button"
+        class="button is-primary"
       >
         Vissza az űrlapokhoz
       </nuxt-link>
