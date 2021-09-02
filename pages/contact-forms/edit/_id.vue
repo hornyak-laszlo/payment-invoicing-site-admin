@@ -21,7 +21,6 @@
           <b-field
             label="Név"
             message="Űrlap neve"
-            horizontal
           >
             <b-input
               v-model="contactForm.name"
@@ -31,7 +30,6 @@
           <b-field
             label="Link"
             message="Link ahol elérhető lesz az űrlap"
-            horizontal
           >
             <b-input
               v-model="contactForm.link"
@@ -41,7 +39,6 @@
           <b-field
             label="Sikeres link"
             message="Sikeres kapcsolatfevétel linkje"
-            horizontal
           >
             <b-input
               v-model="contactForm.successLink"
@@ -51,7 +48,6 @@
           <b-field
             label="Sikeres szöveg"
             message="Sikeres kapcsolatfevétel szövege"
-            horizontal
           >
             <b-input
               v-model="contactForm.successText"
@@ -60,7 +56,7 @@
             />
           </b-field>
           <hr>
-          <b-field horizontal>
+          <b-field>
             <b-button
               type="is-primary"
               :loading="isLoading"

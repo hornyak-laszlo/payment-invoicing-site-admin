@@ -23,7 +23,6 @@
             <b-field
               label="Név"
               message="Űrlap neve"
-              horizontal
             >
               <b-input
                 v-model="purchaseForm.name"
@@ -33,7 +32,6 @@
             <b-field
               label="Link"
               message="Link ahol elérhető lesz az űrlap"
-              horizontal
             >
               <b-input
                 v-model="purchaseForm.link"
@@ -43,7 +41,6 @@
             <b-field
               label="Sikeres link"
               message="Sikeres kapcsolatfevétel linkje"
-              horizontal
             >
               <b-input
                 v-model="purchaseForm.successLink"
@@ -53,7 +50,6 @@
             <b-field
               label="Sikeres szöveg"
               message="Sikeres kapcsolatfevétel szövege"
-              horizontal
             >
               <b-input
                 v-model="purchaseForm.successText"
@@ -61,10 +57,7 @@
                 required
               />
             </b-field>
-            <b-field
-              label="Űrlaphoz tartozó termékek"
-              horizontal
-            >
+            <b-field label="Űrlaphoz tartozó termékek">
               <p>Az űrlaphoz tartozó termékek listája:</p>
             </b-field>
 
@@ -112,7 +105,7 @@
                     outlined
                     type="is-primary"
                     style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                    label="Termék szerkesztése"
+                    label="Szerkesztés"
                     icon-pack="fas"
                     icon-left="tag"
                     class="card-footer-item"
@@ -139,7 +132,7 @@
               <b-button
                 outlined
                 type="is-primary"
-                label="Űrlaphoz tartozó termékek szerkesztése"
+                label="Űrlap termékek szerkesztése"
                 :loading="isLoading"
                 @click="addNewProduct()"
               />
@@ -148,11 +141,11 @@
               v-if="addProduct"
               label="Termék típusa"
               message="Milyen típusú terméket lehet itt rendelni"
-              horizontal
             >
               <b-select
                 v-model="productType"
                 required
+                expanded
               >
                 <option value="subscription">
                   Előfizetéses
@@ -162,80 +155,99 @@
                 </option>
               </b-select>
             </b-field>
+
             <b-field
               v-if="productType === 'subscription' && addProduct"
-              horizontal
+              grouped
             >
-              <b-select
-                v-model="plusProductId"
-                required
-              >
-                <option
-                  v-for="product in subscriptionProducts"
-                  :key="product.id"
-                  :value="product.id"
+              <b-field expanded>
+                <b-select
+                  v-model="plusProductId"
+                  required
+                  expanded
                 >
-                  {{ product.name }}
-                </option>
-              </b-select>
-              <b-button
-                style="border-radius: 5px"
-                type="is-primary"
-                label="Hozzáadás"
-                size="is-small"
-                :loading="isLoading"
-                @click="addNewSubProduct()"
-              />
-              <b-button
-                style="border-radius: 5px"
-                label="Mégse"
-                size="is-small"
-                :loading="isLoading"
-                @click="addProduct = false"
-              />
+                  <option
+                    v-for="product in subscriptionProducts"
+                    :key="product.id"
+                    :value="product.id"
+                  >
+                    {{ product.name }}
+                  </option>
+                </b-select>
+              </b-field>
+              <b-field expanded>
+                <b-button
+                  style="border-radius: 5px"
+                  type="is-primary"
+                  label="Hozzáadás"
+                  size="is-small"
+                  :loading="isLoading"
+                  expanded
+                  @click="addNewSubProduct()"
+                />
+              </b-field>
+              <b-field expanded>
+                <b-button
+                  style="border-radius: 5px"
+                  label="Mégse"
+                  size="is-small"
+                  :loading="isLoading"
+                  expanded
+                  @click="addProduct = false"
+                />
+              </b-field>
             </b-field>
 
             <b-field
               v-if="productType === 'one_time' && addProduct"
-              horizontal
+              grouped
             >
-              <b-dropdown
-                v-model="selectedProductIDs"
-                multiple
-              >
-                <template #trigger>
-                  <b-button icon-right="menu-down">
-                    {{ selectedProductIDs.length }} termék kiválasztva
-                  </b-button>
-                </template>
-                <b-dropdown-item
-                  v-for="product in oneTimeProducts"
-                  :key="product.id"
-                  :value="product.id"
+              <b-field expanded>
+                <b-dropdown
+                  v-model="selectedProductIDs"
+                  multiple
                 >
-                  <span>
-                    {{ product.name }}
-                  </span>
-                </b-dropdown-item>
-              </b-dropdown>
-              <b-button
-                style="border-radius: 5px"
-                type="is-primary"
-                label="Hozzáadás"
-                size="is-small"
-                :loading="isLoading"
-                @click="addNewOneProduct()"
-              />
-              <b-button
-                style="border-radius: 5px"
-                label="Mégse"
-                size="is-small"
-                :loading="isLoading"
-                @click="addProduct = false"
-              />
+                  <template #trigger>
+                    <b-button icon-right="menu-down">
+                      {{ selectedProductIDs.length }} kiválasztva
+                    </b-button>
+                  </template>
+                  <b-dropdown-item
+                    v-for="product in oneTimeProducts"
+                    :key="product.id"
+                    :value="product.id"
+                  >
+                    <span>
+                      {{ product.name }}
+                    </span>
+                  </b-dropdown-item>
+                </b-dropdown>
+              </b-field>
+              <b-field expanded>
+                <b-button
+                  style="border-radius: 5px"
+                  type="is-primary"
+                  label="Hozzáadás"
+                  size="is-small"
+                  :loading="isLoading"
+                  expanded
+                  @click="addNewOneProduct()"
+                />
+              </b-field>
+              <b-field expanded>
+                <b-button
+                  style="border-radius: 5px"
+                  label="Mégse"
+                  size="is-small"
+                  :loading="isLoading"
+                  expanded
+                  @click="addProduct = false"
+                />
+              </b-field>
             </b-field>
+
             <hr>
-            <b-field horizontal>
+            <b-field>
               <b-button
                 type="is-primary"
                 :loading="isLoading"
