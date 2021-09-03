@@ -14,22 +14,38 @@
               <div class="card-content">
                 <form @submit.prevent="submit">
                   <b-field label="Email cím">
-                    <b-input v-model="email" type="email" required />
+                    <b-input
+                      v-model="email"
+                      type="email"
+                      required
+                    />
                   </b-field>
                   <b-field label="Jelszó">
-                    <b-input v-model="password" type="password" required />
+                    <b-input
+                      v-model="password"
+                      type="password"
+                      required
+                    />
                   </b-field>
                   <hr>
                   <div class="field">
                     <div class="field-body">
                       <div class="field columns">
                         <div class="column is-half">
-                          <button type="submit" class="button is-fullwidth is-primary" :class="{'is-loading': isLoading}">
+                          <button
+                            type="submit"
+                            class="button is-fullwidth is-primary"
+                            :class="{'is-loading': isLoading}"
+                          >
                             Bejelentkezés
                           </button>
                         </div>
                         <div class="column is-half">
-                          <nuxt-link to="/forgot-password" class="button is-fullwidth is-outlined is-primary-passive" :class="{'is-loading': isLoading}">
+                          <nuxt-link
+                            to="/forgot-password"
+                            class="button is-fullwidth is-outlined is-primary-passive"
+                            :class="{'is-loading': isLoading}"
+                          >
                             Elfelejtett a jelszó
                           </nuxt-link>
                         </div>
@@ -71,6 +87,15 @@ export default {
         } else {
           this.$router.push('/')
         }
+
+        this.$buefy.snackbar.open({
+          message: 'Üdvözlünk a Deel-ben',
+          queue: false,
+          actionText: null,
+          type: 'has-text-white has-background-primary',
+          duration: 2000
+
+        })
       } catch (err) {
         this.isLoading = false
 
