@@ -11,7 +11,7 @@
         class="title is-child"
       >
         <p class="has-text-centered mb-4">
-          Küldtünk egy emailt a <em>{user.email}</em> címre, amivel meg tudod erősíteni a regisztrációdat.
+          Küldtünk egy emailt az email címedre, amivel meg tudod erősíteni a regisztrációdat.
         </p>
         <hr>
         <nuxt-link to="/login">
@@ -33,12 +33,6 @@ export default {
   layout: 'unauthorized',
   data () {
     return {
-      isLoading: false,
-      email: '',
-      password: '',
-      password2: '',
-      adatvedelem: false,
-      aszf: false
     }
   },
   head () {
@@ -49,7 +43,6 @@ export default {
   computed: {
   },
   methods: {
-
   }
 }
 </script>

@@ -1,6 +1,5 @@
 <template>
   <section
-    v-if="!registerSuccess"
     class="columns is-vcentered"
     style="height: 100vh"
   >
@@ -109,30 +108,6 @@
       </card-component>
     </div>
   </section>
-  <section
-    v-else-if="registerSuccess"
-    class="columns is-vcentered"
-    style="height: 100vh"
-  >
-    <div class="column is-half is-offset-one-quarter">
-      <card-component
-        title="Regisztráció megerősítése"
-        pack="fas"
-        icon="user"
-        class="title is-child"
-      >
-        <p class="has-text-centered mb-4">
-          Küldtünk egy emailt a <em class="has-text-success">{{ email }}</em> címre, amivel meg tudod erősíteni a regisztrációdat.
-        </p>
-        <hr>
-        <nuxt-link to="/login">
-          <button class="button is-primary is-fullwidth ">
-            Tovább a bejelentkezéshez
-          </button>
-        </nuxt-link>
-      </card-component>
-    </div>
-  </section>
 </template>
 
 <script>
@@ -150,8 +125,7 @@ export default {
       password: '',
       password2: '',
       adatvedelem: false,
-      aszf: false,
-      registerSuccess: false
+      aszf: false
     }
   },
   head () {
@@ -177,9 +151,8 @@ export default {
           type: 'is-success',
           queue: false
         })
-        this.registerSuccess = true
 
-        /* this.$router.push('/confirm') */
+        this.$router.push('/confirm')
       } catch (err) {
         this.isLoading = false
         this.$buefy.toast.open({
