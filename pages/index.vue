@@ -140,11 +140,6 @@ export default {
     const { oneTimePayments, subscriptionPayments } = this.dummyData
     const sumPayments = paymentArr => paymentArr.reduce((acc, curr) => acc + curr)
     this.salesNumber = sumPayments(oneTimePayments) + sumPayments(subscriptionPayments)
-
-    this.$buefy.snackbar.open({
-      message: 'Welcome back',
-      queue: false
-    })
   },
   methods: {
     randomChartData (n) {
