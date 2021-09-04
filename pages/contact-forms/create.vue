@@ -56,6 +56,11 @@
               type="textarea"
             />
           </b-field>
+          <b-field label="Feliratkozás a hírlevélre">
+            <b-checkbox>
+              Legyen feliratkozás a hírlevélre gomb
+            </b-checkbox>
+          </b-field>
           <hr>
           <b-field>
             <b-button

@@ -58,6 +58,12 @@
             />
           </b-field>
 
+          <b-field label="Feliratkozás a hírlevélre">
+            <b-checkbox>
+              Legyen feliratkozás a hírlevélre gomb
+            </b-checkbox>
+          </b-field>
+
           <b-field
             v-if="!addProduct"
             label="Űrlaphpz tartozó termékek"
