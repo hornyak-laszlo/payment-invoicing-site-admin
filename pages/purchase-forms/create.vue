@@ -221,7 +221,7 @@
           </b-field>
 
           <hr>
-          <b-field horizontal>
+          <b-field>
             <b-button
               type="is-primary"
               :loading="isLoading"
