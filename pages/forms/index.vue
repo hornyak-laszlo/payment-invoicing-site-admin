@@ -8,27 +8,12 @@
         style="margin: 1rem"
       />
       Űrlapok
-      <!--  <nuxt-link
-        slot="right"
-        to="/contact-forms/create"
-        class="button is-primary"
-        style="marginRight: 1rem"
-      >
-        <p>Új <strong>kontakt</strong> űrlap</p>
-      </nuxt-link>
-      <nuxt-link
-        slot="right"
-        to="/purchase-forms/create"
-        class="button is-primary"
-      >
-        <p>Új <strong>vásárlási</strong> űrlap</p>
-      </nuxt-link> -->
       <nuxt-link
         slot="right"
         to="/forms/create"
         class="button is-primary"
       >
-        <p><strong>Új</strong> űrlap</p>
+        <p>Új űrlap</p>
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
