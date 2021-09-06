@@ -109,6 +109,14 @@ export default {
         field: 'firstName',
         title: 'Keresztnév'
       }, {
+        customFn: (data) => {
+          const statuses = {
+            payed: 'Fizetve',
+            ordered: 'Megrendelve',
+            shipped: 'Kiszállítva'
+          }
+          return statuses[data.status]
+        },
         field: 'status',
         title: 'Vásárlás státusza'
       }, {
