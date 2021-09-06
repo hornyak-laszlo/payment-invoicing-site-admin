@@ -39,55 +39,78 @@
 
                 <b-field label="Székhely" />
                 <b-field grouped>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Ország"
-                    rules="required"
+                  <b-field
+                    expanded
+                    label="Ország"
                   >
-                    <b-input
-                      v-model="company.country"
-                      placeholder="Ország"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Irányítószám"
-                    rules="required"
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      name="Ország"
+                      rules="required"
+                    >
+                      <b-input
+                        v-model="company.country"
+                        placeholder="Ország"
+                        required
+                      />
+                      <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                    </ValidationProvider>
+                  </b-field>
+
+                  <b-field
+                    expanded
+                    label="Irányító"
                   >
-                    <b-input
-                      v-model="company.zip"
-                      placeholder="Irányítószám"
-                      required
-                      type="number"
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Város"
-                    rules="required"
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      name="Irányítószám"
+                      rules="required"
+                    >
+                      <b-input
+                        v-model="company.zip"
+                        placeholder="Irányítószám"
+                        required
+                        type="number"
+                      />
+                      <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                    </ValidationProvider>
+                  </b-field>
+
+                  <b-field
+                    expanded
+                    label="Város"
                   >
-                    <b-input
-                      v-model="company.city"
-                      placeholder="Város"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Utca és házszám"
-                    rules="required"
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      name="Város"
+                      rules="required"
+                    >
+                      <b-input
+                        v-model="company.city"
+                        placeholder="Város"
+                        required
+                      />
+                      <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                    </ValidationProvider>
+                  </b-field>
+
+                  <b-field
+                    expanded
+                    label="Utca, házszám"
                   >
-                    <b-input
-                      v-model="company.streetNo"
-                      placeholder="Utca és házszám"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      name="Utca és házszám"
+                      rules="required"
+                    >
+                      <b-input
+                        v-model="company.streetNo"
+                        placeholder="Utca és házszám"
+                        required
+                      />
+                      <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                    </ValidationProvider>
+                  </b-field>
                 </b-field>
 
                 <b-field
