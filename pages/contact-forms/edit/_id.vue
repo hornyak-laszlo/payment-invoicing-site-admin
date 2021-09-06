@@ -55,6 +55,11 @@
               required
             />
           </b-field>
+          <b-field label="Feliratkozás a hírlevélre">
+            <b-checkbox v-model="contactForm.newsletterCheckbox">
+              Legyen feliratkozás a hírlevélre lehetőség
+            </b-checkbox>
+          </b-field>
           <hr>
           <b-field>
             <b-button
@@ -103,7 +108,8 @@ export default {
         name: '',
         link: '',
         successLink: '',
-        successText: ''
+        successText: '',
+        newsletterCheckbox: null
       }
     },
     async getData () {

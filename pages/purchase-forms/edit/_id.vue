@@ -57,6 +57,11 @@
                 required
               />
             </b-field>
+            <b-field label="Feliratkozás a hírlevélre">
+              <b-checkbox v-model="purchaseForm.newsletterCheckbox">
+                Legyen feliratkozás a hírlevélre lehetőség
+              </b-checkbox>
+            </b-field>
             <b-field label="Űrlaphoz tartozó termékek">
               <p>Az űrlaphoz tartozó termékek listája:</p>
             </b-field>
@@ -325,7 +330,8 @@ export default {
         successLink: '',
         successText: '',
         products: [],
-        company: {}
+        company: {},
+        newsletterCheckbox: null
       }
     },
     deleteProduct (id) {

@@ -60,7 +60,7 @@
 
           <b-field label="Feliratkozás a hírlevélre">
             <b-checkbox>
-              Legyen feliratkozás a hírlevélre gomb
+              Legyen feliratkozás a hírlevélre lehetőség
             </b-checkbox>
           </b-field>
 
