@@ -225,36 +225,40 @@
                 </b-field>
               </div>
 
-              <b-field
-                label="Bankszámla"
-                message="A cég bankszámlaszáma"
+              <div
+                class="card"
+                style="padding: 2rem; border-width: 5px"
               >
-                <ValidationProvider
-                  v-slot="{ errors }"
-                  name="Bankszámlaszám"
-                  rules="required"
+                <b-field label="Bankszámla adatok" />
+                <b-field
+                  label="Bankszámla"
+                  message="A cég bankszámlaszáma"
                 >
-                  <b-input
-                    v-model="company.bankAccountNumber"
-                    required
-                  />
-                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                </ValidationProvider>
-              </b-field>
-
-              <b-field
-                label="SWIFT szám"
-                message="SWIFT szám utaláshoz (opcionális)"
-              >
-                <b-input v-model="company.swift" />
-              </b-field>
-
-              <b-field
-                label="IBAN szám"
-                message="IBAN szám utaláshoz (opcionális)"
-              >
-                <b-input v-model="company.iban" />
-              </b-field>
+                  <ValidationProvider
+                    v-slot="{ errors }"
+                    name="Bankszámlaszám"
+                    rules="required"
+                  >
+                    <b-input
+                      v-model="company.bankAccountNumber"
+                      required
+                    />
+                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                  </ValidationProvider>
+                </b-field>
+                <b-field
+                  label="SWIFT szám"
+                  message="SWIFT szám utaláshoz (opcionális)"
+                >
+                  <b-input v-model="company.swift" />
+                </b-field>
+                <b-field
+                  label="IBAN szám"
+                  message="IBAN szám utaláshoz (opcionális)"
+                >
+                  <b-input v-model="company.iban" />
+                </b-field>
+              </div>
 
               <hr>
               <b-field>
