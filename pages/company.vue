@@ -10,220 +10,84 @@
       Cégadatok
     </hero-bar>
     <section class="section is-main-section">
-      <tiles>
-        <card-component>
-          <ValidationObserver v-slot="{ invalid }">
-            <form @submit.prevent="submit">
-              <div
-                class="card"
-                style="padding: 2rem; border-width: 5px"
+      <ValidationObserver v-slot="{ invalid }">
+        <form @submit.prevent="submit">
+          <card-component>
+            <b-field label="Alap adatok" />
+            <b-field
+              label="Név"
+              message="A cég neve"
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Név"
+                rules="required"
               >
-                <b-field label="Alap adatok" />
-                <b-field
-                  label="Név"
-                  message="A cég neve"
-                >
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Név"
-                    rules="required"
-                  >
-                    <b-input
-                      v-model="company.name"
-                      placeholder="Cégnév"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </b-field>
+                <b-input
+                  v-model="company.name"
+                  placeholder="Cégnév"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
 
-                <b-field label="Székhely" />
-                <b-field grouped>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Ország"
-                    rules="required"
-                  >
-                    <b-input
-                      v-model="company.country"
-                      placeholder="Ország"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Irányítószám"
-                    rules="required"
-                  >
-                    <b-input
-                      v-model="company.zip"
-                      placeholder="Irányítószám"
-                      required
-                      type="number"
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Város"
-                    rules="required"
-                  >
-                    <b-input
-                      v-model="company.city"
-                      placeholder="Város"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Utca és házszám"
-                    rules="required"
-                  >
-                    <b-input
-                      v-model="company.streetNo"
-                      placeholder="Utca és házszám"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </b-field>
-
-                <b-field
-                  label="Vállalkozás formája"
-                  message="Cég, egyéni vállalkozó vagy magánszemély"
-                >
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Vállalkozás formája"
-                    rules="required"
-                  >
-                    <b-select
-                      v-model="company.formOfEnterprise "
-                      required
-                      expanded
-                    >
-                      <option value="company">
-                        Cég
-                      </option>
-                      <option value="self_employed">
-                        Egyéni vállalkozó
-                      </option>
-                      <option value="private_person">
-                        Magánszemély
-                      </option>
-                    </b-select>
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </b-field>
-
-                <b-field
-                  label="Adószám"
-                  message="A vállalkozás adószáma"
-                >
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Adószám"
-                    rules="required|min:4"
-                  >
-                    <b-input
-                      v-model="company.taxNumber"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </b-field>
-
-                <b-field
-                  v-if="company.formOfEnterprise === 'self_employed'"
-                  label="Nyilvántartási szám"
-                  message="Egyéni vállalkozó nyilvántartási száma (opcionális)"
-                >
-                  <b-input v-model="company.registrationNumber" />
-                </b-field>
-                <b-field
-                  v-if="company.formOfEnterprise === 'company'"
-                  label="Cégjegyzék szám"
-                  message="Cég nyilvántartási száma (opcionális)"
-                >
-                  <b-input v-model="company.companyRegistrationNumber" />
-                </b-field>
-              </div>
-
-              <div
-                class="card"
-                style="padding: 2rem; border-width: 5px"
+            <b-field label="Székhely" />
+            <b-field grouped>
+              <b-field
+                expanded
+                label="Ország"
               >
-                <b-field label="Kapcsolattartási adatok" />
-                <b-field
-                  label="Email"
-                  message="A cég e-mail címe"
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Ország"
+                  rules="required"
                 >
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Email"
-                    rules="required|email"
-                  >
-                    <b-input
-                      v-model="company.email"
-                      type="email"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </b-field>
-                <b-field
-                  label="Értesítési email"
-                  message="Értesítési email cím"
+                  <b-input
+                    v-model="company.country"
+                    placeholder="Ország"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+
+              <b-field
+                expanded
+                label="Irányító"
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Irányítószám"
+                  rules="required"
                 >
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Értesítési email"
-                    rules="required|email"
-                  >
-                    <b-input
-                      v-model="company.notificationEmail"
-                      type="email"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </b-field>
-                <b-field
-                  label="Weboldal"
-                  message="A cég weboldalának linkje"
+                  <b-input
+                    v-model="company.zip"
+                    placeholder="Irányítószám"
+                    required
+                    type="number"
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
+
+              <b-field
+                expanded
+                label="Város"
+              >
+                <ValidationProvider
+                  v-slot="{ errors }"
+                  name="Város"
+                  rules="required"
                 >
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Weboldal"
-                    rules="required"
-                  >
-                    <b-input
-                      v-model="company.websiteLink"
-                      type="text"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </b-field>
-                <b-field
-                  label="Telefonszám"
-                  message="Kapcsolattartó telefonszáma"
-                >
-                  <ValidationProvider
-                    v-slot="{ errors }"
-                    name="Telefonszám"
-                    rules="required"
-                  >
-                    <b-input
-                      v-model="company.phoneNumber"
-                      required
-                    />
-                    <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
-                  </ValidationProvider>
-                </b-field>
-              </div>
+                  <b-input
+                    v-model="company.city"
+                    placeholder="Város"
+                    required
+                  />
+                  <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+                </ValidationProvider>
+              </b-field>
 
               <b-field
                 expanded
@@ -244,9 +108,111 @@
               </b-field>
             </b-field>
 
-              <b-field
-                label="SWIFT szám"
-                message="SWIFT szám utaláshoz (opcionális)"
+            <b-field
+              label="Vállalkozás formája"
+              message="Cég, egyéni vállalkozó vagy magánszemély"
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Vállalkozás formája"
+                rules="required"
+              >
+                <b-select
+                  v-model="company.formOfEnterprise "
+                  required
+                  expanded
+                >
+                  <option value="company">
+                    Cég
+                  </option>
+                  <option value="self_employed">
+                    Egyéni vállalkozó
+                  </option>
+                  <option value="private_person">
+                    Magánszemély
+                  </option>
+                </b-select>
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+
+            <b-field
+              label="Adószám"
+              message="A vállalkozás adószáma"
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Adószám"
+                rules="required|min:4"
+              >
+                <b-input
+                  v-model="company.taxNumber"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+
+            <b-field
+              v-if="company.formOfEnterprise === 'self_employed'"
+              label="Nyilvántartási szám"
+              message="Egyéni vállalkozó nyilvántartási száma (opcionális)"
+            >
+              <b-input v-model="company.registrationNumber" />
+            </b-field>
+            <b-field
+              v-if="company.formOfEnterprise === 'company'"
+              label="Cégjegyzék szám"
+              message="Cég nyilvántartási száma (opcionális)"
+            >
+              <b-input v-model="company.companyRegistrationNumber" />
+            </b-field>
+          </card-component>
+
+          <card-component>
+            <b-field label="Kapcsolattartási adatok" />
+            <b-field
+              label="Email"
+              message="A cég e-mail címe"
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Email"
+                rules="required|email"
+              >
+                <b-input
+                  v-model="company.email"
+                  type="email"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+            <b-field
+              label="Értesítési email"
+              message="Értesítési email cím"
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Értesítési email"
+                rules="required|email"
+              >
+                <b-input
+                  v-model="company.notificationEmail"
+                  type="email"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+            <b-field
+              label="Weboldal"
+              message="A cég weboldalának linkje"
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Weboldal"
+                rules="required"
               >
                 <b-input
                   v-model="company.websiteLink"
