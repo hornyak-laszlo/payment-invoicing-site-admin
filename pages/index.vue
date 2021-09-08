@@ -57,6 +57,12 @@
         </div>
       </card-component>
 
+      <b-button
+        label="Modal"
+        class="is-primary is-outlined"
+        @click="isModalActive=true"
+      />
+
       <card-component
         title="Legutóbbi vásárlások"
         class="has-table has-mobile-sort-spaced"
@@ -66,6 +72,49 @@
           :collection="collection"
         />
       </card-component>
+
+      <b-modal
+        :active.sync="isModalActive"
+        :can-cancel="false"
+        has-modal-card
+      >
+        <div class="modal-card">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              Alap adatok megadása
+            </p>
+          </header>
+          <section class="modal-card-body">
+            <b-field label="Alap adatok" />
+            <b-field
+              label="Név"
+              message="A cég neve"
+            >
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="Név"
+                rules="required"
+              >
+                <b-input
+                  v-model="name"
+                  placeholder="Cégnév"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+          </section>
+          <footer class="modal-card-foot">
+            <b-button
+              class="button is-primary"
+              expanded
+              @click="confirm"
+            >
+              Mentés
+            </b-button>
+          </footer>
+        </div>
+      </b-modal>
     </section>
   </div>
 </template>
@@ -93,6 +142,8 @@ export default {
   },
   data () {
     return {
+      name: '',
+      isModalActive: false,
       defaultChart: {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain
@@ -142,6 +193,7 @@ export default {
     this.dummyData = await this.$strapi.$http.$get('/purchases/dashboard')
     this.customers = await this.$strapi.find('customers')
     this.contacts = await this.$strapi.find('contacts')
+    console.log(this.$strapi.user.company)
     console.log(this.customers)
     console.log(this.dummyData)
     this.fillChartData()
@@ -150,6 +202,10 @@ export default {
     this.salesNumber = sumPayments(oneTimePayments) + sumPayments(subscriptionPayments)
   },
   methods: {
+    confirm () {
+      this.$emit('confirm')
+      this.isModalActive = false
+    },
     randomChartData (n) {
       const data = []
 
