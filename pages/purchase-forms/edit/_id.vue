@@ -29,23 +29,27 @@
                 required
               />
             </b-field>
-            <b-field
-              label="Link"
-              message="Link ahol elérhető lesz az űrlap"
-            >
-              <b-input
-                v-model="purchaseForm.link"
-                required
-              />
-            </b-field>
-            <b-field
-              label="Sikeres link"
-              message="Sikeres kapcsolatfevétel linkje"
-            >
-              <b-input
-                v-model="purchaseForm.successLink"
-                required
-              />
+            <b-field grouped>
+              <b-field
+                label="Link"
+                message="Link ahol elérhető lesz az űrlap"
+                expanded
+              >
+                <b-input
+                  v-model="purchaseForm.link"
+                  required
+                />
+              </b-field>
+              <b-field
+                label="Sikeres link"
+                message="Sikeres kapcsolatfevétel linkje"
+                expanded
+              >
+                <b-input
+                  v-model="purchaseForm.successLink"
+                  required
+                />
+              </b-field>
             </b-field>
             <b-field
               label="Sikeres szöveg"
@@ -62,8 +66,18 @@
                 Legyen feliratkozás a hírlevélre lehetőség
               </b-checkbox>
             </b-field>
-            <b-field label="Űrlaphoz tartozó termékek">
-              <p>Az űrlaphoz tartozó termékek listája:</p>
+            <b-field grouped>
+              <b-field label="Űrlaphoz tartozó termékek listája" expanded />
+              <b-field expanded>
+                <b-button
+                  outlined
+                  type="is-primary"
+                  label="Termékek szerkesztése"
+                  :loading="isLoading"
+                  expanded
+                  @click="addNewProduct()"
+                />
+              </b-field>
             </b-field>
 
             <b-collapse
@@ -133,37 +147,32 @@
                 </b-button>
               </footer>
             </b-collapse>
-            <b-field horizontal>
-              <b-button
-                outlined
-                type="is-primary"
-                label="Űrlap termékek szerkesztése"
-                :loading="isLoading"
-                @click="addNewProduct()"
-              />
-            </b-field>
+
             <b-field
               v-if="addProduct"
               label="Termék típusa"
-              message="Milyen típusú terméket lehet itt rendelni"
             >
-              <b-select
-                v-model="productType"
-                required
-                expanded
-              >
-                <option value="subscription">
+              <b-field v-if="addProduct">
+                <b-radio
+                  v-model="productType"
+                  name="name"
+                  native-value="subscription"
+                >
                   Előfizetéses
-                </option>
-                <option value="one_time">
+                </b-radio>
+                <b-radio
+                  v-model="productType"
+                  name="name"
+                  native-value="one_time"
+                >
                   Egyszeri vásárlás
-                </option>
-              </b-select>
+                </b-radio>
+              </b-field>
             </b-field>
 
             <b-field
               v-if="productType === 'subscription' && addProduct"
-              grouped
+              horizontal
             >
               <b-field expanded>
                 <b-select
@@ -205,7 +214,7 @@
 
             <b-field
               v-if="productType === 'one_time' && addProduct"
-              grouped
+              horizontal
             >
               <b-field expanded>
                 <b-dropdown
@@ -233,9 +242,9 @@
                   style="border-radius: 5px"
                   type="is-primary"
                   label="Hozzáadás"
-                  size="is-small"
-                  :loading="isLoading"
                   expanded
+                  :loading="isLoading"
+
                   @click="addNewOneProduct()"
                 />
               </b-field>
@@ -243,7 +252,7 @@
                 <b-button
                   style="border-radius: 5px"
                   label="Mégse"
-                  size="is-small"
+
                   :loading="isLoading"
                   expanded
                   @click="addProduct = false"
