@@ -17,8 +17,8 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component>
-        <form @submit.prevent="submit">
+      <form @submit.prevent="submit">
+        <card-component>
           <b-field
             label="Név"
             message="Űrlap neve"
@@ -66,7 +66,9 @@
               Legyen feliratkozás a hírlevélre lehetőség
             </b-checkbox>
           </b-field>
+        </card-component>
 
+        <card-component>
           <b-field grouped>
             <b-field
               v-if="!addProduct"
@@ -141,7 +143,6 @@
               </nuxt-link>
             </footer>
           </b-collapse>
-
           <b-field
             v-if="addProduct"
             label="Termék típusa"
@@ -197,7 +198,6 @@
               @click="addProduct = false"
             />
           </b-field>
-
           <b-field
             v-if="productType === 'one_time' && addProduct"
             horizontal
@@ -238,7 +238,6 @@
               @click="addProduct = false"
             />
           </b-field>
-
           <hr>
           <b-field>
             <b-button
@@ -250,8 +249,8 @@
               Létrehozás
             </b-button>
           </b-field>
-        </form>
-      </card-component>
+        </card-component>
+      </form>
     </section>
   </div>
 </template>

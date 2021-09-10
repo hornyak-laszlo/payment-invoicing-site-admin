@@ -17,9 +17,9 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component class="tile is-child">
-        <ValidationObserver v-slot="{ invalid }">
-          <form @submit.prevent="submit">
+      <ValidationObserver v-slot="{ invalid }">
+        <form @submit.prevent="submit">
+          <card-component>
             <b-field
               label="Név"
               message="Űrlap neve"
@@ -66,8 +66,14 @@
                 Legyen feliratkozás a hírlevélre lehetőség
               </b-checkbox>
             </b-field>
+          </card-component>
+
+          <card-component>
             <b-field grouped>
-              <b-field label="Űrlaphoz tartozó termékek listája" expanded />
+              <b-field
+                label="Űrlaphoz tartozó termékek listája"
+                expanded
+              />
               <b-field expanded>
                 <b-button
                   outlined
@@ -79,7 +85,6 @@
                 />
               </b-field>
             </b-field>
-
             <b-collapse
               v-for="(product, index) of purchaseForm.products"
               :key="index"
@@ -147,7 +152,6 @@
                 </b-button>
               </footer>
             </b-collapse>
-
             <b-field
               v-if="addProduct"
               label="Termék típusa"
@@ -169,7 +173,6 @@
                 </b-radio>
               </b-field>
             </b-field>
-
             <b-field
               v-if="productType === 'subscription' && addProduct"
               horizontal
@@ -211,7 +214,6 @@
                 />
               </b-field>
             </b-field>
-
             <b-field
               v-if="productType === 'one_time' && addProduct"
               horizontal
@@ -244,7 +246,6 @@
                   label="Hozzáadás"
                   expanded
                   :loading="isLoading"
-
                   @click="addNewOneProduct()"
                 />
               </b-field>
@@ -252,14 +253,12 @@
                 <b-button
                   style="border-radius: 5px"
                   label="Mégse"
-
                   :loading="isLoading"
                   expanded
                   @click="addProduct = false"
                 />
               </b-field>
             </b-field>
-
             <hr>
             <b-field>
               <b-button
@@ -272,9 +271,9 @@
                 Mentés
               </b-button>
             </b-field>
-          </form>
-        </ValidationObserver>
-      </card-component>
+          </card-component>
+        </form>
+      </ValidationObserver>
     </section>
   </div>
 </template>
