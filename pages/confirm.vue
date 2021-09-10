@@ -11,7 +11,7 @@
         class="title is-child"
       >
         <p class="has-text-centered mb-4">
-          Küldtünk egy emailt az email címedre, amivel meg tudod erősíteni a regisztrációdat.
+          Küldtünk egy emailt a <em style="color: #374785">{{ $strapi.user.email }}</em> címedre, amivel meg tudod erősíteni a regisztrációdat.
         </p>
         <hr>
         <nuxt-link to="/login">
