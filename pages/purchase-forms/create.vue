@@ -60,6 +60,12 @@
               type="textarea"
             />
           </b-field>
+          <b-field label="Űrlap promociós tartalom">
+            <b-input
+              required
+              type="textarea"
+            />
+          </b-field>
 
           <b-field label="Feliratkozás a hírlevélre">
             <b-checkbox>

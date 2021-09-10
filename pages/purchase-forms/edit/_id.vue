@@ -61,6 +61,12 @@
                 required
               />
             </b-field>
+            <b-field label="Űrlap promociós tartalom">
+              <b-input
+                required
+                type="textarea"
+              />
+            </b-field>
             <b-field label="Feliratkozás a hírlevélre">
               <b-checkbox v-model="purchaseForm.newsletterCheckbox">
                 Legyen feliratkozás a hírlevélre lehetőség
