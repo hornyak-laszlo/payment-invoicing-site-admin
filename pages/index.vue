@@ -93,6 +93,7 @@ export default {
   },
   data () {
     return {
+
       defaultChart: {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain
@@ -109,6 +110,14 @@ export default {
         field: 'firstName',
         title: 'Keresztnév'
       }, {
+        customFn: (data) => {
+          const statuses = {
+            payed: 'Fizetve',
+            ordered: 'Megrendelve',
+            shipped: 'Kiszállítva'
+          }
+          return statuses[data.status]
+        },
         field: 'status',
         title: 'Vásárlás státusza'
       }, {
@@ -134,6 +143,7 @@ export default {
     this.dummyData = await this.$strapi.$http.$get('/purchases/dashboard')
     this.customers = await this.$strapi.find('customers')
     this.contacts = await this.$strapi.find('contacts')
+    console.log(this.$strapi.user.company)
     console.log(this.customers)
     console.log(this.dummyData)
     this.fillChartData()
@@ -142,6 +152,10 @@ export default {
     this.salesNumber = sumPayments(oneTimePayments) + sumPayments(subscriptionPayments)
   },
   methods: {
+    confirm () {
+      this.$emit('confirm')
+      this.isModalActive = false
+    },
     randomChartData (n) {
       const data = []
 

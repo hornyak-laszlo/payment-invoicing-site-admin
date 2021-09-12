@@ -56,6 +56,11 @@
               type="textarea"
             />
           </b-field>
+          <b-field label="Feliratkozás a hírlevélre">
+            <b-checkbox v-model="contactForm.newsletterCheckbox">
+              Legyen feliratkozás a hírlevélre lehetőség
+            </b-checkbox>
+          </b-field>
           <hr>
           <b-field>
             <b-button
@@ -86,7 +91,14 @@ export default {
   data () {
     return {
       isLoading: false,
-      contactForm: this.getClearFormObject()
+      contactForm: {
+        type: 'contact-forms',
+        name: '',
+        link: '',
+        successLink: '',
+        successText: '',
+        newsletterCheckbox: null
+      }
     }
   },
   head () {
@@ -101,7 +113,8 @@ export default {
         name: '',
         link: '',
         successLink: '',
-        successText: ''
+        successText: '',
+        newsletterCheckbox: null
       }
     },
     async submit () {
