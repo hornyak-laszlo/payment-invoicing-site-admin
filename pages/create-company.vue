@@ -306,7 +306,7 @@
                   rules="required"
                 >
                   <b-input
-                    v-model="company.name"
+                    v-model="company1.name"
                     placeholder="Cégnév"
                     required
                   />
@@ -323,7 +323,7 @@
                   rules="required|email"
                 >
                   <b-input
-                    v-model="company.email"
+                    v-model="company1.email"
                     type="email"
                     required
                   />
@@ -335,9 +335,9 @@
               <b-button
                 type="is-primary"
                 :loading="isLoading"
-                native-type="submit"
                 expanded
                 :disabled="invalid"
+                @click="submit1"
               >
                 Mentés
               </b-button>
@@ -384,6 +384,10 @@ export default {
         swift: '',
         iban: ''
       },
+      company1: {
+        name: '',
+        email: ''
+      },
       isLoading: false
     }
   },
@@ -404,6 +408,27 @@ export default {
       try {
         this.isLoading = true
         await this.$strapi.create('companies', this.company)
+
+        this.isLoading = false
+        this.ismodified = false
+        this.$buefy.snackbar.open({
+          message: 'Sikeresen mentve',
+          queue: false
+        })
+        this.$router.push('/')
+      } catch (err) {
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: `Error: ${err.message}`,
+          type: 'is-danger',
+          queue: false
+        })
+      }
+    },
+    async submit1 () {
+      try {
+        this.isLoading = true
+        await this.$strapi.create('companies', this.company1)
 
         this.isLoading = false
         this.ismodified = false

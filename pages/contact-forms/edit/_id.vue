@@ -27,23 +27,27 @@
               required
             />
           </b-field>
-          <b-field
-            label="Link"
-            message="Link ahol elérhető lesz az űrlap"
-          >
-            <b-input
-              v-model="contactForm.link"
-              required
-            />
-          </b-field>
-          <b-field
-            label="Sikeres link"
-            message="Sikeres kapcsolatfevétel linkje"
-          >
-            <b-input
-              v-model="contactForm.successLink"
-              required
-            />
+          <b-field grouped>
+            <b-field
+              label="Link"
+              expanded
+              message="Link ahol elérhető lesz az űrlap"
+            >
+              <b-input
+                v-model="contactForm.link"
+                required
+              />
+            </b-field>
+            <b-field
+              expanded
+              label="Sikeres link"
+              message="Sikeres kapcsolatfevétel linkje"
+            >
+              <b-input
+                v-model="contactForm.successLink"
+                required
+              />
+            </b-field>
           </b-field>
           <b-field
             label="Sikeres szöveg"

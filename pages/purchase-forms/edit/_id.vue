@@ -17,9 +17,9 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component class="tile is-child">
-        <ValidationObserver v-slot="{ invalid }">
-          <form @submit.prevent="submit">
+      <ValidationObserver v-slot="{ invalid }">
+        <form @submit.prevent="submit">
+          <card-component>
             <b-field
               label="Név"
               message="Űrlap neve"
@@ -29,23 +29,27 @@
                 required
               />
             </b-field>
-            <b-field
-              label="Link"
-              message="Link ahol elérhető lesz az űrlap"
-            >
-              <b-input
-                v-model="purchaseForm.link"
-                required
-              />
-            </b-field>
-            <b-field
-              label="Sikeres link"
-              message="Sikeres kapcsolatfevétel linkje"
-            >
-              <b-input
-                v-model="purchaseForm.successLink"
-                required
-              />
+            <b-field grouped>
+              <b-field
+                label="Link"
+                message="Link ahol elérhető lesz az űrlap"
+                expanded
+              >
+                <b-input
+                  v-model="purchaseForm.link"
+                  required
+                />
+              </b-field>
+              <b-field
+                label="Sikeres link"
+                message="Sikeres kapcsolatfevétel linkje"
+                expanded
+              >
+                <b-input
+                  v-model="purchaseForm.successLink"
+                  required
+                />
+              </b-field>
             </b-field>
             <b-field
               label="Sikeres szöveg"
@@ -57,113 +61,108 @@
                 required
               />
             </b-field>
+            <b-field label="Űrlap promociós tartalom">
+              <b-input type="textarea" />
+            </b-field>
             <b-field label="Feliratkozás a hírlevélre">
               <b-checkbox v-model="purchaseForm.newsletterCheckbox">
                 Legyen feliratkozás a hírlevélre lehetőség
               </b-checkbox>
             </b-field>
-            <b-field label="Űrlaphoz tartozó termékek">
-              <p>Az űrlaphoz tartozó termékek listája:</p>
-            </b-field>
+          </card-component>
 
-            <b-collapse
-              v-for="(product, index) of purchaseForm.products"
-              :key="index"
-              style="max-width: 80%; margin-left: 19%;"
-              class="card"
-              animation="slide"
-            >
-              <template #trigger="props">
-                <div
-                  class="card-header"
-                  role="button"
-                >
-                  <p class="card-header-title">
-                    Termék ID: {{ product.id }}, {{ product.name }}
-                  </p>
-                  <a class="card-header-icon">
-                    <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
-                  </a>
-                </div>
-              </template>
-              <div class="card-content">
-                <div class="content">
-                  <p>
-                    <strong>Termék ára:</strong>
-                    {{ product.grossPrice }}
-                  </p>
-                </div>
-                <div class="content">
-                  <p>
-                    <strong>Termék leírása:</strong>
-                    {{ product.description }}
-                  </p>
-                </div>
-              </div>
-              <footer class="card-footer">
-                <nuxt-link
-                  :to="`/products/edit/${product.id}`"
-                  style="width: 100%"
-                >
-                  <b-button
-                    expanded
-                    outlined
-                    type="is-primary"
-                    style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                    label="Szerkesztés"
-                    icon-pack="fas"
-                    icon-left="tag"
-                    class="card-footer-item"
-                  >
-                    Termék szerkesztése
-                  </b-button>
-                </nuxt-link>
-                <b-button
-                  expanded
-                  outlined
-                  type="is-danger"
-                  style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                  label="Törlés"
-                  icon-pack="fas"
-                  icon-left="trash-alt"
-                  class="card-footer-item"
-                  @click="deleteProduct(product.id)"
-                >
-                  Törlés
-                </b-button>
-              </footer>
-            </b-collapse>
-            <b-field horizontal>
-              <b-button
-                outlined
-                type="is-primary"
-                label="Űrlap termékek szerkesztése"
-                :loading="isLoading"
-                @click="addNewProduct()"
+          <card-component>
+            <b-field grouped>
+              <b-field
+                label="Űrlaphoz tartozó termékek listája"
+                expanded
               />
+              <b-field expanded>
+                <b-button
+                  outlined
+                  type="is-primary"
+                  label="Termékek szerkesztése"
+                  :loading="isLoading"
+                  expanded
+                  @click="addNewProduct()"
+                />
+              </b-field>
             </b-field>
+            <b-table
+              :striped="true"
+              :hoverable="true"
+              default-sort="id"
+              :data="purchaseForm.products"
+              :mobile-cards="true"
+            >
+              <template slot-scope="props">
+                <b-table-column
+                  label="Termék"
+                  field="name"
+                  sortable
+                >
+                  {{ props.row.name }}
+                </b-table-column>
+                <b-table-column
+                  label="Ár"
+                  field="grossPrice"
+                  sortable
+                >
+                  {{ props.row.grossPrice }}
+                </b-table-column>
+
+                <b-table-column
+                  custom-key="actions"
+                  class="is-actions-cell"
+                >
+                  <div class="buttons is-right">
+                    <nuxt-link
+                      :to="`/products/edit/${props.row.id}`"
+                      class="button is-small"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="eye"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </nuxt-link>
+                    <b-button
+                      outlined
+                      size="is-small"
+                      type="is-danger"
+                      icon-pack="fas"
+                      icon-left="trash-alt"
+                      @click="deleteProduct(props.row.id)"
+                    />
+                  </div>
+                </b-table-column>
+              </template>
+            </b-table>
             <b-field
               v-if="addProduct"
               label="Termék típusa"
-              message="Milyen típusú terméket lehet itt rendelni"
             >
-              <b-select
-                v-model="productType"
-                required
-                expanded
-              >
-                <option value="subscription">
+              <b-field v-if="addProduct">
+                <b-radio
+                  v-model="productType"
+                  name="name"
+                  native-value="subscription"
+                >
                   Előfizetéses
-                </option>
-                <option value="one_time">
+                </b-radio>
+                <b-radio
+                  v-model="productType"
+                  name="name"
+                  native-value="one_time"
+                >
                   Egyszeri vásárlás
-                </option>
-              </b-select>
+                </b-radio>
+              </b-field>
             </b-field>
-
             <b-field
               v-if="productType === 'subscription' && addProduct"
-              grouped
+              horizontal
             >
               <b-field expanded>
                 <b-select
@@ -202,10 +201,9 @@
                 />
               </b-field>
             </b-field>
-
             <b-field
               v-if="productType === 'one_time' && addProduct"
-              grouped
+              horizontal
             >
               <b-field expanded>
                 <b-dropdown
@@ -233,9 +231,8 @@
                   style="border-radius: 5px"
                   type="is-primary"
                   label="Hozzáadás"
-                  size="is-small"
-                  :loading="isLoading"
                   expanded
+                  :loading="isLoading"
                   @click="addNewOneProduct()"
                 />
               </b-field>
@@ -243,14 +240,12 @@
                 <b-button
                   style="border-radius: 5px"
                   label="Mégse"
-                  size="is-small"
                   :loading="isLoading"
                   expanded
                   @click="addProduct = false"
                 />
               </b-field>
             </b-field>
-
             <hr>
             <b-field>
               <b-button
@@ -263,9 +258,9 @@
                 Mentés
               </b-button>
             </b-field>
-          </form>
-        </ValidationObserver>
-      </card-component>
+          </card-component>
+        </form>
+      </ValidationObserver>
     </section>
   </div>
 </template>

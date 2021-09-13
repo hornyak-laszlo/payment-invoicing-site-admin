@@ -17,8 +17,8 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component>
-        <form @submit.prevent="submit">
+      <form @submit.prevent="submit">
+        <card-component>
           <b-field
             label="Név"
             message="Űrlap neve"
@@ -28,25 +28,28 @@
               required
             />
           </b-field>
-          <b-field
-            label="Link"
-            message="Link ahol elérhető lesz az űrlap"
-          >
-            <b-input
-              v-model="purchaseForm.link"
-              required
-            />
+          <b-field grouped>
+            <b-field
+              label="Link"
+              message="Link ahol elérhető lesz az űrlap"
+              expanded
+            >
+              <b-input
+                v-model="purchaseForm.link"
+                required
+              />
+            </b-field>
+            <b-field
+              label="Sikeres link"
+              message="Sikeres kapcsolatfevétel linkje"
+              expanded
+            >
+              <b-input
+                v-model="purchaseForm.successLink"
+                required
+              />
+            </b-field>
           </b-field>
-          <b-field
-            label="Sikeres link"
-            message="Sikeres kapcsolatfevétel linkje"
-          >
-            <b-input
-              v-model="purchaseForm.successLink"
-              required
-            />
-          </b-field>
-
           <b-field
             label="Sikeres szöveg"
             message="Sikeres kapcsolatfevétel szövege"
@@ -57,28 +60,40 @@
               type="textarea"
             />
           </b-field>
+          <b-field label="Űrlap promociós tartalom">
+            <b-input
+              required
+              type="textarea"
+            />
+          </b-field>
 
           <b-field label="Feliratkozás a hírlevélre">
             <b-checkbox>
               Legyen feliratkozás a hírlevélre lehetőség
             </b-checkbox>
           </b-field>
+        </card-component>
 
-          <b-field
-            v-if="!addProduct"
-            label="Űrlaphpz tartozó termékek"
-          >
-            <p>Az űrlaphoz tartozó termékek listája:</p>
-          </b-field>
-          <b-field v-if="!addProduct">
-            <b-button
-              outlined
-              style="border-radius: 5px"
-              type="is-primary"
-              size="is-small"
-              label="Űrlaphoz tartozó termékek szerkesztése"
-              @click="addProduct = true"
+        <card-component>
+          <b-field grouped>
+            <b-field
+              v-if="!addProduct"
+              label="Űrlaphoz tartozó termékek listája"
+              expanded
             />
+            <b-field
+              v-if="!addProduct"
+              expanded
+            >
+              <b-button
+                outlined
+                style="border-radius: 5px"
+                type="is-primary"
+                label="Termékek szerkesztése"
+                expanded
+                @click="addProduct = true"
+              />
+            </b-field>
           </b-field>
           <b-collapse
             v-for="(product, index) of purchaseForm.products"
@@ -134,24 +149,25 @@
               </nuxt-link>
             </footer>
           </b-collapse>
-
           <b-field
             v-if="addProduct"
             label="Termék típusa"
-            message="Milyen típusú terméket lehet itt rendelni"
-          >
-            <b-select
+          />
+          <b-field v-if="addProduct">
+            <b-radio
               v-model="productType"
-              required
-              expanded
+              name="name"
+              native-value="subscription"
             >
-              <option value="subscription">
-                Előfizetéses
-              </option>
-              <option value="one_time">
-                Egyszeri vásárlás
-              </option>
-            </b-select>
+              Előfizetéses
+            </b-radio>
+            <b-radio
+              v-model="productType"
+              name="name"
+              native-value="one_time"
+            >
+              Egyszeri vásárlás
+            </b-radio>
           </b-field>
           <b-field
             v-if="productType === 'subscription' && addProduct"
@@ -160,6 +176,7 @@
             <b-select
               v-model="plusProductId"
               required
+              expanded
             >
               <option
                 v-for="product in subscriptionProducts"
@@ -175,6 +192,7 @@
               label="Hozzáadás"
               size="is-small"
               :loading="isLoading"
+              expanded
               @click="addNewSubProduct()"
             />
             <b-button
@@ -182,10 +200,10 @@
               label="Mégse"
               size="is-small"
               :loading="isLoading"
+              expanded
               @click="addProduct = false"
             />
           </b-field>
-
           <b-field
             v-if="productType === 'one_time' && addProduct"
             horizontal
@@ -193,6 +211,7 @@
             <b-dropdown
               v-model="selectedProductIDs"
               multiple
+              expanded
             >
               <template #trigger>
                 <b-button icon-right="menu-down">
@@ -213,19 +232,18 @@
               style="border-radius: 5px"
               type="is-primary"
               label="Hozzáadás"
-              size="is-small"
               :loading="isLoading"
+              expanded
               @click="addNewOneProduct()"
             />
             <b-button
               style="border-radius: 5px"
               label="Mégse"
-              size="is-small"
               :loading="isLoading"
+              expanded
               @click="addProduct = false"
             />
           </b-field>
-
           <hr>
           <b-field>
             <b-button
@@ -237,8 +255,8 @@
               Létrehozás
             </b-button>
           </b-field>
-        </form>
-      </card-component>
+        </card-component>
+      </form>
     </section>
   </div>
 </template>
