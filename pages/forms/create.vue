@@ -123,60 +123,50 @@
               />
             </b-field>
           </b-field>
-          <b-collapse
-            v-for="(product, index) of form.products"
-            :key="index"
-            style="max-width: 80%; margin-left: 19%;"
-            class="card"
-            animation="slide"
+          <b-table
+            :striped="true"
+            :hoverable="true"
+            default-sort="id"
+            :data="form.products"
+            :mobile-cards="true"
           >
-            <template #trigger="props">
-              <div
-                class="card-header"
-                role="button"
+            <template slot-scope="props">
+              <b-table-column
+                label="Termék"
+                field="name"
+                sortable
               >
-                <p class="card-header-title">
-                  Termék ID: {{ product.id }}, {{ product.name }}
-                </p>
-                <a class="card-header-icon">
-                  <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
-                </a>
-              </div>
+                {{ props.row.name }}
+              </b-table-column>
+              <b-table-column
+                label="Ár"
+                field="grossPrice"
+                sortable
+              >
+                {{ props.row.grossPrice }}
+              </b-table-column>
+
+              <b-table-column
+                custom-key="actions"
+                class="is-actions-cell"
+              >
+                <div class="buttons is-right">
+                  <nuxt-link
+                    :to="`/products/edit/${props.row.id}`"
+                    class="button is-small"
+                  >
+                    <b-icon
+                      pack="fas"
+                      icon="eye"
+                      size="is-small"
+                      type="is-primary"
+                    />
+                  </nuxt-link>
+                </div>
+              </b-table-column>
             </template>
-            <div class="card-content">
-              <div class="content">
-                <p>
-                  <strong>Termék ára:</strong>
-                  {{ product.grossPrice }}
-                </p>
-              </div>
-              <div class="content">
-                <p>
-                  <strong>Termék leírása:</strong>
-                  {{ product.description }}
-                </p>
-              </div>
-            </div>
-            <footer class="card-footer">
-              <nuxt-link
-                :to="`/products/edit/${product.id}`"
-                style="width: 100%"
-              >
-                <b-button
-                  expanded
-                  outlined
-                  type="is-primary"
-                  style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                  label="Termék szerkesztése"
-                  icon-pack="fas"
-                  icon-left="tag"
-                  class="card-footer-item"
-                >
-                  Termék szerkesztése
-                </b-button>
-              </nuxt-link>
-            </footer>
-          </b-collapse>
+          </b-table>
+
           <b-field
             v-if="addProduct"
             label="Termék típusa"
@@ -283,6 +273,7 @@
               Létrehozás
             </b-button>
           </b-field>
+          </b-table>
         </card-component>
       </form>
     </section>
