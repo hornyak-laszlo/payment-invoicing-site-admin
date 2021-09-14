@@ -361,7 +361,7 @@ export default {
     HeroBar,
     CardComponent
   },
-  layout: 'unauthorized',
+  /* layout: 'unauthorized', */
   middleware: 'auth',
   data () {
     return {
