@@ -78,10 +78,7 @@
             />
           </b-field>
           <b-field label="Űrlap promociós tartalom">
-            <b-input
-
-              type="textarea"
-            />
+            <b-input type="textarea" />
           </b-field>
 
           <b-field label="Feliratkozás a hírlevélre">
@@ -124,6 +121,7 @@
             </b-field>
           </b-field>
           <b-table
+            v-if="!addProduct"
             :striped="true"
             :hoverable="true"
             default-sort="id"
@@ -134,14 +132,12 @@
               <b-table-column
                 label="Termék"
                 field="name"
-                sortable
               >
                 {{ props.row.name }}
               </b-table-column>
               <b-table-column
                 label="Ár"
                 field="grossPrice"
-                sortable
               >
                 {{ props.row.grossPrice }}
               </b-table-column>
@@ -151,17 +147,14 @@
                 class="is-actions-cell"
               >
                 <div class="buttons is-right">
-                  <nuxt-link
-                    :to="`/products/edit/${props.row.id}`"
-                    class="button is-small"
-                  >
+                  <b-button size="is-small">
                     <b-icon
                       pack="fas"
-                      icon="eye"
+                      icon="trash-alt"
                       size="is-small"
-                      type="is-primary"
+                      type="is-danger"
                     />
-                  </nuxt-link>
+                  </b-button>
                 </div>
               </b-table-column>
             </template>
@@ -273,7 +266,6 @@
               Létrehozás
             </b-button>
           </b-field>
-          </b-table>
         </card-component>
       </form>
     </section>
