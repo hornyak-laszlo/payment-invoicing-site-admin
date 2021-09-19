@@ -66,6 +66,10 @@ td {
   height: 55px !important;
 }
 
+#add-subscription-product .field-label.is-normal {
+  display: none;
+}
+
 @media screen and (max-width: 767px) {
   .buttons {
     min-width: 290px;

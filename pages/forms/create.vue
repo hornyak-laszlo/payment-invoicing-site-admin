@@ -182,7 +182,9 @@
           </b-field>
           <b-field
             v-if="productType === 'subscription' && addProduct"
+            id="add-subscription-product"
             horizontal
+            label-position="inside"
           >
             <b-select
               v-model="plusProductId"
@@ -202,16 +204,16 @@
               type="is-primary"
               label="Hozzáadás"
               size="is-small"
-              :loading="isLoading"
               expanded
+              :loading="isLoading"
               @click="addNewSubProduct()"
             />
             <b-button
               style="border-radius: 5px"
               label="Mégse"
               size="is-small"
-              :loading="isLoading"
               expanded
+              :loading="isLoading"
               @click="addProduct = false"
             />
           </b-field>

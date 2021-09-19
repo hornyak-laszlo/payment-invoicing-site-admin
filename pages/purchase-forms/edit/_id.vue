@@ -162,6 +162,7 @@
             </b-field>
             <b-field
               v-if="productType === 'subscription' && addProduct"
+              id="add-subscription-product"
               horizontal
             >
               <b-field expanded>
