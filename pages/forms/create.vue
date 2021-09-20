@@ -23,14 +23,12 @@
           <b-field>
             <b-radio
               v-model="type"
-              name="name"
               native-value="contact-forms"
             >
               Kontakt űrlap
             </b-radio>
             <b-radio
               v-model="type"
-              name="name"
               native-value="purchase-forms"
             >
               Vásárlás űrlap
@@ -167,14 +165,12 @@
           <b-field v-if="addProduct">
             <b-radio
               v-model="productType"
-              name="name"
               native-value="subscription"
             >
               Előfizetéses
             </b-radio>
             <b-radio
               v-model="productType"
-              name="name"
               native-value="one_time"
             >
               Egyszeri vásárlás
