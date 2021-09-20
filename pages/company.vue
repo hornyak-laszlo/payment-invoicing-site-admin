@@ -13,7 +13,10 @@
       <ValidationObserver v-slot="{ invalid }">
         <form @submit.prevent="submit">
           <card-component>
-            <b-field label="Alap adatok" />
+            <b-field
+              label="Alap adatok"
+              custom-class="is-size-4"
+            />
             <b-field
               label="Név"
               message="A cég neve"
@@ -170,7 +173,10 @@
           </card-component>
 
           <card-component>
-            <b-field label="Kapcsolattartási adatok" />
+            <b-field
+              label="Kapcsolattartási adatok"
+              custom-class="is-size-4"
+            />
             <b-field
               label="Email"
               message="A cég e-mail címe"
@@ -241,7 +247,10 @@
           </card-component>
 
           <card-component>
-            <b-field label="Bankszámla adatok" />
+            <b-field
+              label="Bankszámla adatok"
+              custom-class="is-size-4"
+            />
             <b-field
               label="Bankszámla"
               message="A cég bankszámlaszáma"
