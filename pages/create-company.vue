@@ -293,7 +293,7 @@
           </p>
         </header>
         <ValidationObserver v-slot="{ invalid }">
-          <form @submit.prevent="submit">
+          <form @submit.prevent="submit1">
             <section class="modal-card-body">
               <b-field label="Alap adatok" />
               <b-field

@@ -2,12 +2,13 @@
   <div id="app">
     <nav-bar />
     <aside-menu :menu="menu" />
-    <article v-if="!taxNumber" class="message is-danger">
+    <article
+      v-if="!taxNumber"
+      class="message is-danger"
+    >
       <div class="message-body">
         A rendszer teljeskörű használatához <strong>ki kell töltened a cégadatokat!</strong>
-        <nuxt-link
-          to="/company"
-        >
+        <nuxt-link to="/company">
           Kitöltés
         </nuxt-link>
       </div>
@@ -144,10 +145,11 @@ export default {
         })
       }
     } catch (err) {
-      this.$buefy.toast.open({
+      console.error('Nem sikerült betölteni a cég adatait')
+      /* this.$buefy.toast.open({
         message: 'Nem sikerült betölteni a cég adatait',
         type: 'is-danger'
-      })
+      }) */
     }
   }
 
