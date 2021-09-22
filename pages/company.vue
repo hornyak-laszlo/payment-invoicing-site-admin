@@ -296,23 +296,27 @@
         </form>
       </ValidationObserver>
     </section>
+    <create-company-modal v-if="!companyDataFound" />
   </div>
 </template>
 
 <script>
 import CardComponent from '@/components/common/CardComponent'
 import HeroBar from '@/components/common/HeroBar'
+import CreateCompanyModal from '@/components/CreateCompanyModal.vue'
 /* import Tiles from '@/components/common/Tiles' */
 
 export default {
   name: 'Company',
   components: {
     /* Tiles, */
+    CreateCompanyModal,
     HeroBar,
     CardComponent
   },
   data () {
     return {
+      companyDataFound: true,
       company: {
         name: '',
         taxNumber: '',
@@ -345,10 +349,14 @@ export default {
     try {
       this.company = await this.$strapi.$http.$get('/companies/own/data')
     } catch (err) {
-      this.$buefy.toast.open({
-        message: 'Nem sikerült betölteni a cég adatait',
-        type: 'is-danger'
-      })
+      if (err && err.response.data && err.response.data.message && err.response.data.message === 'Your account does not belong to any company!') {
+        this.companyDataFound = false
+      } else {
+        this.$buefy.toast.open({
+          message: 'Nem sikerült betölteni a cég adatait',
+          type: 'is-danger'
+        })
+      }
     }
   },
 

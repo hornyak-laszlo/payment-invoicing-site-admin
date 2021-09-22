@@ -100,26 +100,25 @@
         <card-component v-if="type === 'purchase-forms'">
           <b-field grouped>
             <b-field
-              v-if="!addProduct"
               label="Űrlaphoz tartozó termékek listája"
               expanded
             />
             <b-field
-              v-if="!addProduct"
+              v-if="form.products.length > 0"
               expanded
             >
               <b-button
                 outlined
                 style="border-radius: 5px"
                 type="is-primary"
-                label="Termékek szerkesztése"
+                label="Termék hozzáadása"
                 expanded
                 @click="addProduct = true"
               />
             </b-field>
           </b-field>
           <b-table
-            v-if="!addProduct"
+            v-if="form.products.length !== 0"
             :striped="true"
             :hoverable="true"
             default-sort="id"
@@ -178,7 +177,7 @@
           </b-field>
           <b-field
             v-if="productType === 'subscription' && addProduct"
-            id="add-subscription-product"
+            class="add-product-no-label"
             horizontal
             label-position="inside"
           >
@@ -216,30 +215,26 @@
           <b-field
             v-if="productType === 'one_time' && addProduct"
             horizontal
+            class="add-product-no-label"
           >
-            <b-dropdown
-              v-model="selectedProductIDs"
-              multiple
+            <b-select
+              v-model="selectedProductID"
+              required
               expanded
             >
-              <template #trigger>
-                <b-button icon-right="menu-down">
-                  {{ selectedProductIDs.length }} termék kiválasztva
-                </b-button>
-              </template>
-              <b-dropdown-item
+              <option
                 v-for="product in oneTimeProducts"
                 :key="product.id"
                 :value="product.id"
               >
-                <span>
-                  {{ product.name }}
-                </span>
-              </b-dropdown-item>
-            </b-dropdown>
+                {{ product.name }}
+              </option>
+            </b-select>
+
             <b-button
               style="border-radius: 5px"
               type="is-primary"
+              size="is-small"
               label="Hozzáadás"
               :loading="isLoading"
               expanded
@@ -248,6 +243,7 @@
             <b-button
               style="border-radius: 5px"
               label="Mégse"
+              size="is-small"
               :loading="isLoading"
               expanded
               @click="addProduct = false"
@@ -287,13 +283,13 @@ export default {
       isLoading: false,
       form: this.getClearFormObject(),
       allProducts: [],
-      selectedProductIDs: [],
+      selectedProductID: 0,
       productType: '',
       plusProductId: 0,
       plusProduct: [],
       addProduct: true,
       subProductAdded: false,
-      oneTimeProductAdded: false,
+      /* oneTimeProductAdded: false, */
       type: ''
 
     }
@@ -340,16 +336,32 @@ export default {
     },
 
     addNewOneProduct () {
-      this.plusProduct = []
-      this.plusProduct = this.allProducts.filter(product => this.selectedProductIDs.includes(product.id))
-      this.form.products = this.plusProduct
-      this.addProduct = false
-      this.oneTimeProductAdded = true
-      console.log(this.form.products)
-      this.$buefy.snackbar.open({
-        message: 'Termék(ek) sikeresen hozzáadva',
-        queue: false
-      })
+      /* this.plusProduct = []
+      this.plusProduct.push(this.allProducts.find(product => product.id === this.selectedProductID)) */
+      if (this.form.products.find(product => product.type === 'subscription') !== undefined) {
+        this.form.products = []
+        this.form.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
+        this.addProduct = false
+        console.log(this.form.products)
+        this.$buefy.snackbar.open({
+          message: 'Termék(ek) sikeresen hozzáadva',
+          queue: false
+        })
+      } else if (this.form.products.find(product => product.id === this.selectedProductID) !== undefined) {
+        this.$buefy.snackbar.open({
+          message: 'Ez a termék már hozzá van adva az űrlaphoz',
+          type: 'is-danger',
+          queue: false
+        })
+      } else {
+        this.form.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
+        this.addProduct = false
+        console.log(this.form.products)
+        this.$buefy.snackbar.open({
+          message: 'Termék(ek) sikeresen hozzáadva',
+          queue: false
+        })
+      }
     },
 
     async submit () {
