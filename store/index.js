@@ -1,9 +1,4 @@
 export const state = () => ({
-  /* User */
-  userName: null,
-  userEmail: null,
-  userAvatar: null,
-
   /* NavBar */
   isNavBarVisible: true,
 
@@ -16,24 +11,6 @@ export const state = () => ({
 })
 
 export const mutations = {
-  /* A fit-them-all commit */
-  basic (state, payload) {
-    state[payload.key] = payload.value
-  },
-
-  /* User */
-  user (state, payload) {
-    if (payload.name) {
-      state.userName = payload.name
-    }
-    if (payload.email) {
-      state.userEmail = payload.email
-    }
-    if (payload.avatar) {
-      state.userAvatar = payload.avatar
-    }
-  },
-
   /* Aside Mobile */
   asideMobileStateToggle (state, payload = null) {
     const htmlClassName = 'has-aside-mobile-expanded'
