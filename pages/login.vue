@@ -83,7 +83,7 @@ export default {
         this.isLoading = false
 
         if (!user.company) {
-          this.$router.push('/create-company')
+          this.$router.push('/company')
         } else {
           this.$router.push('/')
         }
