@@ -146,10 +146,6 @@ export default {
       }
     } catch (err) {
       console.error('Nem sikerült betölteni a cég adatait')
-      /* this.$buefy.toast.open({
-        message: 'Nem sikerült betölteni a cég adatait',
-        type: 'is-danger'
-      }) */
     }
   }
 
