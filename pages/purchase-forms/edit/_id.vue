@@ -81,7 +81,7 @@
                 <b-button
                   outlined
                   type="is-primary"
-                  label="Termékek szerkesztése"
+                  label="Termék hozzáadása"
                   :loading="isLoading"
                   expanded
                   @click="addNewProduct()"

@@ -104,7 +104,7 @@
               expanded
             />
             <b-field
-              v-if="form.products.length > 0"
+
               expanded
             >
               <b-button
@@ -144,7 +144,10 @@
                 class="is-actions-cell"
               >
                 <div class="buttons is-right">
-                  <b-button size="is-small">
+                  <b-button
+                    size="is-small"
+                    @click="deleteProduct(props.row.id)"
+                  >
                     <b-icon
                       pack="fas"
                       icon="trash-alt"
@@ -287,7 +290,7 @@ export default {
       productType: '',
       plusProductId: 0,
       plusProduct: [],
-      addProduct: true,
+      addProduct: false,
       subProductAdded: false,
       /* oneTimeProductAdded: false, */
       type: ''
@@ -320,6 +323,11 @@ export default {
         products: [],
         company: ''
       }
+    },
+
+    deleteProduct (id) {
+      this.form.products = this.form.products.filter(product => product.id !== id)
+      console.log(this.form.products)
     },
 
     addNewSubProduct () {
