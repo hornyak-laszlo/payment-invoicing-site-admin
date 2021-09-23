@@ -426,7 +426,7 @@
             <b-field
               v-if="addProduct"
               horizontal
-              class="add-product-no-label"
+              class="add-product-no-label pl-4"
             >
               <strong>Termék:</strong>
               <b-select
