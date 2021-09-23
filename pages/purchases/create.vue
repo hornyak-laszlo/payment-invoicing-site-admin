@@ -345,80 +345,88 @@
               </ValidationProvider>
             </b-field>
             <hr>
-            <b-field label="Rendelt termékek">
-              Vásárló által rendelt termékek listája:
-            </b-field>
-            <b-collapse
-              v-for="(product, index) of purchase.products"
-              :key="index"
-              style="max-width: 80%; margin-left: 19%;"
-              class="card"
-              animation="slide"
-            >
-              <template #trigger="props">
-                <div
-                  class="card-header"
-                  role="button"
-                >
-                  <p class="card-header-title">
-                    {{ product.name }}
-                  </p>
-                  <a class="card-header-icon">
-                    <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
-                  </a>
-                </div>
-              </template>
-              <div class="card-content">
-                <div class="content">
-                  <p><strong>Termék leírása:</strong> {{ product.description }}</p>
-                </div>
-                <div class="content">
-                  <p>
-                    <strong>Termék ára:</strong>
-                    <b-input
-                      v-model="product.grossPrice"
-                      type="number"
-                      required
-                    />
-                  </p>
-                </div>
-                <div class="content">
-                  <p>
-                    <strong>Rendelt mennyiség:</strong>
-                    <b-input
-                      v-model="product.quantity"
-                      type="number"
-                      required
-                    />
-                  </p>
-                </div>
-              </div>
-              <footer class="card-footer">
-                <b-button
-                  style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                  label="Termék törlése"
-                  icon-pack="fas"
-                  icon-left="trash-alt"
-                  class="card-footer-item has-text-danger"
-                  @click="deleteProduct(index)"
-                />
-              </footer>
-            </b-collapse>
-            <b-field
-              v-if="!addProduct"
-              horizontal
-            >
-              <b-button
-                outlined
-                type="is-primary"
-                label="Termék hozzáadása"
-                :loading="isLoading"
-                @click="addProduct = true"
+            <b-field grouped>
+              <b-field
+                label="Vásárláshoz tartozó termékek listája"
+                expanded
               />
+              <b-field expanded>
+                <b-button
+                  outlined
+                  type="is-primary"
+                  label="Termék hozzáadása"
+                  :loading="isLoading"
+                  expanded
+                  @click="addProduct = true"
+                />
+              </b-field>
             </b-field>
+
+            <b-table
+              :striped="true"
+              :hoverable="true"
+              default-sort="id"
+              :data="purchase.products"
+              :mobile-cards="true"
+            >
+              <template slot-scope="props">
+                <b-table-column
+                  label="Termék"
+                  field="name"
+                  sortable
+                >
+                  {{ props.row.name }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Mennyiség"
+                  field="quantity"
+                  sortable
+                >
+                  {{ props.row.quantity }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Ár"
+                  field="grossPrice"
+                  sortable
+                >
+                  {{ props.row.grossPrice }}
+                </b-table-column>
+
+                <b-table-column
+                  custom-key="actions"
+                  class="is-actions-cell"
+                >
+                  <div class="buttons is-right">
+                    <nuxt-link
+                      :to="`/products/edit/${props.row.productId}`"
+                      class="button is-small"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="eye"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </nuxt-link>
+                    <b-button
+                      outlined
+                      size="is-small"
+                      type="is-danger"
+                      icon-pack="fas"
+                      icon-left="trash-alt"
+                      @click="deleteProduct(props.row.productId)"
+                    />
+                  </div>
+                </b-table-column>
+              </template>
+            </b-table>
+
             <b-field
-              v-else
+              v-if="addProduct"
               horizontal
+              class="add-product-no-label"
             >
               <strong>Termék:</strong>
               <b-select
@@ -532,23 +540,34 @@ export default {
     },
     addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
-      const plusProduct = {
-        productId: this.plusProductId,
-        quantity: this.plusProductQuantity,
-        name: foundPlusProduct.name,
-        nameInvoice: foundPlusProduct.nameInvoice,
-        description: foundPlusProduct.description,
-        grossPrice: foundPlusProduct.grossPrice,
-        isShippable: foundPlusProduct.isShippable,
-        type: foundPlusProduct.type,
-        period: foundPlusProduct.period,
-        taxRatePercent: foundPlusProduct.taxRate.percent
+      if (this.purchase.products.find(product => product.productId === this.plusProductId) !== undefined) {
+        this.$buefy.snackbar.open({
+          message: 'Ez a termék már szerepel az űrlapon',
+          type: 'is-danger',
+          queue: false
+        })
+      } else {
+        const plusProduct = {
+          productId: this.plusProductId,
+          quantity: this.plusProductQuantity,
+          name: foundPlusProduct.name,
+          nameInvoice: foundPlusProduct.nameInvoice,
+          description: foundPlusProduct.description,
+          grossPrice: foundPlusProduct.grossPrice,
+          isShippable: foundPlusProduct.isShippable,
+          type: foundPlusProduct.type,
+          period: foundPlusProduct.period,
+          taxRatePercent: foundPlusProduct.taxRate.percent
+        }
+        this.purchase.products.push(plusProduct)
+        this.addProduct = false
+        console.log(this.purchase.products)
       }
-      this.purchase.products.push(plusProduct)
-      this.addProduct = false
     },
 
     deleteProduct (index) {
+      console.log(index)
+
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
         message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
@@ -558,8 +577,9 @@ export default {
         hasIcon: true,
         iconPack: 'fas',
         icon: 'trash-alt',
+
         onConfirm: () => {
-          this.purchase.products.splice(index, 1)
+          this.purchase.products = this.purchase.products.filter(product => product.productId !== index)
         }
       })
     },
