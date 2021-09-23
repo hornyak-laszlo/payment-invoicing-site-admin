@@ -352,7 +352,7 @@ export default {
         this.addProduct = false
         console.log(this.form.products)
         this.$buefy.snackbar.open({
-          message: 'Termék(ek) sikeresen hozzáadva',
+          message: 'Termék sikeresen hozzáadva',
           queue: false
         })
       } else if (this.form.products.find(product => product.id === this.selectedProductID) !== undefined) {
