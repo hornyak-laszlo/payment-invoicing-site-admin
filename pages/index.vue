@@ -15,7 +15,7 @@
           class="tile is-child"
           type="is-primary"
           icon="account-multiple"
-          :number="contacts.length"
+          :number="contactCount"
           suffix=" db"
           label="Kontaktok"
         />
@@ -31,7 +31,7 @@
           class="tile is-child"
           type="is-success"
           icon="account-check"
-          :number="customers.length"
+          :number="customerCount"
           suffix=" db"
           label="Vásárlók száma"
         />
@@ -100,8 +100,8 @@ export default {
       },
       dummyData: { oneTimePayments: [], subscriptionPayments: [] },
       salesNumber: null,
-      customers: [],
-      contacts: [],
+      customerCount: 0,
+      contactCount: 0,
       collection: 'purchases',
       fields: [{
         field: 'lastName',
@@ -141,11 +141,8 @@ export default {
 
   async mounted () {
     this.dummyData = await this.$strapi.$http.$get('/purchases/dashboard')
-    this.customers = await this.$strapi.find('customers')
-    this.contacts = await this.$strapi.find('contacts')
-    console.log(this.$strapi.user.company)
-    console.log(this.customers)
-    console.log(this.dummyData)
+    this.customerCount = await this.$strapi.count('customers')
+    this.contactCount = await this.$strapi.count('contacts')
     this.fillChartData()
     const { oneTimePayments, subscriptionPayments } = this.dummyData
     const sumPayments = paymentArr => paymentArr.reduce((acc, curr) => acc + curr)

@@ -96,6 +96,7 @@
 import CardComponent from '@/components/common/CardComponent'
 import HeroBar from '@/components/common/HeroBar'
 import Tiles from '@/components/common/Tiles'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'Profile',
@@ -118,15 +119,7 @@ export default {
     }
   },
   computed: {
-    username () {
-      return this.$strapi.user ? this.$strapi.user.username : ''
-    },
-    email () {
-      return this.$strapi.user ? this.$strapi.user.email : ''
-    },
-    role () {
-      return this.$strapi.user ? this.$strapi.user.role.name : ''
-    }
+    ...mapGetters(['username', 'email', 'role'])
   },
   methods: {
     async changePassword () {
