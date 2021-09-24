@@ -81,7 +81,7 @@
                 <b-button
                   outlined
                   type="is-primary"
-                  label="Termékek szerkesztése"
+                  label="Termék hozzáadása"
                   :loading="isLoading"
                   expanded
                   @click="addNewProduct()"
@@ -162,7 +162,7 @@
             </b-field>
             <b-field
               v-if="productType === 'subscription' && addProduct"
-              id="add-subscription-product"
+              class="add-product-no-label"
               horizontal
             >
               <b-field expanded>
@@ -205,27 +205,22 @@
             <b-field
               v-if="productType === 'one_time' && addProduct"
               horizontal
+              class="add-product-no-label"
             >
               <b-field expanded>
-                <b-dropdown
-                  v-model="selectedProductIDs"
-                  multiple
+                <b-select
+                  v-model="selectedProductID"
+                  required
+                  expanded
                 >
-                  <template #trigger>
-                    <b-button icon-right="menu-down">
-                      {{ selectedProductIDs.length }} kiválasztva
-                    </b-button>
-                  </template>
-                  <b-dropdown-item
+                  <option
                     v-for="product in oneTimeProducts"
                     :key="product.id"
                     :value="product.id"
                   >
-                    <span>
-                      {{ product.name }}
-                    </span>
-                  </b-dropdown-item>
-                </b-dropdown>
+                    {{ product.name }}
+                  </option>
+                </b-select>
               </b-field>
               <b-field expanded>
                 <b-button
@@ -284,7 +279,7 @@ export default {
       addProduct: false,
       productType: '',
       plusProductId: 0,
-      selectedProductIDs: [],
+      selectedProductID: 0,
       plusProduct: []
     }
   },
@@ -389,16 +384,28 @@ export default {
     },
 
     addNewOneProduct () {
-      this.plusProduct = []
-      this.plusProduct = this.allProducts.filter(product => this.selectedProductIDs.includes(product.id))
-      this.purchaseForm.products = this.plusProduct
-      this.addProduct = false
-      this.oneTimeProductAdded = true
-      console.log(this.purchaseForm.products)
-      this.$buefy.snackbar.open({
-        message: 'Termék(ek) sikeresen hozzáadva',
-        queue: false
-      })
+      if (this.purchaseForm.products.find(product => product.type === 'subscription') !== undefined) {
+        this.purchaseForm.products = []
+        this.purchaseForm.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
+        this.addProduct = false
+        this.$buefy.snackbar.open({
+          message: 'Termék sikeresen hozzáadva',
+          queue: false
+        })
+      } else if (this.purchaseForm.products.find(product => product.id === this.selectedProductID) !== undefined) {
+        this.$buefy.snackbar.open({
+          message: 'Ez a termék már szerepel az űrlapon',
+          type: 'is-danger',
+          queue: false
+        })
+      } else {
+        this.purchaseForm.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
+        this.addProduct = false
+        this.$buefy.snackbar.open({
+          message: 'Termék sikeresen hozzáadva',
+          queue: false
+        })
+      }
     },
     async submit () {
       try {
