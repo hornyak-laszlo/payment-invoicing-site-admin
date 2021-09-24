@@ -23,6 +23,7 @@
 import NavBar from '@/components/navbar/NavBar'
 import AsideMenu from '@/components/sidebar/AsideMenu'
 import FooterBar from '@/components/footer/FooterBar'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
@@ -36,7 +37,6 @@ export default {
     return {
       company: {
         name: '',
-        taxNumber: '',
         bankAccountNumber: '',
         phoneNumber: '',
         email: '',
@@ -56,9 +56,7 @@ export default {
     }
   },
   computed: {
-    taxNumber () {
-      return !!this.company.taxNumber
-    },
+    ...mapGetters(['taxNumber']),
     menu () {
       return [
         'Ügyfelek',
@@ -123,30 +121,11 @@ export default {
       ]
     }
   },
-  async mounted () {
+  mounted () {
     document.documentElement.classList.add('has-aside-left')
     document.documentElement.classList.add('has-aside-mobile-transition')
     document.documentElement.classList.add('has-navbar-fixed-top')
     document.documentElement.classList.add('has-aside-expanded')
-    try {
-      this.company = await this.$strapi.$http.$get('/companies/own/data')
-      console.log(this.company.name)
-      if (this.company.taxNumber === '') {
-        this.$buefy.snackbar.open({
-          message: 'Mielőtt a rendszert teljeskörűen használhatnád, <br> <em>ki kell töltened a cégadatokat</em>',
-          type: 'is-success',
-
-          position: 'is-top-right',
-          actionText: 'Kitöltés',
-          indefinite: true,
-          onAction: () => {
-            this.$router.push('/company')
-          }
-        })
-      }
-    } catch (err) {
-      console.error('Nem sikerült betölteni a cég adatait')
-    }
   }
 
 }

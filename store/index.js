@@ -1,4 +1,8 @@
 export const state = () => ({
+  /* Strapi user */
+  user: null,
+  // ownCompany: null,
+
   /* NavBar */
   isNavBarVisible: true,
 
@@ -10,7 +14,35 @@ export const state = () => ({
   isAsideMobileExpanded: false
 })
 
+export const getters = {
+  username (state) {
+    return state.user ? state.user.username : ''
+  },
+  email (state) {
+    return state.user ? state.user.email : ''
+  },
+  role (state) {
+    return state.user ? state.user.role.name : ''
+  },
+  taxNumber (state) {
+    return state.user && state.user.company ? state.user.company.taxNumber : ''
+  }
+}
+
 export const mutations = {
+  /* Strapi user */
+  setUser (state, payload) {
+    state.user = payload
+  },
+
+  setCompany (state, payload) {
+    if (!state.user) {
+      return
+    }
+
+    state.user.company = payload
+  },
+
   /* Aside Mobile */
   asideMobileStateToggle (state, payload = null) {
     const htmlClassName = 'has-aside-mobile-expanded'
@@ -32,3 +64,10 @@ export const mutations = {
     state.isAsideMobileExpanded = isShow
   }
 }
+
+/* const actions = {
+  async loadCompany (state, payload) => {
+    await a()
+    state.$commit()
+  }
+} */

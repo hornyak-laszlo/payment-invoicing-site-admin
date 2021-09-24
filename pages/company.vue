@@ -302,6 +302,7 @@ import CardComponent from '@/components/common/CardComponent'
 import HeroBar from '@/components/common/HeroBar'
 import CreateCompanyModal from '@/components/CreateCompanyModal.vue'
 /* import Tiles from '@/components/common/Tiles' */
+import { mapMutations } from 'vuex'
 
 export default {
   name: 'Company',
@@ -358,11 +359,13 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['setCompany']),
     async submit () {
       try {
         this.isLoading = true
 
-        await this.$strapi.$http.$put('/companies/own/data', this.company)
+        const companyUpd = await this.$strapi.$http.$put('/companies/own/data', this.company)
+        this.setCompany(companyUpd)
 
         this.isLoading = false
         this.$buefy.snackbar.open({

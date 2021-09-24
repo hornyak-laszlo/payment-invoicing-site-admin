@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import NavBarMenu from '@/components/navbar/NavBarMenu'
 
 export default {
@@ -75,9 +75,7 @@ export default {
     }
   },
   computed: {
-    username () {
-      return this.$strapi.user ? this.$strapi.user.username : ''
-    },
+    ...mapGetters(['username']),
     menuNavBarToggleIcon () {
       return this.isMenuNavBarActive ? 'close' : 'dots-vertical'
     },

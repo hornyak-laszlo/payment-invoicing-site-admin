@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
+
 export default {
   layout: 'unauthorized',
   data () {
@@ -73,6 +75,7 @@ export default {
     }
   },
   methods: {
+    ...mapMutations(['setUser']),
     async submit () {
       this.isLoading = true
       try {
@@ -82,6 +85,7 @@ export default {
         })
         this.isLoading = false
 
+        this.setUser(user)
         if (!user.company) {
           this.$router.push('/company')
         } else {
