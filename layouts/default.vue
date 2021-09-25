@@ -3,7 +3,7 @@
     <nav-bar />
     <aside-menu :menu="menu" />
     <article
-      v-if="!taxNumber"
+      v-show="!taxNumber"
       class="message is-danger"
     >
       <div class="message-body">
