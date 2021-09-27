@@ -362,6 +362,65 @@
               </b-field>
             </b-field>
 
+            <b-field
+              v-if="addProduct"
+              horizontal
+              class="add-product-no-label pl-4"
+            >
+              <b-field label="Termék">
+                <b-select
+                  v-model="plusProductId"
+                  required
+                  @change="getPlusProduct()"
+                >
+                  <option
+                    v-for="product in allProducts"
+                    :key="product.id"
+                    :value="product.id"
+                  >
+                    {{ product.name }}
+                  </option>
+                </b-select>
+              </b-field>
+
+              <b-field label="Mennyiség">
+                <b-input
+                  v-model="plusProductQuantity"
+                  type="number"
+                  required
+                  name="mennyiség"
+                />
+              </b-field>
+
+              <b-field label="Bruttó ár">
+                <b-input
+                  v-model="plusProductPrice"
+                  type="number"
+                  required
+                />
+              </b-field>
+
+              <b-field>
+                <b-button
+                  style="border-radius: 5px; margin-top: 2.5em"
+                  type="is-primary"
+                  size="is-small"
+                  label="Hozzáadás"
+                  :loading="isLoading"
+                  expanded
+                  @click="addNewProduct()"
+                />
+                <b-button
+                  style="border-radius: 5px; margin-top: 2.5em"
+                  label="Mégse"
+                  size="is-small"
+                  :loading="isLoading"
+                  expanded
+                  @click="addProduct = false"
+                />
+              </b-field>
+            </b-field>
+
             <b-table
               :striped="true"
               :hoverable="true"
@@ -422,63 +481,6 @@
                 </b-table-column>
               </template>
             </b-table>
-
-            <b-field
-              v-if="addProduct"
-              horizontal
-              class="add-product-no-label pl-4"
-            >
-              <b-field label="Termék">
-                <b-select
-                  v-model="plusProductId"
-                  required
-                >
-                  <option
-                    v-for="product in allProducts"
-                    :key="product.id"
-                    :value="product.id"
-                  >
-                    {{ product.name }}
-                  </option>
-                </b-select>
-              </b-field>
-
-              <b-field label="Mennyiség">
-                <b-input
-                  v-model="plusProductQuantity"
-                  type="number"
-                  required
-                  name="mennyiség"
-                />
-              </b-field>
-
-              <b-field label="Bruttó ár">
-                <b-input
-                  v-model="plusProductPrice"
-                  type="number"
-                  required
-                />
-              </b-field>
-
-              <b-field>
-                <b-button
-                  style="margin-top: 2.5em"
-                  type="is-primary"
-                  label="Hozzáadás"
-                  size="is-small"
-                  :loading="isLoading"
-                  @click="addNewProduct()"
-                />
-                <b-button
-                  style="margin-top: 2.5em"
-                  type="is-danger"
-                  label="Mégse"
-                  size="is-small"
-                  :loading="isLoading"
-                  @click="addProduct = false"
-                />
-              </b-field>
-            </b-field>
 
             <hr>
             <b-field>
@@ -556,6 +558,22 @@ export default {
         status: ''
       }
     },
+    getPlusProduct () {
+      /* const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId) */
+      this.plusProductPrice = 2500
+      console.log(2500)
+    },
+    async getPlusProductPrice () {
+      if (this.plusProductId !== 0) {
+        const foundPlusProduct = await this.allProducts.find(product => product.id === this.plusProductId)
+        if (foundPlusProduct !== undefined) {
+          return foundPlusProduct.grossPrice
+        } else {
+          return 0
+        }
+      }
+    },
+
     addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       if (foundPlusProduct !== undefined) {
@@ -573,6 +591,8 @@ export default {
         }
         this.purchase.products.push(plusProduct)
         this.addProduct = false
+        this.plusProductId = 0
+        this.plusProductQuantity = 1
       } else {
         this.$buefy.snackbar.open({
           message: 'Nem választottál ki terméket',

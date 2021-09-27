@@ -362,6 +362,48 @@
               </b-field>
             </b-field>
 
+            <b-field
+              v-if="addProduct"
+              horizontal
+              class="add-product-no-label pl-4"
+            >
+              <strong>Termék:</strong>
+              <b-select
+                v-model="plusProductId"
+                required
+              >
+                <option
+                  v-for="product in allProducts"
+                  :key="product.id"
+                  :value="product.id"
+                >
+                  {{ product.name }}
+                </option>
+              </b-select>
+              <strong>Mennyiség:</strong>
+              <b-input
+                v-model="plusProductQuantity"
+                type="number"
+                required
+              />
+              <b-button
+                style="border-radius: 5px"
+                type="is-primary"
+                label="Hozzáadás"
+                size="is-small"
+                :loading="isLoading"
+                @click="addNewProduct()"
+              />
+              <b-button
+                style="border-radius: 5px"
+                type="is-danger"
+                label="Mégse"
+                size="is-small"
+                :loading="isLoading"
+                @click="addProduct = false"
+              />
+            </b-field>
+
             <b-table
               :striped="true"
               :hoverable="true"
@@ -412,47 +454,6 @@
               </template>
             </b-table>
 
-            <b-field
-              v-if="addProduct"
-              horizontal
-              class="add-product-no-label pl-4"
-            >
-              <strong>Termék:</strong>
-              <b-select
-                v-model="plusProductId"
-                required
-              >
-                <option
-                  v-for="product in allProducts"
-                  :key="product.id"
-                  :value="product.id"
-                >
-                  {{ product.name }}
-                </option>
-              </b-select>
-              <strong>Mennyiség:</strong>
-              <b-input
-                v-model="plusProductQuantity"
-                type="number"
-                required
-              />
-              <b-button
-                style="border-radius: 5px"
-                type="is-primary"
-                label="Hozzáadás"
-                size="is-small"
-                :loading="isLoading"
-                @click="addNewProduct()"
-              />
-              <b-button
-                style="border-radius: 5px"
-                type="is-danger"
-                label="Mégse"
-                size="is-small"
-                :loading="isLoading"
-                @click="addProduct = false"
-              />
-            </b-field>
             <hr>
             <b-field>
               <b-button
