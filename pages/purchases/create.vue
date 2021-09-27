@@ -399,17 +399,6 @@
                   class="is-actions-cell"
                 >
                   <div class="buttons is-right">
-                    <nuxt-link
-                      :to="`/products/edit/${props.row.productId}`"
-                      class="button is-small"
-                    >
-                      <b-icon
-                        pack="fas"
-                        icon="eye"
-                        size="is-small"
-                        type="is-primary"
-                      />
-                    </nuxt-link>
                     <b-button
                       outlined
                       size="is-small"
@@ -543,6 +532,12 @@ export default {
       if (this.purchase.products.find(product => product.productId === this.plusProductId) !== undefined) {
         this.$buefy.snackbar.open({
           message: 'Ez a termék már szerepel az űrlapon',
+          type: 'is-danger',
+          queue: false
+        })
+      } else if (foundPlusProduct === undefined) {
+        this.$buefy.snackbar.open({
+          message: 'Nem választottál ki terméket',
           type: 'is-danger',
           queue: false
         })
