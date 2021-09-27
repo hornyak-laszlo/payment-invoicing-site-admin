@@ -345,122 +345,139 @@
               </ValidationProvider>
             </b-field>
             <hr>
-            <b-field label="Rendelt termékek">
-              Vásárló által rendelt termékek listája:
-            </b-field>
-            <b-collapse
-              v-for="(product, index) of purchase.products"
-              :key="index"
-              style="max-width: 80%; margin-left: 19%;"
-              class="card"
-              animation="slide"
-            >
-              <template #trigger="props">
-                <div
-                  class="card-header"
-                  role="button"
-                >
-                  <p class="card-header-title">
-                    {{ product.name }}
-                  </p>
-                  <a class="card-header-icon">
-                    <b-icon :icon="props.open ? 'menu-up' : 'menu-down'" />
-                  </a>
-                </div>
-              </template>
-              <div class="card-content">
-                <div class="content">
-                  <p>
-                    <strong>Termék leírása:</strong>
-                    {{ product.description }}
-                  </p>
-                </div>
-                <div class="content">
-                  <p>
-                    <strong>Termék ára:</strong>
-                    <b-input
-                      v-model="product.grossPrice"
-                      type="number"
-                      required
-                    />
-                  </p>
-                </div>
-                <div class="content">
-                  <p>
-                    <strong>Rendelt mennyiség:</strong>
-                    <b-input
-                      v-model="product.quantity"
-                      type="number"
-                      required
-                    />
-                  </p>
-                </div>
-              </div>
-              <footer class="card-footer">
+            <b-field grouped>
+              <b-field
+                label="Vásárláshoz tartozó termékek listája"
+                expanded
+              />
+              <b-field expanded>
                 <b-button
-                  expanded
                   outlined
-                  type="is-danger"
-                  style="border-top-left-radius: 0; border-top-right-radius: 0; border-color: whitesmoke;"
-                  label="Termék törlése"
-                  icon-pack="fas"
-                  icon-left="trash-alt"
-                  class="card-footer-item"
-                  @click="deleteProduct(index)"
+                  type="is-primary"
+                  label="Termék hozzáadása"
+                  :loading="isLoading"
+                  expanded
+                  @click="addProduct = true"
                 />
-              </footer>
-            </b-collapse>
-            <b-field
-              v-if="!addProduct"
-              horizontal
-            >
-              <b-button
-                outlined
-                type="is-primary"
-                label="Termék hozzáadása"
-                :loading="isLoading"
-                @click="addProduct = true"
-              />
+              </b-field>
             </b-field>
-            <b-field
-              v-else
-              horizontal
+
+            <b-table
+              :striped="true"
+              :hoverable="true"
+              default-sort="id"
+              :data="purchase.products"
+              :mobile-cards="true"
             >
-              <strong>Termék:</strong>
-              <b-select
-                v-model="plusProductId"
-                required
-              >
-                <option
-                  v-for="product in allProducts"
-                  :key="product.id"
-                  :value="product.id"
+              <template slot-scope="props">
+                <b-table-column
+                  label="Termék"
+                  field="name"
+                  sortable
                 >
-                  {{ product.name }}
-                </option>
-              </b-select>
-              <strong>Mennyiség:</strong>
-              <b-input
-                v-model="plusProductQuantity"
-                type="number"
-                required
-              />
-              <b-button
-                style="border-radius: 5px"
-                type="is-primary"
-                label="Hozzáadás"
-                size="is-small"
-                :loading="isLoading"
-                @click="addNewProduct()"
-              />
-              <b-button
-                style="border-radius: 5px"
-                type="is-danger"
-                label="Mégse"
-                size="is-small"
-                :loading="isLoading"
-                @click="addProduct = false"
-              />
+                  {{ props.row.name }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Mennyiség"
+                  field="quantity"
+                  sortable
+                >
+                  {{ props.row.quantity }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Ár"
+                  field="grossPrice"
+                  sortable
+                >
+                  {{ props.row.grossPrice }}
+                </b-table-column>
+
+                <b-table-column
+                  custom-key="actions"
+                  class="is-actions-cell"
+                >
+                  <div class="buttons is-right">
+                    <nuxt-link
+                      :to="`/products/edit/${props.row.productId}`"
+                      class="button is-small"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="eye"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </nuxt-link>
+                    <b-button
+                      outlined
+                      size="is-small"
+                      type="is-danger"
+                      icon-pack="fas"
+                      icon-left="trash-alt"
+                      @click="deleteProduct(props.row.productId)"
+                    />
+                  </div>
+                </b-table-column>
+              </template>
+            </b-table>
+
+            <b-field
+              v-if="addProduct"
+              horizontal
+              class="add-product-no-label pl-4"
+            >
+              <b-field label="Termék">
+                <b-select
+                  v-model="plusProductId"
+                  required
+                >
+                  <option
+                    v-for="product in allProducts"
+                    :key="product.id"
+                    :value="product.id"
+                  >
+                    {{ product.name }}
+                  </option>
+                </b-select>
+              </b-field>
+
+              <b-field label="Mennyiség">
+                <b-input
+                  v-model="plusProductQuantity"
+                  type="number"
+                  required
+                  name="mennyiség"
+                />
+              </b-field>
+
+              <b-field label="Bruttó ár">
+                <b-input
+                  v-model="plusProductPrice"
+                  type="number"
+                  required
+                />
+              </b-field>
+
+              <b-field>
+                <b-button
+                  style="margin-top: 2.5em"
+                  type="is-primary"
+                  label="Hozzáadás"
+                  size="is-small"
+                  :loading="isLoading"
+                  @click="addNewProduct()"
+                />
+                <b-button
+                  style="margin-top: 2.5em"
+                  type="is-danger"
+                  label="Mégse"
+                  size="is-small"
+                  :loading="isLoading"
+                  @click="addProduct = false"
+                />
+              </b-field>
             </b-field>
 
             <hr>
@@ -499,7 +516,8 @@ export default {
       addProduct: false,
       allProducts: [],
       plusProductId: 0,
-      plusProductQuantity: 1
+      plusProductQuantity: 1,
+      plusProductPrice: 0
     }
   },
   head () {
@@ -540,20 +558,28 @@ export default {
     },
     addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
-      const plusProduct = {
-        productId: this.plusProductId,
-        quantity: this.plusProductQuantity,
-        name: foundPlusProduct.name,
-        nameInvoice: foundPlusProduct.nameInvoice,
-        description: foundPlusProduct.description,
-        grossPrice: foundPlusProduct.grossPrice,
-        isShippable: foundPlusProduct.isShippable,
-        type: foundPlusProduct.type,
-        period: foundPlusProduct.period,
-        taxRatePercent: foundPlusProduct.taxRate.percent
+      if (foundPlusProduct !== undefined) {
+        const plusProduct = {
+          productId: this.plusProductId,
+          quantity: this.plusProductQuantity,
+          name: foundPlusProduct.name,
+          nameInvoice: foundPlusProduct.nameInvoice,
+          description: foundPlusProduct.description,
+          grossPrice: this.plusProductPrice,
+          isShippable: foundPlusProduct.isShippable,
+          type: foundPlusProduct.type,
+          period: foundPlusProduct.period,
+          taxRatePercent: foundPlusProduct.taxRate.percent
+        }
+        this.purchase.products.push(plusProduct)
+        this.addProduct = false
+      } else {
+        this.$buefy.snackbar.open({
+          message: 'Nem választottál ki terméket',
+          type: 'is-danger',
+          queue: false
+        })
       }
-      this.purchase.products.push(plusProduct)
-      this.addProduct = false
     },
     deleteProduct (index) {
       this.$buefy.dialog.confirm({
@@ -566,7 +592,7 @@ export default {
         iconPack: 'fas',
         icon: 'trash-alt',
         onConfirm: () => {
-          this.purchase.products.splice(index, 1)
+          this.purchase.products = this.purchase.products.filter(product => product.productId !== index)
         }
       })
     },
