@@ -438,6 +438,14 @@
                 </b-table-column>
 
                 <b-table-column
+                  label="Ár"
+                  field="grossPrice"
+                  sortable
+                >
+                  {{ props.row.grossPrice }}
+                </b-table-column>
+
+                <b-table-column
                   label="Mennyiség"
                   field="quantity"
                   sortable
@@ -446,11 +454,11 @@
                 </b-table-column>
 
                 <b-table-column
-                  label="Ár"
-                  field="grossPrice"
+                  label="Összesen"
+                  field="quantity"
                   sortable
                 >
-                  {{ props.row.grossPrice }}
+                  {{ props.row.quantity * props.row.grossPrice }}
                 </b-table-column>
 
                 <b-table-column
