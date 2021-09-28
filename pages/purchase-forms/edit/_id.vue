@@ -72,6 +72,25 @@
           </card-component>
 
           <card-component>
+            <b-field label="Termék típusa">
+              <b-field>
+                <b-radio
+                  v-model="productType"
+                  name="name"
+                  native-value="subscription"
+                >
+                  Előfizetéses
+                </b-radio>
+                <b-radio
+                  v-model="productType"
+                  name="name"
+                  native-value="one_time"
+                >
+                  Egyszeri vásárlás
+                </b-radio>
+              </b-field>
+            </b-field>
+
             <b-field grouped>
               <b-field
                 label="Űrlaphoz tartozó termékek listája"
@@ -89,27 +108,6 @@
               </b-field>
             </b-field>
 
-            <b-field
-              v-if="addProduct"
-              label="Termék típusa"
-            >
-              <b-field v-if="addProduct">
-                <b-radio
-                  v-model="productType"
-                  name="name"
-                  native-value="subscription"
-                >
-                  Előfizetéses
-                </b-radio>
-                <b-radio
-                  v-model="productType"
-                  name="name"
-                  native-value="one_time"
-                >
-                  Egyszeri vásárlás
-                </b-radio>
-              </b-field>
-            </b-field>
             <b-field
               v-if="productType === 'subscription' && addProduct"
               class="add-product-no-label"
