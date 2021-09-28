@@ -346,8 +346,6 @@ export default {
     },
 
     addNewOneProduct () {
-      /* this.plusProduct = []
-      this.plusProduct.push(this.allProducts.find(product => product.id === this.selectedProductID)) */
       if (this.form.products.find(product => product.type === 'subscription') !== undefined) {
         this.form.products = []
         this.form.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
@@ -357,6 +355,7 @@ export default {
           message: 'Termék sikeresen hozzáadva',
           queue: false
         })
+        this.selectedProductID = 0
       } else if (this.form.products.find(product => product.id === this.selectedProductID) !== undefined) {
         this.$buefy.snackbar.open({
           message: 'Ez a termék már hozzá van adva az űrlaphoz',
@@ -371,6 +370,7 @@ export default {
           message: 'Termék(ek) sikeresen hozzáadva',
           queue: false
         })
+        this.selectedProductID = 0
       }
     },
 

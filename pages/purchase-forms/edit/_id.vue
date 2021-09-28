@@ -395,6 +395,8 @@ export default {
           message: 'Termék sikeresen hozzáadva',
           queue: false
         })
+        this.plusProductId = 0
+        this.selectedProductID = 0
       } else if (this.purchaseForm.products.find(product => product.id === this.selectedProductID) !== undefined) {
         this.$buefy.snackbar.open({
           message: 'Ez a termék már szerepel az űrlapon',
@@ -408,6 +410,8 @@ export default {
           message: 'Termék sikeresen hozzáadva',
           queue: false
         })
+        this.plusProductId = 0
+        this.selectedProductID = 0
       }
     },
     async submit () {

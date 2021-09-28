@@ -558,6 +558,7 @@ export default {
         this.purchase.products.push(plusProduct)
         this.addProduct = false
         console.log(this.purchase.products)
+        this.plusProductId = 0
       }
     },
 

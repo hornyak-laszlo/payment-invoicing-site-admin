@@ -593,6 +593,7 @@ export default {
         this.addProduct = false
         this.plusProductId = 0
         this.plusProductQuantity = 1
+        this.plusProductPrice = 0
       } else {
         this.$buefy.snackbar.open({
           message: 'Nem választottál ki terméket',
