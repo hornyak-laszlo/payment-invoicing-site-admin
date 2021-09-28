@@ -64,10 +64,3 @@ export const mutations = {
     state.isAsideMobileExpanded = isShow
   }
 }
-
-/* const actions = {
-  async loadCompany (state, payload) => {
-    await a()
-    state.$commit()
-  }
-} */
