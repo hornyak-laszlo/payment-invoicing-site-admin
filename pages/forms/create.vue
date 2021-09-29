@@ -98,15 +98,32 @@
         </card-component>
 
         <card-component v-if="type === 'purchase-forms'">
+          <b-field
+            v-if="type === 'purchase-forms'"
+            label="Termék típusa"
+          >
+            <b-field v-if="type === 'purchase-forms'">
+              <b-radio
+                v-model="productType"
+                native-value="subscription"
+              >
+                Előfizetéses
+              </b-radio>
+              <b-radio
+                v-model="productType"
+                native-value="one_time"
+              >
+                Egyszeri vásárlás
+              </b-radio>
+            </b-field>
+          </b-field>
+
           <b-field grouped>
             <b-field
               label="Űrlaphoz tartozó termékek listája"
               expanded
             />
-            <b-field
-
-              expanded
-            >
+            <b-field expanded>
               <b-button
                 outlined
                 style="border-radius: 5px"
@@ -117,67 +134,7 @@
               />
             </b-field>
           </b-field>
-          <b-table
-            v-if="form.products.length !== 0"
-            :striped="true"
-            :hoverable="true"
-            default-sort="id"
-            :data="form.products"
-            :mobile-cards="true"
-          >
-            <template slot-scope="props">
-              <b-table-column
-                label="Termék"
-                field="name"
-              >
-                {{ props.row.name }}
-              </b-table-column>
-              <b-table-column
-                label="Ár"
-                field="grossPrice"
-              >
-                {{ props.row.grossPrice }}
-              </b-table-column>
 
-              <b-table-column
-                custom-key="actions"
-                class="is-actions-cell"
-              >
-                <div class="buttons is-right">
-                  <b-button
-                    size="is-small"
-                    @click="deleteProduct(props.row.id)"
-                  >
-                    <b-icon
-                      pack="fas"
-                      icon="trash-alt"
-                      size="is-small"
-                      type="is-danger"
-                    />
-                  </b-button>
-                </div>
-              </b-table-column>
-            </template>
-          </b-table>
-
-          <b-field
-            v-if="addProduct"
-            label="Termék típusa"
-          />
-          <b-field v-if="addProduct">
-            <b-radio
-              v-model="productType"
-              native-value="subscription"
-            >
-              Előfizetéses
-            </b-radio>
-            <b-radio
-              v-model="productType"
-              native-value="one_time"
-            >
-              Egyszeri vásárlás
-            </b-radio>
-          </b-field>
           <b-field
             v-if="productType === 'subscription' && addProduct"
             class="add-product-no-label"
@@ -252,6 +209,50 @@
               @click="addProduct = false"
             />
           </b-field>
+
+          <b-table
+            v-if="form.products.length !== 0"
+            :striped="true"
+            :hoverable="true"
+            default-sort="id"
+            :data="form.products"
+            :mobile-cards="true"
+          >
+            <template slot-scope="props">
+              <b-table-column
+                label="Termék"
+                field="name"
+              >
+                {{ props.row.name }}
+              </b-table-column>
+              <b-table-column
+                label="Ár"
+                field="grossPrice"
+              >
+                {{ props.row.grossPrice }}
+              </b-table-column>
+
+              <b-table-column
+                custom-key="actions"
+                class="is-actions-cell"
+              >
+                <div class="buttons is-right">
+                  <b-button
+                    size="is-small"
+                    @click="deleteProduct(props.row.id)"
+                  >
+                    <b-icon
+                      pack="fas"
+                      icon="trash-alt"
+                      size="is-small"
+                      type="is-danger"
+                    />
+                  </b-button>
+                </div>
+              </b-table-column>
+            </template>
+          </b-table>
+
           <hr>
           <b-field>
             <b-button
@@ -344,8 +345,6 @@ export default {
     },
 
     addNewOneProduct () {
-      /* this.plusProduct = []
-      this.plusProduct.push(this.allProducts.find(product => product.id === this.selectedProductID)) */
       if (this.form.products.find(product => product.type === 'subscription') !== undefined) {
         this.form.products = []
         this.form.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
@@ -355,6 +354,7 @@ export default {
           message: 'Termék sikeresen hozzáadva',
           queue: false
         })
+        this.selectedProductID = 0
       } else if (this.form.products.find(product => product.id === this.selectedProductID) !== undefined) {
         this.$buefy.snackbar.open({
           message: 'Ez a termék már hozzá van adva az űrlaphoz',
@@ -369,6 +369,7 @@ export default {
           message: 'Termék(ek) sikeresen hozzáadva',
           queue: false
         })
+        this.selectedProductID = 0
       }
     },
 

@@ -362,67 +362,6 @@
               </b-field>
             </b-field>
 
-            <b-table
-              :striped="true"
-              :hoverable="true"
-              default-sort="id"
-              :data="purchase.products"
-              :mobile-cards="true"
-            >
-              <template slot-scope="props">
-                <b-table-column
-                  label="Termék"
-                  field="name"
-                  sortable
-                >
-                  {{ props.row.name }}
-                </b-table-column>
-
-                <b-table-column
-                  label="Mennyiség"
-                  field="quantity"
-                  sortable
-                >
-                  {{ props.row.quantity }}
-                </b-table-column>
-
-                <b-table-column
-                  label="Ár"
-                  field="grossPrice"
-                  sortable
-                >
-                  {{ props.row.grossPrice }}
-                </b-table-column>
-
-                <b-table-column
-                  custom-key="actions"
-                  class="is-actions-cell"
-                >
-                  <div class="buttons is-right">
-                    <nuxt-link
-                      :to="`/products/edit/${props.row.productId}`"
-                      class="button is-small"
-                    >
-                      <b-icon
-                        pack="fas"
-                        icon="eye"
-                        size="is-small"
-                        type="is-primary"
-                      />
-                    </nuxt-link>
-                    <b-button
-                      outlined
-                      size="is-small"
-                      type="is-danger"
-                      icon-pack="fas"
-                      icon-left="trash-alt"
-                      @click="deleteProduct(props.row.productId)"
-                    />
-                  </div>
-                </b-table-column>
-              </template>
-            </b-table>
-
             <b-field
               v-if="addProduct"
               horizontal
@@ -432,6 +371,7 @@
                 <b-select
                   v-model="plusProductId"
                   required
+                  @change="getPlusProduct()"
                 >
                   <option
                     v-for="product in allProducts"
@@ -462,23 +402,93 @@
 
               <b-field>
                 <b-button
-                  style="margin-top: 2.5em"
+                  style="border-radius: 5px; margin-top: 2.5em"
                   type="is-primary"
-                  label="Hozzáadás"
                   size="is-small"
+                  label="Hozzáadás"
                   :loading="isLoading"
+                  expanded
                   @click="addNewProduct()"
                 />
                 <b-button
-                  style="margin-top: 2.5em"
-                  type="is-danger"
+                  style="border-radius: 5px; margin-top: 2.5em"
                   label="Mégse"
                   size="is-small"
                   :loading="isLoading"
+                  expanded
                   @click="addProduct = false"
                 />
               </b-field>
             </b-field>
+
+            <b-table
+              :striped="true"
+              :hoverable="true"
+              default-sort="id"
+              :data="purchase.products"
+              :mobile-cards="true"
+            >
+              <template slot-scope="props">
+                <b-table-column
+                  label="Termék"
+                  field="name"
+                  sortable
+                >
+                  {{ props.row.name }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Ár"
+                  field="grossPrice"
+                  sortable
+                >
+                  {{ props.row.grossPrice }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Mennyiség"
+                  field="quantity"
+                  sortable
+                >
+                  {{ props.row.quantity }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Összesen"
+                  field="quantity"
+                  sortable
+                >
+                  {{ props.row.quantity * props.row.grossPrice }}
+                </b-table-column>
+
+                <b-table-column
+                  custom-key="actions"
+                  class="is-actions-cell"
+                >
+                  <div class="buttons is-right">
+                    <nuxt-link
+                      :to="`/products/edit/${props.row.productId}`"
+                      class="button is-small"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="eye"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </nuxt-link>
+                    <b-button
+                      outlined
+                      size="is-small"
+                      type="is-danger"
+                      icon-pack="fas"
+                      icon-left="trash-alt"
+                      @click="deleteProduct(props.row.productId)"
+                    />
+                  </div>
+                </b-table-column>
+              </template>
+            </b-table>
 
             <hr>
             <b-field>
@@ -556,6 +566,22 @@ export default {
         status: ''
       }
     },
+    getPlusProduct () {
+      /* const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId) */
+      this.plusProductPrice = 2500
+      console.log(2500)
+    },
+    async getPlusProductPrice () {
+      if (this.plusProductId !== 0) {
+        const foundPlusProduct = await this.allProducts.find(product => product.id === this.plusProductId)
+        if (foundPlusProduct !== undefined) {
+          return foundPlusProduct.grossPrice
+        } else {
+          return 0
+        }
+      }
+    },
+
     addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       if (foundPlusProduct !== undefined) {
@@ -573,6 +599,9 @@ export default {
         }
         this.purchase.products.push(plusProduct)
         this.addProduct = false
+        this.plusProductId = 0
+        this.plusProductQuantity = 1
+        this.plusProductPrice = 0
       } else {
         this.$buefy.snackbar.open({
           message: 'Nem választottál ki terméket',

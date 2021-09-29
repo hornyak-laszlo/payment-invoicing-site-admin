@@ -362,56 +362,6 @@
               </b-field>
             </b-field>
 
-            <b-table
-              :striped="true"
-              :hoverable="true"
-              default-sort="id"
-              :data="purchase.products"
-              :mobile-cards="true"
-            >
-              <template slot-scope="props">
-                <b-table-column
-                  label="Termék"
-                  field="name"
-                  sortable
-                >
-                  {{ props.row.name }}
-                </b-table-column>
-
-                <b-table-column
-                  label="Mennyiség"
-                  field="quantity"
-                  sortable
-                >
-                  {{ props.row.quantity }}
-                </b-table-column>
-
-                <b-table-column
-                  label="Ár"
-                  field="grossPrice"
-                  sortable
-                >
-                  {{ props.row.grossPrice }}
-                </b-table-column>
-
-                <b-table-column
-                  custom-key="actions"
-                  class="is-actions-cell"
-                >
-                  <div class="buttons is-right">
-                    <b-button
-                      outlined
-                      size="is-small"
-                      type="is-danger"
-                      icon-pack="fas"
-                      icon-left="trash-alt"
-                      @click="deleteProduct(props.row.productId)"
-                    />
-                  </div>
-                </b-table-column>
-              </template>
-            </b-table>
-
             <b-field
               v-if="addProduct"
               horizontal
@@ -453,6 +403,65 @@
                 @click="addProduct = false"
               />
             </b-field>
+
+            <b-table
+              :striped="true"
+              :hoverable="true"
+              default-sort="id"
+              :data="purchase.products"
+              :mobile-cards="true"
+            >
+              <template slot-scope="props">
+                <b-table-column
+                  label="Termék"
+                  field="name"
+                  sortable
+                >
+                  {{ props.row.name }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Ár"
+                  field="grossPrice"
+                  sortable
+                >
+                  {{ props.row.grossPrice }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Mennyiség"
+                  field="quantity"
+                  sortable
+                >
+                  {{ props.row.quantity }}
+                </b-table-column>
+
+                <b-table-column
+                  label="Összesen"
+                  field="quantity"
+                  sortable
+                >
+                  {{ props.row.quantity * props.row.grossPrice }}
+                </b-table-column>
+
+                <b-table-column
+                  custom-key="actions"
+                  class="is-actions-cell"
+                >
+                  <div class="buttons is-right">
+                    <b-button
+                      outlined
+                      size="is-small"
+                      type="is-danger"
+                      icon-pack="fas"
+                      icon-left="trash-alt"
+                      @click="deleteProduct(props.row.productId)"
+                    />
+                  </div>
+                </b-table-column>
+              </template>
+            </b-table>
+
             <hr>
             <b-field>
               <b-button
@@ -557,6 +566,7 @@ export default {
         this.purchase.products.push(plusProduct)
         this.addProduct = false
         console.log(this.purchase.products)
+        this.plusProductId = 0
       }
     },
 
