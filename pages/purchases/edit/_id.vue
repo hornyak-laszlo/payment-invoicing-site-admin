@@ -306,11 +306,14 @@
                   required
                   expanded
                 >
-                  <option value="transfer">
+                  <option value="bankTransfer">
                     Átutalás
                   </option>
-                  <option value="creditCard">
-                    Bankkártya
+                  <option value="stripe">
+                    Bankkártya Stripe
+                  </option>
+                  <option value="simplePay">
+                    Bankkártya SimplePay
                   </option>
                 </b-select>
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
@@ -371,7 +374,7 @@
                 <b-select
                   v-model="plusProductId"
                   required
-                  @change="getPlusProduct()"
+                  @change.native="getPlusProduct()"
                 >
                   <option
                     v-for="product in allProducts"
@@ -567,9 +570,8 @@ export default {
       }
     },
     getPlusProduct () {
-      /* const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId) */
-      this.plusProductPrice = 2500
-      console.log(2500)
+      const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
+      this.plusProductPrice = foundPlusProduct.grossPrice
     },
     async getPlusProductPrice () {
       if (this.plusProductId !== 0) {
