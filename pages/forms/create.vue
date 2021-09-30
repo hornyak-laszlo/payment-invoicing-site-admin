@@ -76,7 +76,9 @@
             />
           </b-field>
           <b-field label="Űrlap promociós tartalom">
-            <b-input type="textarea" />
+            <client-only>
+              <editor />
+            </client-only>
           </b-field>
 
           <b-field label="Feliratkozás a hírlevélre">
@@ -274,13 +276,15 @@
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 /* import Tiles from '@/components/common/Tiles' */
+import Editor from '@/components/Tiptap.vue'
 
 export default {
   name: 'FormCreate',
   components: {
     /* Tiles, */
     CardComponent,
-    HeroBar
+    HeroBar,
+    Editor
   },
   data () {
     return {
