@@ -425,7 +425,7 @@
                   field="grossPrice"
                   sortable
                 >
-                  {{ props.row.grossPrice }}
+                  {{ props.row.grossPrice }} Ft
                 </b-table-column>
 
                 <b-table-column
@@ -441,7 +441,7 @@
                   field="quantity"
                   sortable
                 >
-                  {{ props.row.quantity * props.row.grossPrice }}
+                  {{ props.row.quantity * props.row.grossPrice }} Ft
                 </b-table-column>
 
                 <b-table-column
@@ -461,6 +461,17 @@
                 </b-table-column>
               </template>
             </b-table>
+
+            <b-field grouped>
+              <b-field
+                label="Teljes összeg"
+                expanded
+                style="marginLeft: 1.5em"
+              />
+              <b-field style="marginRight: 2em">
+                <strong>{{ sumOfPurchase }} Ft</strong>
+              </b-field>
+            </b-field>
 
             <hr>
             <b-field>
@@ -504,6 +515,16 @@ export default {
   head () {
     return {
       title: 'Vásárlás hozzáadása'
+    }
+  },
+  computed: {
+    sumOfPurchase () {
+      if (this.purchase.products.length > 0) {
+        const priceArray = this.purchase.products.map((product) => { return product.grossPrice * product.quantity })
+        return priceArray.reduce((a, b) => a + b)
+      } else {
+        return 0
+      }
     }
   },
   async mounted () {

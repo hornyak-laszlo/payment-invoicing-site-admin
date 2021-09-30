@@ -211,7 +211,7 @@
                   field="grossPrice"
                   sortable
                 >
-                  {{ props.row.grossPrice }}
+                  {{ props.row.grossPrice }} Ft
                 </b-table-column>
 
                 <b-table-column
