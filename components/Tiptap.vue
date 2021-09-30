@@ -22,6 +22,36 @@
       >
         code
       </button>
+      <button
+        :class="{ 'is-active': editor.isActive('bulletList') }"
+        @click="editor.chain().focus().toggleBulletList().run()"
+      >
+        bullet list
+      </button>
+      <button
+        :class="{ 'is-active': editor.isActive('orderedList') }"
+        @click="editor.chain().focus().toggleOrderedList().run()"
+      >
+        ordered list
+      </button>
+      <button
+        :class="{ 'is-active': editor.isActive('codeBlock') }"
+        @click="editor.chain().focus().toggleCodeBlock().run()"
+      >
+        code block
+      </button>
+      <button
+        :class="{ 'is-active': editor.isActive('blockquote') }"
+        @click="editor.chain().focus().toggleBlockquote().run()"
+      >
+        blockquote
+      </button>
+      <button @click="editor.chain().focus().undo().run()">
+        undo
+      </button>
+      <button @click="editor.chain().focus().redo().run()">
+        redo
+      </button>
     </div>
     <editor-content :editor="editor" />
   </div>
