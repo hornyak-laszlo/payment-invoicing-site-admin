@@ -593,19 +593,10 @@ export default {
         status: ''
       }
     },
+
     getPlusProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       this.plusProductPrice = foundPlusProduct.grossPrice
-    },
-    async getPlusProductPrice () {
-      if (this.plusProductId !== 0) {
-        const foundPlusProduct = await this.allProducts.find(product => product.id === this.plusProductId)
-        if (foundPlusProduct !== undefined) {
-          return foundPlusProduct.grossPrice
-        } else {
-          return 0
-        }
-      }
     },
 
     addNewProduct () {
