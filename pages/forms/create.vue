@@ -77,7 +77,14 @@
           </b-field>
           <b-field label="Űrlap promociós tartalom">
             <client-only>
-              <editor />
+              <quill-editor
+                ref="editor"
+                v-model="content"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @ready="onEditorReady($event)"
+              />
             </client-only>
           </b-field>
 
@@ -276,15 +283,15 @@
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 /* import Tiles from '@/components/common/Tiles' */
-import Editor from '@/components/Tiptap.vue'
+/* import Editor from '@/components/Tiptap.vue' */
 
 export default {
   name: 'FormCreate',
   components: {
     /* Tiles, */
     CardComponent,
-    HeroBar,
-    Editor
+    HeroBar
+    /* Editor */
   },
   data () {
     return {
@@ -298,7 +305,17 @@ export default {
       addProduct: false,
       subProductAdded: false,
       /* oneTimeProductAdded: false, */
-      type: ''
+      type: '',
+      content: 'testing',
+      editorOption: {
+        theme: 'snow',
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block']
+          ]
+        }
+      }
 
     }
   },
@@ -328,6 +345,16 @@ export default {
         products: [],
         company: ''
       }
+    },
+
+    onEditorBlur (editor) {
+      console.log('editor blur!', editor)
+    },
+    onEditorFocus (editor) {
+      console.log('editor focus!', editor)
+    },
+    onEditorReady (editor) {
+      console.log('editor ready!', editor)
     },
 
     deleteProduct (id) {
@@ -406,3 +433,60 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+/* Basic editor styles */
+.ProseMirror {
+  > * + * {
+    margin-top: 0.75em;
+  }
+
+  ul,
+  ol {
+    padding: 0 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.1;
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  pre {
+    background: #0d0d0d;
+    color: #fff;
+    font-family: "JetBrainsMono", monospace;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  hr {
+    margin: 1rem 0;
+  }
+
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(#0d0d0d, 0.1);
+  }
+}
+</style>
