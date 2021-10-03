@@ -56,7 +56,7 @@
 
               <b-field
                 expanded
-                label="Irányító"
+                label="Ir. szám"
               >
                 <ValidationProvider
                   v-slot="{ errors }"
