@@ -16,7 +16,7 @@
             title="Adatvédelmi nyilatkozat"
             class="title is-child"
           >
-            <b-field>
+            <b-field label="Adatvédelmi nyilatkozat szövege">
               <client-only>
                 <quill-editor
                   ref="editor"
@@ -34,7 +34,7 @@
             title="Általános szerződési feltételek"
             class="title is-child"
           >
-            <b-field>
+            <b-field label="aszf szövege">
               <client-only>
                 <quill-editor
                   ref="editor"
@@ -125,7 +125,6 @@ export default {
   methods: {
     onEditorBlur (editor) {
       console.log('editor blur!', editor)
-      console.log(this.content)
     },
     onEditorFocus (editor) {
       console.log('editor focus!', editor)
