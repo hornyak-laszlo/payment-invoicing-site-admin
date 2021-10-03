@@ -62,7 +62,16 @@
               />
             </b-field>
             <b-field label="Űrlap promociós tartalom">
-              <b-input type="textarea" />
+              <client-only>
+                <quill-editor
+                  ref="editor"
+                  v-model="content"
+                  :options="editorOption"
+                  @blur="onEditorBlur($event)"
+                  @focus="onEditorFocus($event)"
+                  @ready="onEditorReady($event)"
+                />
+              </client-only>
             </b-field>
             <b-field label="Feliratkozás a hírlevélre">
               <b-checkbox v-model="purchaseForm.newsletterCheckbox">
@@ -281,7 +290,20 @@ export default {
       productType: '',
       plusProductId: 0,
       selectedProductID: 0,
-      plusProduct: []
+      plusProduct: [],
+      content: 'testing',
+      editorOption: {
+        theme: 'snow',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, 3, 4, 5, 6, false] }], [{ font: [] }], ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'], [{ align: [] }], ['link', 'image'],
+            [{ list: 'ordered' }, { list: 'bullet' }],
+            [{ script: 'sub' }, { script: 'super' }], [{ indent: '-1' }, { indent: '+1' }],
+            [{ color: [] }, { background: [] }], ['clean']
+          ]
+        }
+      }
     }
   },
   head () {
@@ -326,6 +348,18 @@ export default {
         newsletterCheckbox: null
       }
     },
+
+    onEditorBlur (editor) {
+      console.log('editor blur!', editor)
+      console.log(this.content)
+    },
+    onEditorFocus (editor) {
+      console.log('editor focus!', editor)
+    },
+    onEditorReady (editor) {
+      console.log('editor ready!', editor)
+    },
+
     deleteProduct (id) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
