@@ -282,16 +282,12 @@
 <script>
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
-/* import Tiles from '@/components/common/Tiles' */
-/* import Editor from '@/components/Tiptap.vue' */
 
 export default {
   name: 'FormCreate',
   components: {
-    /* Tiles, */
     CardComponent,
     HeroBar
-    /* Editor */
   },
   data () {
     return {
@@ -304,7 +300,6 @@ export default {
       plusProduct: [],
       addProduct: false,
       subProductAdded: false,
-      /* oneTimeProductAdded: false, */
       type: '',
       content: 'testing',
       editorOption: {
@@ -437,60 +432,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-/* Basic editor styles */
-.ProseMirror {
-  > * + * {
-    margin-top: 0.75em;
-  }
-
-  ul,
-  ol {
-    padding: 0 1rem;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    line-height: 1.1;
-  }
-
-  code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
-  }
-
-  pre {
-    background: #0d0d0d;
-    color: #fff;
-    font-family: "JetBrainsMono", monospace;
-    padding: 0.75rem 1rem;
-    border-radius: 0.5rem;
-
-    code {
-      color: inherit;
-      padding: 0;
-      background: none;
-      font-size: 0.8rem;
-    }
-  }
-
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-
-  hr {
-    margin: 1rem 0;
-  }
-
-  blockquote {
-    padding-left: 1rem;
-    border-left: 2px solid rgba(#0d0d0d, 0.1);
-  }
-}
-</style>
