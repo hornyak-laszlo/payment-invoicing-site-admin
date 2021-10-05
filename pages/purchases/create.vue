@@ -400,6 +400,7 @@
                   v-model="plusProductPrice"
                   type="number"
                   required
+                  @change.native="setPlusProductPrice($event)"
                 />
               </b-field>
 
@@ -435,7 +436,6 @@
                 <b-table-column
                   label="Termék"
                   field="name"
-                  sortable
                 >
                   {{ props.row.name }}
                 </b-table-column>
@@ -443,7 +443,6 @@
                 <b-table-column
                   label="Ár"
                   field="grossPrice"
-                  sortable
                 >
                   {{ props.row.grossPrice }} Ft
                 </b-table-column>
@@ -451,7 +450,6 @@
                 <b-table-column
                   label="Mennyiség"
                   field="quantity"
-                  sortable
                 >
                   {{ props.row.quantity }}
                 </b-table-column>
@@ -459,7 +457,6 @@
                 <b-table-column
                   label="Összesen"
                   field="quantity"
-                  sortable
                 >
                   {{ props.row.quantity * props.row.grossPrice }} Ft
                 </b-table-column>
@@ -583,6 +580,10 @@ export default {
       this.plusProductPrice = foundPlusProduct.grossPrice
     },
 
+    setPlusProductPrice (event) {
+      this.plusProductPrice = event.target.value
+    },
+
     addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       if (this.purchase.products.find(product => product.productId === this.plusProductId) !== undefined) {
@@ -604,7 +605,7 @@ export default {
           name: foundPlusProduct.name,
           nameInvoice: foundPlusProduct.nameInvoice,
           description: foundPlusProduct.description,
-          grossPrice: foundPlusProduct.grossPrice,
+          grossPrice: this.plusProductPrice,
           isShippable: foundPlusProduct.isShippable,
           type: foundPlusProduct.type,
           period: foundPlusProduct.period,
@@ -614,6 +615,8 @@ export default {
         this.addProduct = false
         console.log(this.purchase.products)
         this.plusProductId = 0
+        this.plusProductQuantity = 1
+        this.plusProductPrice = 0
       }
     },
 

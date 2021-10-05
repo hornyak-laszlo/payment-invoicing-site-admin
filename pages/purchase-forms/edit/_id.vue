@@ -211,14 +211,12 @@
                 <b-table-column
                   label="Termék"
                   field="name"
-                  sortable
                 >
                   {{ props.row.name }}
                 </b-table-column>
                 <b-table-column
                   label="Ár"
                   field="grossPrice"
-                  sortable
                 >
                   {{ props.row.grossPrice }} Ft
                 </b-table-column>
