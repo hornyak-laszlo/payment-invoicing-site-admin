@@ -435,7 +435,6 @@
                 <b-table-column
                   label="Termék"
                   field="name"
-                  sortable
                 >
                   {{ props.row.name }}
                 </b-table-column>
@@ -443,7 +442,6 @@
                 <b-table-column
                   label="Ár"
                   field="grossPrice"
-                  sortable
                 >
                   {{ props.row.grossPrice }} Ft
                 </b-table-column>
@@ -451,7 +449,6 @@
                 <b-table-column
                   label="Mennyiség"
                   field="quantity"
-                  sortable
                 >
                   {{ props.row.quantity }}
                 </b-table-column>
@@ -459,7 +456,6 @@
                 <b-table-column
                   label="Összesen"
                   field="quantity"
-                  sortable
                 >
                   {{ props.row.quantity * props.row.grossPrice }} Ft
                 </b-table-column>
