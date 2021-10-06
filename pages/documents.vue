@@ -10,43 +10,41 @@
       Jogi dokumentumok
     </hero-bar>
     <section class="section is-main-section">
-      <ValidationObserver v-slot="{ invalid }">
-        <form @submit.prevent="submit">
-          <card-component
-            title="Adatvédelmi nyilatkozat"
-            class="title is-child"
-          >
-            <b-field label="Adatvédelmi nyilatkozat szövege">
-              <client-only>
-                <quill-editor
-                  ref="editor"
-                  v-model="adatvedelmi"
-                  :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @ready="onEditorReady($event)"
-                />
-              </client-only>
-            </b-field>
-          </card-component>
+      <form @submit.prevent="submit">
+        <card-component
+          title="Adatvédelmi nyilatkozat"
+          class="title is-child"
+        >
+          <b-field label="Adatvédelmi nyilatkozat szövege">
+            <client-only>
+              <quill-editor
+                ref="editor"
+                v-model="adatvedelmi"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @ready="onEditorReady($event)"
+              />
+            </client-only>
+          </b-field>
+        </card-component>
 
-          <card-component
-            title="Általános szerződési feltételek"
-            class="title is-child"
-          >
-            <b-field label="aszf szövege">
-              <client-only>
-                <quill-editor
-                  ref="editor"
-                  v-model="aszf"
-                  :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @ready="onEditorReady($event)"
-                />
-              </client-only>
-            </b-field>
-          </card-component>
+        <card-component
+          title="Általános szerződési feltételek"
+          class="title is-child"
+        >
+          <b-field label="aszf szövege">
+            <client-only>
+              <quill-editor
+                ref="editor"
+                v-model="aszf"
+                :options="editorOption"
+                @blur="onEditorBlur($event)"
+                @focus="onEditorFocus($event)"
+                @ready="onEditorReady($event)"
+              />
+            </client-only>
+          </b-field>
 
           <hr>
           <b-field>
@@ -55,13 +53,12 @@
               :loading="isLoading"
               native-type="submit"
               expanded
-              :disabled="invalid"
             >
               Mentés
             </b-button>
           </b-field>
-        </form>
-      </ValidationObserver>
+        </card-component>
+      </form>
     </section>
   </div>
 </template>
