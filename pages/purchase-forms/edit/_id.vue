@@ -78,23 +78,23 @@
                 Legyen feliratkozás a hírlevélre lehetőség
               </b-checkbox>
             </b-field>
-          </card-component>
-
-          <card-component>
+            <hr>
             <b-field label="Fizetési lehetőségek">
               <b-field>
                 <b-checkbox v-model="purchaseForm.bankTransferEnabled">
                   Banki utalás
                 </b-checkbox>
-                <b-checkbox v-model="purchaseForm.stripeEnabled">
+                <b-checkbox v-model="purchaseForm.stripeEnabled" :disabled="!stripeIntegrated">
                   Kártyás fizetés: <b>Stripe</b>
                 </b-checkbox>
-                <b-checkbox v-model="purchaseForm.simplePayEnabled">
+                <b-checkbox v-model="purchaseForm.simplePayEnabled" :disabled="!simplePayIntegrated">
                   Kártyás fizetés: <b>SimplePay</b>
                 </b-checkbox>
               </b-field>
             </b-field>
+          </card-component>
 
+          <card-component>
             <b-field label="Termék típusa">
               <b-field>
                 <b-radio
@@ -315,7 +315,9 @@ export default {
             [{ color: [] }, { background: [] }], ['clean']
           ]
         }
-      }
+      },
+      stripeIntegrated: null,
+      simplePayIntegrated: null
     }
   },
   head () {
@@ -342,7 +344,19 @@ export default {
   },
   async mounted () {
     this.purchaseForm = await this.getData()
-    this.allProducts = await this.$strapi.find('products')
+
+    try {
+      this.allProducts = await this.$strapi.find('products')
+      const data = await this.$strapi.$http.$get('/companies/own/integrations')
+      this.stripeIntegrated = data.stripeIntegrated
+      this.simplePayIntegrated = data.simplePayIntegrated
+    } catch (err) {
+      this.$buefy.toast.open({
+        message: 'Nem sikerült betölteni az adatokat',
+        type: 'is-danger'
+      })
+    }
+
     if (this.purchaseForm.products.length > 0) {
       this.selectedProductIDs = this.purchaseForm.products.map(product => product.id)
     }
