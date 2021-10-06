@@ -400,7 +400,6 @@
                   v-model="plusProductPrice"
                   type="number"
                   required
-                  @change.native="setPlusProductPrice($event)"
                 />
               </b-field>
 
@@ -579,11 +578,6 @@ export default {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       this.plusProductPrice = foundPlusProduct.grossPrice
     },
-
-    setPlusProductPrice (event) {
-      this.plusProductPrice = event.target.value
-    },
-
     addNewProduct () {
       const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
       if (this.purchase.products.find(product => product.productId === this.plusProductId) !== undefined) {
