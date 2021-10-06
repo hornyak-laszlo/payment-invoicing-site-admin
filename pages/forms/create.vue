@@ -109,6 +109,22 @@
         <card-component v-if="type === 'purchase-forms'">
           <b-field
             v-if="type === 'purchase-forms'"
+            label="Fizetési lehetőségek"
+          >
+            <b-field>
+              <b-checkbox v-model="form.bankTransferEnabled">
+                Banki utalás
+              </b-checkbox>
+              <b-checkbox v-model="form.stripeEnabled">
+                Kártyás fizetés: <b>Stripe</b>
+              </b-checkbox>
+              <b-checkbox v-model="form.simplePayEnabled">
+                Kártyás fizetés: <b>SimplePay</b>
+              </b-checkbox>
+            </b-field>
+          </b-field>
+          <b-field
+            v-if="type === 'purchase-forms'"
             label="Termék típusa"
           >
             <b-field v-if="type === 'purchase-forms'">
@@ -332,6 +348,7 @@ export default {
   },
   async mounted () {
     this.allProducts = await this.$strapi.find('products')
+    this.getClearFormObject()
   },
   methods: {
     getClearFormObject () {
@@ -341,7 +358,10 @@ export default {
         successLink: '',
         successText: '',
         products: [],
-        company: ''
+        company: '',
+        stripeEnabled: null,
+        simplePayEnabled: null,
+        bankTransferEnabled: true
       }
     },
 
