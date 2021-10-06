@@ -144,25 +144,9 @@ export default {
     this.customerCount = await this.$strapi.count('customers')
     this.contactCount = await this.$strapi.count('contacts')
     this.fillChartData()
-    const { oneTimePayments, subscriptionPayments } = this.dummyData
-    const sumPayments = paymentArr => paymentArr.reduce((acc, curr) => acc + curr)
-    this.salesNumber = sumPayments(oneTimePayments) + sumPayments(subscriptionPayments)
+    this.salesNumber = this.dummyData.revenue
   },
   methods: {
-    confirm () {
-      this.$emit('confirm')
-      this.isModalActive = false
-    },
-    randomChartData (n) {
-      const data = []
-
-      for (let i = 0; i < n; i++) {
-        data.push(Math.round(Math.random() * 50000))
-      }
-
-      return data
-    },
-
     fillChartData () {
       this.defaultChart.chartData = {
         datasets: [
