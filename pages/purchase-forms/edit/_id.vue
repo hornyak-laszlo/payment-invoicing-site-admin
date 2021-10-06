@@ -81,6 +81,20 @@
           </card-component>
 
           <card-component>
+            <b-field label="Fizetési lehetőségek">
+              <b-field>
+                <b-checkbox v-model="purchaseForm.bankTransferEnabled">
+                  Banki utalás
+                </b-checkbox>
+                <b-checkbox v-model="purchaseForm.stripeEnabled">
+                  Kártyás fizetés: <b>Stripe</b>
+                </b-checkbox>
+                <b-checkbox v-model="purchaseForm.simplePayEnabled">
+                  Kártyás fizetés: <b>SimplePay</b>
+                </b-checkbox>
+              </b-field>
+            </b-field>
+
             <b-field label="Termék típusa">
               <b-field>
                 <b-radio
@@ -343,7 +357,10 @@ export default {
         successText: '',
         products: [],
         company: {},
-        newsletterCheckbox: null
+        newsletterCheckbox: null,
+        stripeEnabled: null,
+        simplePayEnabled: null,
+        bankTransferEnabled: null
       }
     },
 
