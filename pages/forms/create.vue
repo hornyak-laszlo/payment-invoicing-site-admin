@@ -94,6 +94,28 @@
             </b-checkbox>
           </b-field>
           <hr>
+          <b-field
+            v-if="type === 'purchase-forms'"
+            label="Fizetési lehetőségek"
+          >
+            <b-field>
+              <b-checkbox v-model="form.bankTransferEnabled">
+                Banki utalás
+              </b-checkbox>
+              <b-checkbox
+                v-model="form.stripeEnabled"
+                :disabled="!stripeIntegrated"
+              >
+                Kártyás fizetés: <b>Stripe</b>
+              </b-checkbox>
+              <b-checkbox
+                v-model="form.simplePayEnabled"
+                :disabled="!simplePayIntegrated"
+              >
+                Kártyás fizetés: <b>SimplePay</b>
+              </b-checkbox>
+            </b-field>
+          </b-field>
           <b-field v-if="type === 'contact-forms'">
             <b-button
               type="is-primary"
@@ -107,22 +129,6 @@
         </card-component>
 
         <card-component v-if="type === 'purchase-forms'">
-          <b-field
-            v-if="type === 'purchase-forms'"
-            label="Fizetési lehetőségek"
-          >
-            <b-field>
-              <b-checkbox v-model="form.bankTransferEnabled">
-                Banki utalás
-              </b-checkbox>
-              <b-checkbox v-model="form.stripeEnabled">
-                Kártyás fizetés: <b>Stripe</b>
-              </b-checkbox>
-              <b-checkbox v-model="form.simplePayEnabled">
-                Kártyás fizetés: <b>SimplePay</b>
-              </b-checkbox>
-            </b-field>
-          </b-field>
           <b-field
             v-if="type === 'purchase-forms'"
             label="Termék típusa"
@@ -329,7 +335,9 @@ export default {
             [{ color: [] }, { background: [] }], ['clean']
           ]
         }
-      }
+      },
+      stripeIntegrated: null,
+      simplePayIntegrated: null
 
     }
   },
@@ -347,8 +355,18 @@ export default {
     }
   },
   async mounted () {
-    this.allProducts = await this.$strapi.find('products')
     this.getClearFormObject()
+    try {
+      this.allProducts = await this.$strapi.find('products')
+      const data = await this.$strapi.$http.$get('/companies/own/integrations')
+      this.stripeIntegrated = data.stripeIntegrated
+      this.simplePayIntegrated = data.simplePayIntegrated
+    } catch (err) {
+      this.$buefy.toast.open({
+        message: 'Nem sikerült betölteni az adatokat',
+        type: 'is-danger'
+      })
+    }
   },
   methods: {
     getClearFormObject () {
