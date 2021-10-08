@@ -89,7 +89,7 @@
           </b-field>
 
           <b-field label="Feliratkozás a hírlevélre">
-            <b-checkbox>
+            <b-checkbox v-model="form.newsletterCheckbox">
               Legyen feliratkozás a hírlevélre lehetőség
             </b-checkbox>
           </b-field>
@@ -375,6 +375,7 @@ export default {
         link: '',
         successLink: '',
         successText: '',
+        newsletterCheckbox: null,
         products: [],
         company: '',
         stripeEnabled: null,
