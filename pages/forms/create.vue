@@ -377,7 +377,6 @@ export default {
         successText: '',
         newsletterCheckbox: null,
         products: [],
-        company: '',
         stripeEnabled: null,
         simplePayEnabled: null,
         bankTransferEnabled: true

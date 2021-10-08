@@ -370,7 +370,6 @@ export default {
         successLink: '',
         successText: '',
         products: [],
-        company: {},
         newsletterCheckbox: null,
         stripeEnabled: null,
         simplePayEnabled: null,
