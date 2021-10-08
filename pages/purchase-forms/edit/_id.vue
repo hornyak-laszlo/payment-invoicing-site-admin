@@ -419,20 +419,31 @@ export default {
       }
     },
     addNewSubProduct () {
-      this.plusProduct = []
-      this.plusProduct.push(this.allProducts.find(product => product.id === this.plusProductId))
-      this.purchaseForm.products = this.plusProduct
-      this.addProduct = false
-      this.subProductAdded = true
-      console.log(this.purchaseForm.products)
-      this.$buefy.snackbar.open({
-        message: 'Termék sikeresen hozzáadva',
-        queue: false
-      })
+      if (this.plusProductId === 0) {
+        this.$buefy.snackbar.open({
+          message: 'Válassz egy terméket!',
+          type: 'is-danger',
+          queue: false
+        })
+      } else {
+        this.plusProduct = []
+        this.plusProduct.push(this.allProducts.find(product => product.id === this.plusProductId))
+        this.purchaseForm.products = this.plusProduct
+        this.addProduct = false
+        this.subProductAdded = true
+        console.log(this.purchaseForm.products)
+        this.$buefy.snackbar.open({
+          message: 'Termék sikeresen hozzáadva',
+          queue: false
+        })
+        this.plusProductId = 0
+      }
     },
 
     addNewOneProduct () {
-      if (this.purchaseForm.products.find(product => product.type === 'subscription') !== undefined) {
+      const subProductPresent = this.purchaseForm.products.some(product => product.type === 'subscription') !== undefined
+      const productAlreadyAdded = this.purchaseForm.products.find(product => product.id === this.selectedProductID) !== undefined
+      if (subProductPresent && this.selectedProductID !== 0) {
         this.purchaseForm.products = []
         this.purchaseForm.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
         this.addProduct = false
@@ -442,9 +453,15 @@ export default {
         })
         this.plusProductId = 0
         this.selectedProductID = 0
-      } else if (this.purchaseForm.products.find(product => product.id === this.selectedProductID) !== undefined) {
+      } else if (productAlreadyAdded && this.selectedProductID !== 0) {
         this.$buefy.snackbar.open({
           message: 'Ez a termék már szerepel az űrlapon',
+          type: 'is-danger',
+          queue: false
+        })
+      } else if (this.selectedProductID === 0) {
+        this.$buefy.snackbar.open({
+          message: 'Válassz egy terméket!',
           type: 'is-danger',
           queue: false
         })
