@@ -74,6 +74,10 @@ td {
   padding-left: 1rem !important;
 }
 
+.flex-item-2 {
+  margin-top: 1.5rem;
+}
+
 @media screen and (max-width: 767px) {
   .buttons {
     min-width: 290px;
@@ -92,5 +96,18 @@ td {
     .button {
       width: 49%;
     }
+  }
+}
+
+@media screen and (min-width: 1415px) {
+  .flex-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .flex-item-2 {
+    margin-top: 0;
   }
 }

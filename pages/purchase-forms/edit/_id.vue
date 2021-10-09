@@ -19,10 +19,10 @@
     <section class="section is-main-section">
       <ValidationObserver v-slot="{ invalid }">
         <form
-          class="columns is-desktop"
+          class="flex-container"
           @submit.prevent="submit"
         >
-          <div class="column is-8-widescreen">
+          <div class="flex-item-1">
             <card-component>
               <b-field
                 label="Név"
@@ -105,7 +105,7 @@
             </card-component>
           </div>
 
-          <div class="column is-4-widescreen">
+          <div class="flex-item-2">
             <card-component>
               <b-field label="Termék típusa">
                 <b-field>
