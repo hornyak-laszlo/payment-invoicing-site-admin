@@ -17,7 +17,10 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <form @submit.prevent="submit">
+      <form
+        class="flex-container"
+        @submit.prevent="submit"
+      >
         <card-component>
           <b-field label="Űrlap típusa" />
           <b-field>
