@@ -17,9 +17,9 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <card-component>
-        <ValidationObserver v-slot="{ invalid }">
-          <form @submit.prevent="submit">
+      <ValidationObserver v-slot="{ invalid }">
+        <form class="flex-container" @submit.prevent="submit">
+          <card-component>
             <b-field grouped>
               <b-field
                 label="Vezetéknév"
@@ -58,7 +58,6 @@
                 </ValidationProvider>
               </b-field>
             </b-field>
-
             <b-field
               label="Email"
               message="Vásárló e-mail címe"
@@ -76,7 +75,6 @@
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
             </b-field>
-
             <b-field
               label="Telefonszám"
               message="Vásárló telefonszáma"
@@ -93,14 +91,12 @@
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
             </b-field>
-
             <b-field
               label="Cégnév"
               message="Vásárló cég neve"
             >
               <b-input v-model="purchase.companyName" />
             </b-field>
-
             <b-field label="Számlázási cím" />
             <b-field grouped>
               <b-field
@@ -173,7 +169,6 @@
                 </ValidationProvider>
               </b-field>
             </b-field>
-
             <b-field label="Kiszállítási cím" />
             <b-field grouped>
               <b-field
@@ -214,7 +209,6 @@
                 />
               </b-field>
             </b-field>
-
             <b-field grouped>
               <b-field
                 label="Feltételeket elfogadta"
@@ -264,7 +258,6 @@
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
-
               <b-field
                 label="Hírlevélre feliratkozott"
                 message="A vásárló feliratkozott a hírlevélre"
@@ -290,7 +283,6 @@
                 </ValidationProvider>
               </b-field>
             </b-field>
-
             <b-field
               label="Fizetési mód"
               message="Hogy fizet a vevő"
@@ -347,7 +339,9 @@
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
             </b-field>
-            <hr>
+          </card-component>
+
+          <card-component>
             <b-field grouped>
               <b-field
                 label="Vásárláshoz tartozó termékek listája"
@@ -364,7 +358,6 @@
                 />
               </b-field>
             </b-field>
-
             <b-field
               v-if="addProduct"
               horizontal
@@ -385,7 +378,6 @@
                   </option>
                 </b-select>
               </b-field>
-
               <b-field label="Mennyiség">
                 <b-input
                   v-model="plusProductQuantity"
@@ -394,7 +386,6 @@
                   name="mennyiség"
                 />
               </b-field>
-
               <b-field label="Bruttó ár">
                 <b-input
                   v-model="plusProductPrice"
@@ -402,7 +393,6 @@
                   required
                 />
               </b-field>
-
               <b-field>
                 <b-button
                   style="border-radius: 5px; margin-top: 2.5em"
@@ -423,7 +413,6 @@
                 />
               </b-field>
             </b-field>
-
             <b-table
               :striped="true"
               :hoverable="true"
@@ -438,28 +427,24 @@
                 >
                   {{ props.row.name }}
                 </b-table-column>
-
                 <b-table-column
                   label="Ár"
                   field="grossPrice"
                 >
                   {{ props.row.grossPrice }} Ft
                 </b-table-column>
-
                 <b-table-column
                   label="Mennyiség"
                   field="quantity"
                 >
                   {{ props.row.quantity }}
                 </b-table-column>
-
                 <b-table-column
                   label="Összesen"
                   field="quantity"
                 >
                   {{ props.row.quantity * props.row.grossPrice }} Ft
                 </b-table-column>
-
                 <b-table-column
                   custom-key="actions"
                   class="is-actions-cell"
@@ -477,7 +462,6 @@
                 </b-table-column>
               </template>
             </b-table>
-
             <b-field grouped>
               <b-field
                 label="Teljes összeg"
@@ -488,7 +472,6 @@
                 <strong>{{ sumOfPurchase }} Ft</strong>
               </b-field>
             </b-field>
-
             <hr>
             <b-field>
               <b-button
@@ -501,9 +484,9 @@
                 Mentés
               </b-button>
             </b-field>
-          </form>
-        </ValidationObserver>
-      </card-component>
+          </card-component>
+        </form>
+      </ValidationObserver>
     </section>
   </div>
 </template>
