@@ -441,8 +441,8 @@ export default {
     },
 
     addNewOneProduct () {
-      const subProductPresent = this.purchaseForm.products.some(product => product.type === 'subscription') !== undefined
-      const productAlreadyAdded = this.purchaseForm.products.find(product => product.id === this.selectedProductID) !== undefined
+      const subProductPresent = this.purchaseForm.products.some(product => product.type === 'subscription')
+      const productAlreadyAdded = this.purchaseForm.products.some(product => product.id === this.selectedProductID)
       if (subProductPresent && this.selectedProductID !== 0) {
         this.purchaseForm.products = []
         this.purchaseForm.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
