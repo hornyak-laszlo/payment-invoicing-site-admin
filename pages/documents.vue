@@ -15,8 +15,32 @@
           title="Adatvédelmi nyilatkozat"
           class="title is-child"
         >
+          <b-field>
+            <b-radio
+              v-model="typeAdat"
+              native-value="linkAdat"
+              size="is-medium"
+              style="font-size: 1rem"
+            >
+              Linket adok meg
+            </b-radio>
+            <b-radio
+              v-model="typeAdat"
+              native-value="textAdat"
+              size="is-medium"
+              style="font-size: 1rem"
+            >
+              Szöveget adok meg
+            </b-radio>
+          </b-field>
           <b-field label="Adatvédelmi nyilatkozat szövege">
-            <client-only>
+            <b-input
+              v-if="typeAdat === 'linkAdat'"
+              v-model="adatvedelmiLinkje"
+              type="text"
+              placeholder="Adatvédelmi nyilatkozat linkje"
+            />
+            <client-only v-if="typeAdat === 'textAdat'">
               <quill-editor
                 ref="editor"
                 v-model="adatvedelmi"
@@ -33,8 +57,33 @@
           title="Általános szerződési feltételek"
           class="title is-child"
         >
+          <b-field>
+            <b-radio
+              v-model="typeAszf"
+              native-value="linkAszf"
+              size="is-medium"
+              style="font-size: 1rem"
+            >
+              Linket adok meg
+            </b-radio>
+            <b-radio
+              v-model="typeAszf"
+              native-value="textAszf"
+              size="is-medium"
+              style="font-size: 1rem"
+            >
+              Szöveget adok meg
+            </b-radio>
+          </b-field>
+
           <b-field label="aszf szövege">
-            <client-only>
+            <b-input
+              v-if="typeAszf === 'linkAszf'"
+              v-model="aszfLinkje"
+              type="text"
+              placeholder="Általános szerződési feltételek linkje"
+            />
+            <client-only v-if="typeAszf === 'textAszf'">
               <quill-editor
                 ref="editor"
                 v-model="aszf"
@@ -79,7 +128,10 @@ export default {
   },
   data () {
     return {
-
+      typeAdat: 'textAdat',
+      typeAszf: 'textAszf',
+      aszfLinkje: '',
+      adatvedelmiLinkje: '',
       adatvedelmi: 'testing egyes',
       aszf: 'testing kettes',
       isLoading: false,
