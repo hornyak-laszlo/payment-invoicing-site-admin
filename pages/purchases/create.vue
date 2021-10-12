@@ -18,7 +18,10 @@
     </hero-bar>
     <section class="section is-main-section">
       <ValidationObserver v-slot="{ invalid }">
-        <form class="flex-container" @submit.prevent="submit">
+        <form
+          class="flex-container"
+          @submit.prevent="submit"
+        >
           <card-component>
             <b-field grouped>
               <b-field
@@ -341,7 +344,7 @@
             </b-field>
           </card-component>
 
-          <card-component>
+          <card-component class="flex-item-2">
             <b-field grouped>
               <b-field
                 label="Vásárláshoz tartozó termékek listája"
@@ -387,7 +390,10 @@
                   name="mennyiség"
                 />
               </b-field>
-              <b-field label="Bruttó ár" style="min-width: 85px">
+              <b-field
+                label="Bruttó ár"
+                style="min-width: 85px"
+              >
                 <b-input
                   v-model="plusProductPrice"
                   type="number"

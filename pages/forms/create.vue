@@ -21,7 +21,7 @@
         class="flex-container"
         @submit.prevent="submit"
       >
-        <card-component class="flex-item-1">
+        <card-component>
           <b-field label="Űrlap típusa" />
           <b-field>
             <b-radio
