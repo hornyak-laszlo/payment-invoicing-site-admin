@@ -94,3 +94,15 @@ td {
     }
   }
 }
+
+@media screen and (min-width: 1599px) {
+  .flex-container {
+    display: grid;
+    grid-template-columns: 2fr minmax(630px, 1fr);
+    gap: 1.5rem 1.5rem;
+  }
+
+  .flex-item-2 {
+    margin-bottom: 1.5rem;
+  }
+}

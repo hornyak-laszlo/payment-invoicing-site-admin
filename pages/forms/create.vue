@@ -17,7 +17,10 @@
       </nuxt-link>
     </hero-bar>
     <section class="section is-main-section">
-      <form @submit.prevent="submit">
+      <form
+        class="flex-container"
+        @submit.prevent="submit"
+      >
         <card-component>
           <b-field label="Űrlap típusa" />
           <b-field>
@@ -128,7 +131,10 @@
           </b-field>
         </card-component>
 
-        <card-component v-if="type === 'purchase-forms'">
+        <card-component
+          v-if="type === 'purchase-forms'"
+          class="flex-item-2"
+        >
           <b-field
             v-if="type === 'purchase-forms'"
             label="Termék típusa"
@@ -157,6 +163,7 @@
             <b-field expanded>
               <b-button
                 outlined
+                size="is-small"
                 style="border-radius: 5px"
                 type="is-primary"
                 label="Termék hozzáadása"

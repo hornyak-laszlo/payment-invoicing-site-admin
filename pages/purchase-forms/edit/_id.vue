@@ -18,7 +18,10 @@
     </hero-bar>
     <section class="section is-main-section">
       <ValidationObserver v-slot="{ invalid }">
-        <form @submit.prevent="submit">
+        <form
+          class="flex-container"
+          @submit.prevent="submit"
+        >
           <card-component>
             <b-field
               label="Név"
@@ -81,17 +84,23 @@
                 <b-checkbox v-model="purchaseForm.bankTransferEnabled">
                   Banki utalás
                 </b-checkbox>
-                <b-checkbox v-model="purchaseForm.stripeEnabled" :disabled="!stripeIntegrated">
+                <b-checkbox
+                  v-model="purchaseForm.stripeEnabled"
+                  :disabled="!stripeIntegrated"
+                >
                   Kártyás fizetés: <b>Stripe</b>
                 </b-checkbox>
-                <b-checkbox v-model="purchaseForm.simplePayEnabled" :disabled="!simplePayIntegrated">
+                <b-checkbox
+                  v-model="purchaseForm.simplePayEnabled"
+                  :disabled="!simplePayIntegrated"
+                >
                   Kártyás fizetés: <b>SimplePay</b>
                 </b-checkbox>
               </b-field>
             </b-field>
           </card-component>
 
-          <card-component>
+          <card-component class="flex-item-2">
             <b-field label="Termék típusa">
               <b-field>
                 <b-radio
@@ -110,7 +119,6 @@
                 </b-radio>
               </b-field>
             </b-field>
-
             <b-field grouped>
               <b-field
                 label="Űrlaphoz tartozó termékek listája"
@@ -119,6 +127,7 @@
               <b-field expanded>
                 <b-button
                   outlined
+                  size="is-small"
                   type="is-primary"
                   label="Termék hozzáadása"
                   :loading="isLoading"
@@ -127,7 +136,6 @@
                 />
               </b-field>
             </b-field>
-
             <b-field
               v-if="productType === 'subscription' && addProduct"
               class="add-product-no-label"
@@ -194,6 +202,7 @@
                 <b-button
                   style="border-radius: 5px"
                   type="is-primary"
+                  size="is-small"
                   label="Hozzáadás"
                   expanded
                   :loading="isLoading"
@@ -204,13 +213,13 @@
                 <b-button
                   style="border-radius: 5px"
                   label="Mégse"
+                  size="is-small"
                   :loading="isLoading"
                   expanded
                   @click="addProduct = false"
                 />
               </b-field>
             </b-field>
-
             <b-table
               :striped="true"
               :hoverable="true"
@@ -231,7 +240,6 @@
                 >
                   {{ props.row.grossPrice }} Ft
                 </b-table-column>
-
                 <b-table-column
                   custom-key="actions"
                   class="is-actions-cell"
@@ -260,7 +268,6 @@
                 </b-table-column>
               </template>
             </b-table>
-
             <hr>
             <b-field>
               <b-button
