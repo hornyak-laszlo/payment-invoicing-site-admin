@@ -354,6 +354,7 @@
                 <b-button
                   outlined
                   type="is-primary"
+                  size="is-small"
                   label="Termék hozzáadása"
                   :loading="isLoading"
                   expanded
@@ -389,7 +390,7 @@
                   name="mennyiség"
                 />
               </b-field>
-              <b-field label="Bruttó ár">
+              <b-field label="Bruttó ár" style="min-width: 85px">
                 <b-input
                   v-model="plusProductPrice"
                   type="number"

@@ -21,7 +21,7 @@
         class="flex-container"
         @submit.prevent="submit"
       >
-        <card-component>
+        <card-component class="flex-item-1">
           <b-field label="Űrlap típusa" />
           <b-field>
             <b-radio
@@ -131,7 +131,10 @@
           </b-field>
         </card-component>
 
-        <card-component v-if="type === 'purchase-forms'">
+        <card-component
+          v-if="type === 'purchase-forms'"
+          class="flex-item-2"
+        >
           <b-field
             v-if="type === 'purchase-forms'"
             label="Termék típusa"
@@ -160,6 +163,7 @@
             <b-field expanded>
               <b-button
                 outlined
+                size="is-small"
                 style="border-radius: 5px"
                 type="is-primary"
                 label="Termék hozzáadása"
