@@ -382,7 +382,7 @@ export default {
         link: '',
         successLink: '',
         successText: '',
-        newsletterCheckbox: null,
+        newsletterCheckbox: false,
         products: [],
         stripeEnabled: null,
         simplePayEnabled: null,
