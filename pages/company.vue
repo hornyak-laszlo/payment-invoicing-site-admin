@@ -17,6 +17,49 @@
             class="title is-child"
           >
             <b-field
+              label="Logo"
+              message="A cég logoja"
+            >
+              <b-upload
+                v-if="!logo"
+                v-model="logo"
+                drag-drop
+                expanded
+                accept="image/*"
+              >
+                <section class="section">
+                  <div class="content has-text-centered">
+                    <p>
+                      <b-icon
+                        icon="upload"
+                        size="is-large"
+                      />
+                    </p>
+                    <p>Húzd ide a logodat, vagy kattints a feltöltéshez</p>
+                  </div>
+                </section>
+              </b-upload>
+              <div v-else>
+                <span v-if="!logo.url" class="is-size-5 has-text-weight-normal">
+                  {{ logo.name }} kiválasztva feltöltésre
+                </span>
+                <div v-else>
+                  <figure class="image is-128x128">
+                    <img
+                      alt="logo"
+                      :src="`https://payment-invoicing-site.herokuapp.com${logo.url}`"
+                    >
+                  </figure>
+                </div>
+                <b-button
+                  type="is-danger"
+                  @click="logo = null"
+                >
+                  Törlés
+                </b-button>
+              </div>
+            </b-field>
+            <b-field
               label="Név"
               message="A cég neve"
             >
@@ -315,6 +358,7 @@ export default {
   data () {
     return {
       companyDataFound: true,
+      logo: null,
       company: {
         name: '',
         taxNumber: '',
@@ -346,6 +390,7 @@ export default {
   async mounted () {
     try {
       this.company = await this.$strapi.$http.$get('/companies/own/data')
+      this.logo = this.company.logo
     } catch (err) {
       if (err && err.response.data && err.response.data.message && err.response.data.message === 'Your account does not belong to any company!') {
         this.companyDataFound = false
@@ -364,7 +409,11 @@ export default {
       try {
         this.isLoading = true
 
-        const companyUpd = await this.$strapi.$http.$put('/companies/own/data', this.company)
+        const formData = new FormData()
+        formData.append('data', JSON.stringify(this.company))
+        formData.append('files.logo', this.logo)
+
+        const companyUpd = await this.$strapi.$http.$put('/companies/own/data', formData)
         this.setCompany(companyUpd)
 
         this.isLoading = false
