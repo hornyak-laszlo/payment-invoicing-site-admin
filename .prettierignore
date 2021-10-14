@@ -5,3 +5,4 @@ plugins/vee-validate.js
 components/Charts/chart.config.js
 middleware/
 middleware/auth.js
+store
