@@ -17,16 +17,16 @@
         >
           <b-field>
             <b-radio
-              v-model="typeAdat"
-              native-value="linkAdat"
+              v-model="documents.privacyPolicyType"
+              native-value="link"
               size="is-medium"
               style="font-size: 1rem"
             >
               Linket adok meg
             </b-radio>
             <b-radio
-              v-model="typeAdat"
-              native-value="textAdat"
+              v-model="documents.privacyPolicyType"
+              native-value="text"
               size="is-medium"
               style="font-size: 1rem"
             >
@@ -35,15 +35,15 @@
           </b-field>
           <b-field label="Adatvédelmi nyilatkozat szövege">
             <b-input
-              v-if="typeAdat === 'linkAdat'"
-              v-model="adatvedelmiLinkje"
+              v-if="documents.privacyPolicyType === 'link'"
+              v-model="documents.privacyPolicyLink"
               type="text"
               placeholder="Adatvédelmi nyilatkozat linkje"
             />
-            <client-only v-if="typeAdat === 'textAdat'">
+            <client-only v-if="documents.privacyPolicyType === 'text'">
               <quill-editor
                 ref="editor"
-                v-model="adatvedelmi"
+                v-model="documents.privacyPolicyText"
                 :options="editorOption"
                 @blur="onEditorBlur($event)"
                 @focus="onEditorFocus($event)"
@@ -59,16 +59,16 @@
         >
           <b-field>
             <b-radio
-              v-model="typeAszf"
-              native-value="linkAszf"
+              v-model="documents.GTCType"
+              native-value="link"
               size="is-medium"
               style="font-size: 1rem"
             >
               Linket adok meg
             </b-radio>
             <b-radio
-              v-model="typeAszf"
-              native-value="textAszf"
+              v-model="documents.GTCType"
+              native-value="text"
               size="is-medium"
               style="font-size: 1rem"
             >
@@ -78,15 +78,15 @@
 
           <b-field label="aszf szövege">
             <b-input
-              v-if="typeAszf === 'linkAszf'"
-              v-model="aszfLinkje"
+              v-if="documents.GTCType === 'link'"
+              v-model="documents.GTCLink"
               type="text"
               placeholder="Általános szerződési feltételek linkje"
             />
-            <client-only v-if="typeAszf === 'textAszf'">
+            <client-only v-if="documents.GTCType === 'text'">
               <quill-editor
                 ref="editor"
-                v-model="aszf"
+                v-model="documents.GTCText"
                 :options="editorOption"
                 @blur="onEditorBlur($event)"
                 @focus="onEditorFocus($event)"
@@ -128,12 +128,14 @@ export default {
   },
   data () {
     return {
-      typeAdat: 'textAdat',
-      typeAszf: 'textAszf',
-      aszfLinkje: '',
-      adatvedelmiLinkje: '',
-      adatvedelmi: 'testing egyes',
-      aszf: 'testing kettes',
+      documents: {
+        privacyPolicyType: 'text',
+        GTCType: 'text',
+        privacyPolicyLink: '',
+        GTCLink: '',
+        privacyPolicyText: '',
+        GTCText: ''
+      },
       isLoading: false,
       editorOption: {
         theme: 'snow',
@@ -157,8 +159,8 @@ export default {
   computed: {
   },
   async mounted () {
-    /* try {
-      this.company = await this.$strapi.$http.$get('/companies/own/data')
+    try {
+      this.documents = await this.$strapi.$http.$get('/companies/own/documents')
     } catch (err) {
       if (err && err.response.data && err.response.data.message && err.response.data.message === 'Your account does not belong to any company!') {
         this.companyDataFound = false
@@ -168,7 +170,7 @@ export default {
           type: 'is-danger'
         })
       }
-    } */
+    }
   },
 
   methods: {
@@ -186,8 +188,8 @@ export default {
       try {
         this.isLoading = true
 
-        const companyUpd = await this.$strapi.$http.$put('/companies/own/data', this.company)
-        this.setCompany(companyUpd)
+        const companyUpd = await this.$strapi.$http.$put('/companies/own/documents', this.documents)
+        this.documents = companyUpd
 
         this.isLoading = false
         this.$buefy.snackbar.open({
