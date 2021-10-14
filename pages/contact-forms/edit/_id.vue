@@ -64,7 +64,7 @@
             <client-only>
               <quill-editor
                 ref="editor"
-                v-model="content"
+                v-model="contactForm.promotionText"
                 :options="editorOption"
                 @blur="onEditorBlur($event)"
                 @focus="onEditorFocus($event)"
@@ -109,7 +109,6 @@ export default {
     return {
       isLoading: false,
       contactForm: this.getClearFormObject(),
-      content: 'testing',
       editorOption: {
         theme: 'snow',
         modules: {
@@ -140,6 +139,7 @@ export default {
         link: '',
         successLink: '',
         successText: '',
+        promotionText: '',
         newsletterCheckbox: null
       }
     },

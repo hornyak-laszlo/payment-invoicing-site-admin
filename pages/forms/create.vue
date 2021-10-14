@@ -82,7 +82,7 @@
             <client-only>
               <quill-editor
                 ref="editor"
-                v-model="content"
+                v-model="form.promotionText"
                 :options="editorOption"
                 @blur="onEditorBlur($event)"
                 @focus="onEditorFocus($event)"
@@ -383,6 +383,7 @@ export default {
         successLink: '',
         successText: '',
         newsletterCheckbox: false,
+        promotionText: '',
         products: [],
         stripeEnabled: null,
         simplePayEnabled: null,
@@ -392,7 +393,6 @@ export default {
 
     onEditorBlur (editor) {
       console.log('editor blur!', editor)
-      console.log(this.content)
     },
     onEditorFocus (editor) {
       console.log('editor focus!', editor)
