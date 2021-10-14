@@ -18,7 +18,7 @@
           >
             <b-field
               label="Logo"
-              message="A cég logoja"
+              message="A cég logója"
             >
               <b-upload
                 v-if="!logo"
@@ -27,36 +27,42 @@
                 expanded
                 accept="image/*"
               >
-                <section class="section">
-                  <div class="content has-text-centered">
-                    <p>
-                      <b-icon
-                        icon="upload"
-                        size="is-large"
-                      />
-                    </p>
-                    <p>Húzd ide a logodat, vagy kattints a feltöltéshez</p>
-                  </div>
-                </section>
+                <div class="content has-text-centered">
+                  <p>
+                    <b-icon
+                      icon="upload"
+                      size="is-large"
+                    />
+                  </p>
+                  <p>Húzd ide a logodat, vagy kattints a feltöltéshez</p>
+                </div>
               </b-upload>
               <div v-else>
-                <span v-if="!logo.url" class="is-size-5 has-text-weight-normal">
+                <span
+                  v-if="!logo.url"
+                  class="is-size-5 has-text-weight-normal"
+                >
                   {{ logo.name }} kiválasztva feltöltésre
                 </span>
                 <div v-else>
-                  <figure class="image is-128x128">
+                  <figure
+                    class="image"
+                    style="margin: 1rem 0 1rem 50%; transform: translateX(-50%); max-width: 50%; width: 256px"
+                  >
                     <img
                       alt="logo"
                       :src="`https://payment-invoicing-site.herokuapp.com${logo.url}`"
                     >
                   </figure>
+                  <b-button
+                    type="is-danger"
+                    style="margin-left: 50%; transform: translateX(-50%)"
+                    size="is-small"
+                    @click="logo = null"
+                  >
+                    Törlés
+                  </b-button>
                 </div>
-                <b-button
-                  type="is-danger"
-                  @click="logo = null"
-                >
-                  Törlés
-                </b-button>
               </div>
             </b-field>
             <b-field
