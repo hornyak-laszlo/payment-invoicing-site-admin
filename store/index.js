@@ -26,6 +26,9 @@ export const getters = {
   },
   taxNumber (state) {
     return state.user && state.user.company ? state.user.company.taxNumber : ''
+  },
+  logo (state) {
+    return state.user && state.user.company ? state.user.company.logo : ''
   }
 }
 

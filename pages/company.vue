@@ -364,7 +364,7 @@ export default {
   data () {
     return {
       companyDataFound: true,
-      logo: null,
+      logo: this.computedLogo,
       company: {
         name: '',
         taxNumber: '',
@@ -392,6 +392,10 @@ export default {
     }
   },
   computed: {
+    /* ...mapGetters(['logo']), */
+    computedLogo () {
+      return this.$store.getters.logo
+    }
   },
   async mounted () {
     try {
