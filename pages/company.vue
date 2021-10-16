@@ -351,7 +351,7 @@ import CardComponent from '@/components/common/CardComponent'
 import HeroBar from '@/components/common/HeroBar'
 import CreateCompanyModal from '@/components/CreateCompanyModal.vue'
 /* import Tiles from '@/components/common/Tiles' */
-import { mapMutations } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   name: 'Company',
@@ -364,7 +364,7 @@ export default {
   data () {
     return {
       companyDataFound: true,
-      logo: this.computedLogo,
+
       company: {
         name: '',
         taxNumber: '',
@@ -392,9 +392,16 @@ export default {
     }
   },
   computed: {
-    /* ...mapGetters(['logo']), */
-    computedLogo () {
-      return this.$store.getters.logo
+    ...mapGetters({
+      logoFromStore: 'logo'
+    }),
+    logo: {
+      get () {
+        return this.logoFromStore
+      },
+      set (value) {
+        this.$store.commit('setLogo', value)
+      }
     }
   },
   async mounted () {
@@ -402,7 +409,13 @@ export default {
       this.company = await this.$strapi.$http.$get('/companies/own/data')
       this.logo = this.company.logo
     } catch (err) {
-      if (err && err.response.data && err.response.data.message && err.response.data.message === 'Your account does not belong to any company!') {
+      if (
+        err &&
+        err.response.data &&
+        err.response.data.message &&
+        err.response.data.message ===
+          'Your account does not belong to any company!'
+      ) {
         this.companyDataFound = false
       } else {
         this.$buefy.toast.open({
@@ -423,7 +436,10 @@ export default {
         formData.append('data', JSON.stringify(this.company))
         formData.append('files.logo', this.logo)
 
-        const companyUpd = await this.$strapi.$http.$put('/companies/own/data', formData)
+        const companyUpd = await this.$strapi.$http.$put(
+          '/companies/own/data',
+          formData
+        )
         this.setCompany(companyUpd)
 
         this.isLoading = false
