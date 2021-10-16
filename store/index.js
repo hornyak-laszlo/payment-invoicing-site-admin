@@ -2,6 +2,7 @@ export const state = () => ({
   /* Strapi user */
   user: null,
   // ownCompany: null,
+  logo: null,
 
   /* NavBar */
   isNavBarVisible: true,
@@ -44,6 +45,14 @@ export const mutations = {
     }
 
     state.user.company = payload
+  },
+
+  setLogo (state, payload) {
+    if (!state.user) {
+      return
+    }
+
+    state.user.company.logo = payload
   },
 
   /* Aside Mobile */
