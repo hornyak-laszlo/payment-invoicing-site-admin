@@ -303,7 +303,7 @@ export default {
       purchaseForm: this.getClearFormObject(),
       allProducts: [],
       addProduct: false,
-      productType: '',
+      productType: 'one_time',
       plusProductId: 0,
       selectedProductID: 0,
       plusProduct: [],
@@ -311,11 +311,17 @@ export default {
         theme: 'snow',
         modules: {
           toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }], [{ font: [] }], ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'], [{ align: [] }], ['link', 'image'],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ font: [] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ align: [] }],
+            ['link', 'image'],
             [{ list: 'ordered' }, { list: 'bullet' }],
-            [{ script: 'sub' }, { script: 'super' }], [{ indent: '-1' }, { indent: '+1' }],
-            [{ color: [] }, { background: [] }], ['clean']
+            [{ script: 'sub' }, { script: 'super' }],
+            [{ indent: '-1' }, { indent: '+1' }],
+            [{ color: [] }, { background: [] }],
+            ['clean']
           ]
         }
       },
@@ -343,7 +349,6 @@ export default {
         this.selectedProductIDs = value
       }
     } */
-
   },
   async mounted () {
     this.purchaseForm = await this.getData()
@@ -361,7 +366,9 @@ export default {
     }
 
     if (this.purchaseForm.products.length > 0) {
-      this.selectedProductIDs = this.purchaseForm.products.map(product => product.id)
+      this.selectedProductIDs = this.purchaseForm.products.map(
+        product => product.id
+      )
     }
   },
   methods: {
@@ -391,7 +398,9 @@ export default {
         iconPack: 'fas',
         icon: 'trash-alt',
         onConfirm: () => {
-          this.purchaseForm.products = this.purchaseForm.products.filter(product => product.id !== id)
+          this.purchaseForm.products = this.purchaseForm.products.filter(
+            product => product.id !== id
+          )
           console.log(this.purchaseForm.products)
           this.$buefy.snackbar.open({
             message: 'Sikeresen törölve',
@@ -401,7 +410,11 @@ export default {
       })
     },
     addNewProduct () {
-      if (this.purchaseForm.products.some(product => product.type === 'subscription')) {
+      if (
+        this.purchaseForm.products.some(
+          product => product.type === 'subscription'
+        )
+      ) {
         this.$buefy.snackbar.open({
           message: 'Már egy előfizetéses termék szerepel az űrlapon',
           type: 'is-danger',
@@ -414,7 +427,10 @@ export default {
     async getData () {
       if (this.$route.params.id) {
         try {
-          const res = await this.$strapi.findOne('purchase-forms', this.$route.params.id)
+          const res = await this.$strapi.findOne(
+            'purchase-forms',
+            this.$route.params.id
+          )
           return res
         } catch (err) {
           this.$buefy.toast.open({
@@ -434,7 +450,9 @@ export default {
         })
       } else {
         this.plusProduct = []
-        this.plusProduct.push(this.allProducts.find(product => product.id === this.plusProductId))
+        this.plusProduct.push(
+          this.allProducts.find(product => product.id === this.plusProductId)
+        )
         this.purchaseForm.products = this.plusProduct
         this.addProduct = false
         this.subProductAdded = true
@@ -448,11 +466,19 @@ export default {
     },
 
     addNewOneProduct () {
-      const subProductPresent = this.purchaseForm.products.some(product => product.type === 'subscription')
-      const productAlreadyAdded = this.purchaseForm.products.some(product => product.id === this.selectedProductID)
+      const subProductPresent = this.purchaseForm.products.some(
+        product => product.type === 'subscription'
+      )
+      const productAlreadyAdded = this.purchaseForm.products.some(
+        product => product.id === this.selectedProductID
+      )
       if (subProductPresent && this.selectedProductID !== 0) {
         this.purchaseForm.products = []
-        this.purchaseForm.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
+        this.purchaseForm.products.push(
+          this.allProducts.find(
+            product => product.id === this.selectedProductID
+          )
+        )
         this.addProduct = false
         this.$buefy.snackbar.open({
           message: 'Termék sikeresen hozzáadva',
@@ -473,7 +499,11 @@ export default {
           queue: false
         })
       } else {
-        this.purchaseForm.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
+        this.purchaseForm.products.push(
+          this.allProducts.find(
+            product => product.id === this.selectedProductID
+          )
+        )
         this.addProduct = false
         this.$buefy.snackbar.open({
           message: 'Termék sikeresen hozzáadva',
@@ -487,7 +517,11 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update('purchase-forms', this.purchaseForm.id, this.purchaseForm)
+        await this.$strapi.update(
+          'purchase-forms',
+          this.purchaseForm.id,
+          this.purchaseForm
+        )
 
         this.isLoading = false
         this.$buefy.snackbar.open({
