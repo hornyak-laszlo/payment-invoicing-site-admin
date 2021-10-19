@@ -51,7 +51,7 @@
                   >
                     <img
                       alt="logo"
-                      :src="`https://payment-invoicing-site.herokuapp.com${logo.url}`"
+                      :src="logo.url"
                     >
                   </figure>
                   <b-button
