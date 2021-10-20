@@ -126,6 +126,7 @@
               />
               <b-field expanded>
                 <b-button
+                  v-if="!addProduct"
                   outlined
                   size="is-small"
                   type="is-primary"
