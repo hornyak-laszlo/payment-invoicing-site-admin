@@ -162,6 +162,7 @@
             />
             <b-field expanded>
               <b-button
+                v-if="!addProduct"
                 outlined
                 size="is-small"
                 style="border-radius: 5px"
@@ -335,17 +336,22 @@ export default {
         theme: 'snow',
         modules: {
           toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }], [{ font: [] }], ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'], [{ align: [] }], ['link', 'image'],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ font: [] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ align: [] }],
+            ['link', 'image'],
             [{ list: 'ordered' }, { list: 'bullet' }],
-            [{ script: 'sub' }, { script: 'super' }], [{ indent: '-1' }, { indent: '+1' }],
-            [{ color: [] }, { background: [] }], ['clean']
+            [{ script: 'sub' }, { script: 'super' }],
+            [{ indent: '-1' }, { indent: '+1' }],
+            [{ color: [] }, { background: [] }],
+            ['clean']
           ]
         }
       },
       stripeIntegrated: null,
       simplePayIntegrated: null
-
     }
   },
   head () {
@@ -402,7 +408,9 @@ export default {
     },
 
     deleteProduct (id) {
-      this.form.products = this.form.products.filter(product => product.id !== id)
+      this.form.products = this.form.products.filter(
+        product => product.id !== id
+      )
       console.log(this.form.products)
     },
 
@@ -415,7 +423,9 @@ export default {
         })
       } else {
         this.plusProduct = []
-        this.plusProduct.push(this.allProducts.find(product => product.id === this.plusProductId))
+        this.plusProduct.push(
+          this.allProducts.find(product => product.id === this.plusProductId)
+        )
         this.form.products = this.plusProduct
         this.addProduct = false
         this.subProductAdded = true
@@ -428,11 +438,19 @@ export default {
     },
 
     addNewOneProduct () {
-      const subProductPresent = this.form.products.some(product => product.type === 'subscription')
-      const productAlreadyAdded = this.form.products.some(product => product.id === this.selectedProductID)
+      const subProductPresent = this.form.products.some(
+        product => product.type === 'subscription'
+      )
+      const productAlreadyAdded = this.form.products.some(
+        product => product.id === this.selectedProductID
+      )
       if (subProductPresent && this.selectedProductID !== 0) {
         this.form.products = []
-        this.form.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
+        this.form.products.push(
+          this.allProducts.find(
+            product => product.id === this.selectedProductID
+          )
+        )
         this.addProduct = false
         console.log(this.form.products)
         this.$buefy.snackbar.open({
@@ -453,7 +471,11 @@ export default {
           queue: false
         })
       } else {
-        this.form.products.push(this.allProducts.find(product => product.id === this.selectedProductID))
+        this.form.products.push(
+          this.allProducts.find(
+            product => product.id === this.selectedProductID
+          )
+        )
         this.addProduct = false
         console.log(this.form.products)
         this.$buefy.snackbar.open({
