@@ -352,6 +352,7 @@
               />
               <b-field expanded>
                 <b-button
+                  v-if="!addProduct"
                   outlined
                   size="is-small"
                   type="is-primary"
@@ -527,7 +528,9 @@ export default {
   computed: {
     sumOfPurchase () {
       if (this.purchase.products.length > 0) {
-        const priceArray = this.purchase.products.map((product) => { return product.grossPrice * product.quantity })
+        const priceArray = this.purchase.products.map((product) => {
+          return product.grossPrice * product.quantity
+        })
         return priceArray.reduce((a, b) => a + b)
       } else {
         return 0
@@ -565,12 +568,20 @@ export default {
       }
     },
     getPlusProduct () {
-      const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
+      const foundPlusProduct = this.allProducts.find(
+        product => product.id === this.plusProductId
+      )
       this.plusProductPrice = foundPlusProduct.grossPrice
     },
     addNewProduct () {
-      const foundPlusProduct = this.allProducts.find(product => product.id === this.plusProductId)
-      if (this.purchase.products.find(product => product.productId === this.plusProductId) !== undefined) {
+      const foundPlusProduct = this.allProducts.find(
+        product => product.id === this.plusProductId
+      )
+      if (
+        this.purchase.products.find(
+          product => product.productId === this.plusProductId
+        ) !== undefined
+      ) {
         this.$buefy.snackbar.open({
           message: 'Ez a termék már szerepel az űrlapon',
           type: 'is-danger',
@@ -609,7 +620,8 @@ export default {
 
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
-        message: 'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
+        message:
+          'Biztos, hogy <b>törölni</b> akarod ezt a terméket? <br> A műveletet nem lehet visszavonni',
         confirmText: 'Termék törlése',
         cancelText: 'Mégse',
         type: 'is-danger',
@@ -618,7 +630,9 @@ export default {
         icon: 'trash-alt',
 
         onConfirm: () => {
-          this.purchase.products = this.purchase.products.filter(product => product.productId !== index)
+          this.purchase.products = this.purchase.products.filter(
+            product => product.productId !== index
+          )
         }
       })
     },
