@@ -105,17 +105,15 @@
               <b-field>
                 <b-radio
                   v-model="productType"
-                  name="name"
-                  native-value="subscription"
-                >
-                  Előfizetéses
-                </b-radio>
-                <b-radio
-                  v-model="productType"
-                  name="name"
                   native-value="one_time"
                 >
                   Egyszeri vásárlás
+                </b-radio>
+                <b-radio
+                  v-model="productType"
+                  native-value="subscription"
+                >
+                  Előfizetéses
                 </b-radio>
               </b-field>
             </b-field>
@@ -303,7 +301,7 @@ export default {
       purchaseForm: this.getClearFormObject(),
       allProducts: [],
       addProduct: false,
-      productType: 'one_time',
+      productType: '',
       plusProductId: 0,
       selectedProductID: 0,
       plusProduct: [],
@@ -341,6 +339,7 @@ export default {
     oneTimeProducts () {
       return this.allProducts.filter(product => product.type === 'one_time')
     }
+
     /* selectedProductIDs: {
       get () {
         return this.purchaseForm.products.map(product => product.id)
@@ -352,6 +351,7 @@ export default {
   },
   async mounted () {
     this.purchaseForm = await this.getData()
+    this.productType = await this.purchaseForm.products[0].type
 
     try {
       this.allProducts = await this.$strapi.find('products')
@@ -387,6 +387,7 @@ export default {
         bankTransferEnabled: null
       }
     },
+
     deleteProduct (id) {
       this.$buefy.dialog.confirm({
         title: 'Termék törlése',
