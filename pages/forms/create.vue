@@ -142,15 +142,15 @@
             <b-field v-if="type === 'purchase-forms'">
               <b-radio
                 v-model="productType"
-                native-value="subscription"
-              >
-                Előfizetéses
-              </b-radio>
-              <b-radio
-                v-model="productType"
                 native-value="one_time"
               >
                 Egyszeri vásárlás
+              </b-radio>
+              <b-radio
+                v-model="productType"
+                native-value="subscription"
+              >
+                Előfizetéses
               </b-radio>
             </b-field>
           </b-field>
@@ -325,7 +325,7 @@ export default {
       form: this.getClearFormObject(),
       allProducts: [],
       selectedProductID: 0,
-      productType: '',
+      productType: 'one_time',
       plusProductId: 0,
       plusProduct: [],
       addProduct: false,
