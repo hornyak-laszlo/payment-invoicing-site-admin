@@ -24,6 +24,42 @@
         />
       </card-component>
     </section>
+    <section class="section">
+      <card-component class="has-table">
+        <b-tabs
+          type="is-boxed"
+          expanded
+        >
+          <b-tab-item>
+            <template #header>
+              <b-icon icon="information-outline" />
+              <span> Előfizetések </span>
+            </template>
+            <b-table
+              :data="subscriptionPurchases"
+              :columns="columns"
+              :striped="true"
+              :hoverable="true"
+            />
+          </b-tab-item>
+          <b-tab-item>
+            <template #header>
+              <b-icon
+                pack="fas"
+                icon="shopping-basket"
+              />
+              <span> Vásárlások </span>
+            </template>
+            <b-table
+              :data="oneTimePurchases"
+              :columns="columns"
+              :striped="true"
+              :hoverable="true"
+            />
+          </b-tab-item>
+        </b-tabs>
+      </card-component>
+    </section>
   </div>
 </template>
 
@@ -41,41 +77,92 @@ export default {
   },
   data () {
     return {
+      subscriptions: [],
+      oneTimeProducts: [],
       collection: 'purchases',
-      fields: [{
-        field: 'lastName',
-        title: 'Vezetéknév'
-      }, {
-        field: 'firstName',
-        title: 'Keresztnév'
-      }, {
-        customFn: (data) => {
-          const statuses = {
-            payed: 'Fizetve',
-            ordered: 'Megrendelve',
-            shipped: 'Kiszállítva'
-          }
-          return statuses[data.status]
+      fields: [
+        {
+          field: 'lastName',
+          title: 'Vezetéknév'
         },
-        field: 'status',
-        title: 'Vásárlás státusza'
-      }, {
-        field: 'sumOfPurchase',
-        title: 'Vásárlás értéke'
-      },
-      {
-        customFn: (data) => {
-          const productTypes = {
-            one_time: 'Egyszeri',
-            subscription: 'Előfizetéses'
-          }
-          return productTypes[data.products[0].type]
+        {
+          field: 'firstName',
+          title: 'Keresztnév'
         },
-        field: 'purchaseType',
-        title: 'Vásárlás típusa'
-      }],
+        {
+          customFn: (data) => {
+            const statuses = {
+              payed: 'Fizetve',
+              ordered: 'Megrendelve',
+              shipped: 'Kiszállítva'
+            }
+            return statuses[data.status]
+          },
+          field: 'status',
+          title: 'Vásárlás státusza'
+        },
+        {
+          field: 'sumOfPurchase',
+          title: 'Vásárlás értéke'
+        },
+        {
+          customFn: (data) => {
+            const productTypes = {
+              one_time: 'Egyszeri',
+              subscription: 'Előfizetéses'
+            }
+            return productTypes[data.type]
+          },
+          field: 'purchaseType',
+          title: 'Vásárlás típusa'
+        }
+      ],
       purchases: [{ products: [] }],
-      type: ''
+      type: '',
+      columns: [
+        {
+          field: 'id',
+          label: 'ID',
+          sortable: true,
+          numeric: true,
+          width: '30'
+        },
+        {
+          field: 'lastName',
+          label: 'Vezetéknév'
+        },
+        {
+          field: 'firstName',
+          label: 'Keresztnév'
+        },
+        {
+          customFn: (data) => {
+            const statuses = {
+              payed: 'Fizetve',
+              ordered: 'Megrendelve',
+              shipped: 'Kiszállítva'
+            }
+            return statuses[data.status]
+          },
+          field: 'status',
+          label: 'Vásárlás státusza'
+        },
+        {
+          field: 'sumOfPurchase',
+          label: 'Vásárlás értéke'
+        },
+        {
+          customFn: (data) => {
+            const productTypes = {
+              one_time: 'Egyszeri',
+              subscription: 'Előfizetéses'
+            }
+            return productTypes[data.type]
+          },
+          field: 'type',
+          label: 'Vásárlás típusa'
+        }
+      ]
     }
   },
   head () {
@@ -84,11 +171,54 @@ export default {
     }
   },
   computed: {
+    subscriptionPurchases () {
+      const result = this.subscriptions.map((sub) => {
+        const statuses = {
+          payed: 'Fizetve',
+          ordered: 'Megrendelve',
+          shipped: 'Kiszállítva'
+        }
+        const productTypes = {
+          one_time: 'Egyszeri',
+          subscription: 'Előfizetéses'
+        }
+
+        sub.status = statuses[sub.status]
+        sub.type = productTypes[sub.type]
+
+        return sub
+      })
+      return result
+    },
+    oneTimePurchases () {
+      const result = this.oneTimeProducts.map((sub) => {
+        const statuses = {
+          payed: 'Fizetve',
+          ordered: 'Megrendelve',
+          shipped: 'Kiszállítva'
+        }
+        const productTypes = {
+          one_time: 'Egyszeri',
+          subscription: 'Előfizetéses'
+        }
+
+        sub.status = statuses[sub.status]
+        sub.type = productTypes[sub.type]
+
+        return sub
+      })
+      return result
+    }
   },
   async mounted () {
     this.purchases = await this.$strapi.find('purchases')
+    this.subscriptions = this.purchases.filter(
+      purchase => purchase.type === 'subscription'
+    )
+    this.oneTimeProducts = this.purchases.filter(
+      purchase => purchase.type === 'one_time'
+    )
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
