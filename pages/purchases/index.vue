@@ -32,26 +32,27 @@
         >
           <b-tab-item>
             <template #header>
-              <b-icon icon="information-outline" />
-              <span> Előfizetések </span>
+              <b-icon
+                pack="fas"
+                icon="shopping-basket"
+              />
+              <span> <strong>Vásárlások</strong> </span>
             </template>
             <b-table
-              :data="subscriptionPurchases"
+              :data="oneTimePurchases"
               :columns="columns"
               :striped="true"
               :hoverable="true"
             />
           </b-tab-item>
+
           <b-tab-item>
             <template #header>
-              <b-icon
-                pack="fas"
-                icon="shopping-basket"
-              />
-              <span> Vásárlások </span>
+              <b-icon icon="information-outline" />
+              <span> <strong>Előfizetések</strong> </span>
             </template>
             <b-table
-              :data="oneTimePurchases"
+              :data="subscriptionPurchases"
               :columns="columns"
               :striped="true"
               :hoverable="true"
@@ -136,14 +137,6 @@ export default {
           label: 'Keresztnév'
         },
         {
-          customFn: (data) => {
-            const statuses = {
-              payed: 'Fizetve',
-              ordered: 'Megrendelve',
-              shipped: 'Kiszállítva'
-            }
-            return statuses[data.status]
-          },
           field: 'status',
           label: 'Vásárlás státusza'
         },
@@ -152,13 +145,14 @@ export default {
           label: 'Vásárlás értéke'
         },
         {
-          customFn: (data) => {
-            const productTypes = {
-              one_time: 'Egyszeri',
-              subscription: 'Előfizetéses'
-            }
-            return productTypes[data.type]
-          },
+          field: 'period',
+          label: 'Gyakoriság'
+        },
+        {
+          field: 'subscriptionStatus',
+          label: 'Előfizetés státusza'
+        },
+        {
           field: 'type',
           label: 'Vásárlás típusa'
         }
@@ -182,7 +176,13 @@ export default {
           one_time: 'Egyszeri',
           subscription: 'Előfizetéses'
         }
+        const periods = {
+          weekly: 'Heti',
+          monthly: 'Havi',
+          yearly: 'Éves'
+        }
 
+        sub.period = periods[sub.products[0].period]
         sub.status = statuses[sub.status]
         sub.type = productTypes[sub.type]
 
