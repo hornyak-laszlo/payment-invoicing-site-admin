@@ -72,8 +72,6 @@ export default {
   },
   data () {
     return {
-      subscriptions: [],
-      oneTimeProducts: [],
       collection: 'purchases',
       fields: [
         {
@@ -150,9 +148,6 @@ export default {
           title: 'Gyakoriság'
         }
       ],
-      purchases: [{ products: [] }],
-      type: '',
-
       oneTimePurchases: async () => {
         const purchases = await this.$strapi.find('purchases')
         const subscriptions = purchases.filter(
@@ -173,9 +168,6 @@ export default {
     return {
       title: 'Vásárlások'
     }
-  },
-  computed: {},
-  async mounted () {},
-  methods: {}
+  }
 }
 </script>
