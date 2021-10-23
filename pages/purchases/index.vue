@@ -39,7 +39,10 @@
 
           <b-tab-item>
             <template #header>
-              <b-icon icon="information-outline" />
+              <b-icon
+                pack="fas"
+                icon="credit-card"
+              />
               <span> <strong>Előfizetések</strong> </span>
             </template>
             <data-table
