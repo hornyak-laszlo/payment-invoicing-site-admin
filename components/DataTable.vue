@@ -8,7 +8,7 @@
     />
     <b-table
       :sticky-header="true"
-      :height="tableHeight"
+      :height="tableHeight()"
       :checked-rows.sync="checkedRows"
       :checkable="checkable"
       :loading="isLoading"
@@ -65,7 +65,7 @@
             <div class="t-button-wrapper">
               <nuxt-link
                 v-if="readOnly"
-                :to="`/${collection}/view/${props.row.id}`"
+                :to="getViewLink(props.row)"
                 class="button is-small"
               >
                 <b-icon
@@ -77,7 +77,7 @@
               </nuxt-link>
               <nuxt-link
                 v-if="!readOnly"
-                :to="`/${collection}/edit/${props.row.id}`"
+                :to="getEditLink(props.row)"
                 class="button is-small"
               >
                 <b-icon
@@ -144,6 +144,14 @@ export default {
   name: 'DataTable',
   components: { ModalBox },
   props: {
+    customCollectionFn: {
+      type: Function,
+      default: null
+    },
+    customDataFn: {
+      type: Function,
+      default: null
+    },
     readOnly: {
       type: Boolean,
       default: false
@@ -163,7 +171,6 @@ export default {
   },
   data () {
     return {
-      windowHeight: 300,
       isModalActive: false,
       trashObject: null,
       data: [],
@@ -174,15 +181,6 @@ export default {
     }
   },
   computed: {
-    tableHeight () {
-      const header = 52
-      const sectionHeader = 85
-      const tablePadding = 24 + 48
-      const border = 2
-      const tableHeader = 49
-      const tableFooter = 72
-      return this.windowHeight - (header + sectionHeader + tablePadding + tableHeader + tableFooter + border)
-    },
     trashObjectName () {
       if (this.trashObject) {
         return this.trashObject.name
@@ -192,49 +190,58 @@ export default {
     }
   },
   async mounted () {
-    window.addEventListener('resize', this.onResize)
-    this.onResize()
     await this.loadData()
   },
-  beforeDestroy () {
-    window.removeEventListener('resize', this.onResize)
-  },
   methods: {
-    async loadData () {
-      if (this.collection) {
-        this.isLoading = true
-        try {
-          const customFunctions = this.fields.filter(f => f.customFn)
-          this.data = await this.$strapi.find(this.collection)
-          this.isLoading = false
-          this.data.forEach((data) => {
-            customFunctions.forEach((e) => {
-              data[e.field] = e.customFn(data)
-            })
-            data.created_at = convertToHungarianTime(data.created_at)
-            data.updated_at = convertToHungarianTime(data.updated_at)
-          })
-          if (this.data.length > this.perPage) {
-            this.paginated = true
-          }
-        } catch (err) {
-          this.isLoading = false
-          this.$buefy.toast.open({
-            message: 'Nem sikerült betölteni az adatokat',
-            type: 'is-danger'
-          })
-        }
-      }
+    tableHeight () {
+      const header = 52
+      const sectionHeader = 85
+      const tablePadding = 24 + 48
+      const border = 2
+      const tableHeader = 49
+      const tableFooter = 72
+      const tabHeight = 43
+      return `calc(100vh - ${header + sectionHeader + tablePadding + tableHeader + tableFooter + border + tabHeight}px`
     },
-    onResize () {
-      this.windowHeight = window.innerHeight
+    getViewLink (row) {
+      const collection = this.customCollectionFn ? this.customCollectionFn(row) : this.collection
+      return `/${collection}/view/${row.id}`
+    },
+    getEditLink (row) {
+      const collection = this.customCollectionFn ? this.customCollectionFn(row) : this.collection
+      return `/${collection}/edit/${row.id}`
+    },
+    async loadData () {
+      this.isLoading = true
+      try {
+        const customFunctions = this.fields.filter(f => f.customFn)
+        this.data = this.customDataFn ? await this.customDataFn() : await this.$strapi.find(this.collection)
+        this.isLoading = false
+        this.data.forEach((data) => {
+          customFunctions.forEach((e) => {
+            data[e.field] = e.customFn(data)
+          })
+          data.created_at = convertToHungarianTime(data.created_at)
+          data.updated_at = convertToHungarianTime(data.updated_at)
+        })
+        if (this.data.length > this.perPage) {
+          this.paginated = true
+        }
+      } catch (err) {
+        this.isLoading = false
+        this.$buefy.toast.open({
+          message: 'Nem sikerült betölteni az adatokat',
+          type: 'is-danger'
+        })
+      }
     },
     trashModal (trashObject) {
       this.trashObject = trashObject
       this.isModalActive = true
     },
     async trashConfirm () {
-      await this.$strapi.delete(this.collection, this.trashObject.id)
+      const collection = this.customCollectionFn ? this.customCollectionFn(this.trashObject) : this.collection
+      await this.$strapi.delete(collection, this.trashObject.id)
       await this.loadData()
       this.isModalActive = false
       this.$buefy.snackbar.open({

@@ -18,10 +18,40 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table">
-        <data-table
-          :fields="fields"
-          :collection="collection"
-        />
+        <b-tabs
+          type="is-boxed"
+          expanded
+        >
+          <b-tab-item>
+            <template #header>
+              <b-icon
+                pack="fas"
+                icon="shopping-basket"
+              />
+              <span> <strong>Vásárlások</strong> </span>
+            </template>
+            <data-table
+              :fields="fields"
+              :collection="collection"
+              :custom-data-fn="oneTimePurchases"
+            />
+          </b-tab-item>
+
+          <b-tab-item>
+            <template #header>
+              <b-icon
+                pack="fas"
+                icon="credit-card"
+              />
+              <span> <strong>Előfizetések</strong> </span>
+            </template>
+            <data-table
+              :fields="subFields"
+              :collection="collection"
+              :custom-data-fn="subscriptionPurchases"
+            />
+          </b-tab-item>
+        </b-tabs>
       </card-component>
     </section>
   </div>
@@ -32,6 +62,7 @@
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 import DataTable from '@/components/DataTable'
+
 export default {
   name: 'Purchases',
   components: {
@@ -42,53 +73,101 @@ export default {
   data () {
     return {
       collection: 'purchases',
-      fields: [{
-        field: 'lastName',
-        title: 'Vezetéknév'
-      }, {
-        field: 'firstName',
-        title: 'Keresztnév'
-      }, {
-        customFn: (data) => {
-          const statuses = {
-            payed: 'Fizetve',
-            ordered: 'Megrendelve',
-            shipped: 'Kiszállítva'
-          }
-          return statuses[data.status]
+      fields: [
+        {
+          field: 'lastName',
+          title: 'Vezetéknév'
         },
-        field: 'status',
-        title: 'Vásárlás státusza'
-      }, {
-        field: 'sumOfPurchase',
-        title: 'Vásárlás értéke'
+        {
+          field: 'firstName',
+          title: 'Keresztnév'
+        },
+        {
+          customFn: (data) => {
+            const statuses = {
+              payed: 'Fizetve',
+              ordered: 'Megrendelve',
+              shipped: 'Kiszállítva'
+            }
+            return statuses[data.status]
+          },
+          field: 'status',
+          title: 'Vásárlás státusza'
+        },
+        {
+          field: 'sumOfPurchase',
+          title: 'Vásárlás értéke'
+        },
+        {
+          customFn: (data) => {
+            const productTypes = {
+              one_time: 'Egyszeri',
+              subscription: 'Előfizetéses'
+            }
+            return productTypes[data.type]
+          },
+          field: 'purchaseType',
+          title: 'Vásárlás típusa'
+        }
+      ],
+      subFields: [
+        {
+          field: 'lastName',
+          title: 'Vezetéknév'
+        },
+        {
+          field: 'firstName',
+          title: 'Keresztnév'
+        },
+        {
+          customFn: (data) => {
+            const periods = {
+              active: 'Aktív',
+              inactive: 'Inaktív',
+              cancelled: 'Lemondva'
+            }
+            return periods[data.subscriptionStatus]
+          },
+          field: 'subscriptionStatus',
+          title: 'Előfizetés státusza'
+        },
+        {
+          field: 'sumOfPurchase',
+          title: 'Előfizetés értéke'
+        },
+        {
+          customFn: (data) => {
+            const periods = {
+              weekly: 'Heti',
+              monthly: 'Havi',
+              yearly: 'Éves'
+            }
+            return periods[data.products[0].period]
+          },
+          field: 'period',
+          title: 'Gyakoriság'
+        }
+      ],
+      oneTimePurchases: async () => {
+        const purchases = await this.$strapi.find('purchases')
+        const subscriptions = purchases.filter(
+          purchase => purchase.type === 'one_time'
+        )
+        return subscriptions
       },
-      {
-        customFn: (data) => {
-          const productTypes = {
-            one_time: 'Egyszeri',
-            subscription: 'Előfizetéses'
-          }
-          return productTypes[data.products[0].type]
-        },
-        field: 'purchaseType',
-        title: 'Vásárlás típusa'
-      }],
-      purchases: [{ products: [] }],
-      type: ''
+      subscriptionPurchases: async () => {
+        const purchases = await this.$strapi.find('purchases')
+        const subscriptions = purchases.filter(
+          purchase => purchase.type === 'subscription'
+        )
+        return subscriptions
+      }
     }
   },
   head () {
     return {
       title: 'Vásárlások'
     }
-  },
-  computed: {
-  },
-  async mounted () {
-    this.purchases = await this.$strapi.find('purchases')
-  },
-  methods: {
   }
 }
 </script>
