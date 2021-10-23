@@ -64,14 +64,14 @@
             <form @submit.prevent="submit">
               <b-field label="Állapot">
                 <b-switch
-                  v-model="company.szamlazzIntegrated"
+                  v-model="company.szamlazzhuIntegrated"
                   type="is-success"
                 >
-                  {{ company.szamlazzIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
+                  {{ company.szamlazzhuIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
                 </b-switch>
               </b-field>
               <b-field
-                v-if="company.szamlazzIntegrated"
+                v-if="company.szamlazzhuIntegrated"
                 label="Auth Token"
               >
                 <ValidationProvider
@@ -79,12 +79,15 @@
                   name="Szamlazz Auth Token"
                   rules="required|min:5"
                 >
-                  <b-input v-model="company.szamlazzAuthToken" />
+                  <b-input
+                    v-model="company.szamlazzhuAuthToken"
+                    type="password"
+                  />
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
               <b-button
-                v-if="company.szamlazzIntegrated"
+                v-if="company.szamlazzhuIntegrated"
                 type="is-primary"
                 :loading="isLoading"
                 expanded
@@ -250,8 +253,8 @@ export default {
       company: {
         billingoIntegrated: false,
         billingoApiKey: '',
-        szamlazzIntegrated: false,
-        szamlazzAuthToken: '',
+        szamlazzhuIntegrated: false,
+        szamlazzhuAuthToken: '',
         simplePayIntegrated: false,
         simplePayPublicKey: '',
         simplePayPrivateKey: '',
@@ -273,14 +276,7 @@ export default {
   },
   async mounted () {
     try {
-      const data = await this.$strapi.$http.$get('/companies/own/integrations')
-      this.company.stripeIntegrated = data.stripeIntegrated
-      this.company.stripePrivateKey = data.stripePrivateKey
-      this.company.stripePublicKey = data.stripePublicKey
-      this.company.stripeWebhookId = data.stripeWebhookId
-      this.company.stripeWebhookSecret = data.stripeWebhookSecret
-      this.company.billingoIntegrated = data.billingoIntegrated
-      this.company.billingoApiKey = data.billingoApiKey
+      this.company = await this.$strapi.$http.$get('/companies/own/integrations')
     } catch (err) {
       this.$buefy.toast.open({
         message: 'Nem sikerült betölteni az integrációs adatokat',
