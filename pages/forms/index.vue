@@ -18,7 +18,11 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table">
-        <form-data-table />
+        <data-table
+          :fields="fields"
+          :custom-collection-fn="customCollectionFn"
+          :custom-data-fn="customDataFn"
+        />
       </card-component>
     </section>
   </div>
@@ -28,16 +32,35 @@
 // @ is an alias to /src
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
-import FormDataTable from '@/components/FormDataTable'
+import DataTable from '@/components/DataTable'
+
 export default {
   name: 'Forms',
   components: {
     HeroBar,
-    FormDataTable,
+    DataTable,
     CardComponent
   },
   data () {
     return {
+      fields: [{
+        field: 'name',
+        title: 'Név'
+      }, {
+        field: 'link',
+        title: 'Link'
+      }],
+      customCollectionFn: (row) => {
+        return row.type
+      },
+      customDataFn: async () => {
+        const contactFormsData = await this.$strapi.find('contact-forms')
+        const purchaseFormsData = await this.$strapi.find('purchase-forms')
+        contactFormsData.forEach((data) => { data.type = 'contact-forms' })
+        purchaseFormsData.forEach((data) => { data.type = 'purchase-forms' })
+
+        return [...contactFormsData, ...purchaseFormsData]
+      }
     }
   },
   head () {

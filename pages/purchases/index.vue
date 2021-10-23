@@ -18,14 +18,6 @@
     </hero-bar>
     <section class="section is-main-section">
       <card-component class="has-table">
-        <data-table
-          :fields="fields"
-          :collection="collection"
-        />
-      </card-component>
-    </section>
-    <section class="section">
-      <card-component class="has-table">
         <b-tabs
           type="is-boxed"
           expanded
@@ -38,11 +30,10 @@
               />
               <span> <strong>Vásárlások</strong> </span>
             </template>
-            <b-table
-              :data="oneTimePurchases"
-              :columns="columns"
-              :striped="true"
-              :hoverable="true"
+            <data-table
+              :fields="fields"
+              :collection="collection"
+              :custom-data-fn="oneTimePurchases"
             />
           </b-tab-item>
 
@@ -51,11 +42,10 @@
               <b-icon icon="information-outline" />
               <span> <strong>Előfizetések</strong> </span>
             </template>
-            <b-table
-              :data="subscriptionPurchases"
-              :columns="columns"
-              :striped="true"
-              :hoverable="true"
+            <data-table
+              :fields="fields"
+              :collection="collection"
+              :custom-data-fn="subscriptionPurchases"
             />
           </b-tab-item>
         </b-tabs>
@@ -69,6 +59,7 @@
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 import DataTable from '@/components/DataTable'
+
 export default {
   name: 'Purchases',
   components: {
@@ -156,7 +147,21 @@ export default {
           field: 'type',
           label: 'Vásárlás típusa'
         }
-      ]
+      ],
+      oneTimePurchases: async () => {
+        const purchases = await this.$strapi.find('purchases')
+        const subscriptions = purchases.filter(
+          purchase => purchase.type === 'one_time'
+        )
+        return subscriptions
+      },
+      subscriptionPurchases: async () => {
+        const purchases = await this.$strapi.find('purchases')
+        const subscriptions = purchases.filter(
+          purchase => purchase.type === 'subscription'
+        )
+        return subscriptions
+      }
     }
   },
   head () {
@@ -164,61 +169,8 @@ export default {
       title: 'Vásárlások'
     }
   },
-  computed: {
-    subscriptionPurchases () {
-      const result = this.subscriptions.map((sub) => {
-        const statuses = {
-          payed: 'Fizetve',
-          ordered: 'Megrendelve',
-          shipped: 'Kiszállítva'
-        }
-        const productTypes = {
-          one_time: 'Egyszeri',
-          subscription: 'Előfizetéses'
-        }
-        const periods = {
-          weekly: 'Heti',
-          monthly: 'Havi',
-          yearly: 'Éves'
-        }
-
-        sub.period = periods[sub.products[0].period]
-        sub.status = statuses[sub.status]
-        sub.type = productTypes[sub.type]
-
-        return sub
-      })
-      return result
-    },
-    oneTimePurchases () {
-      const result = this.oneTimeProducts.map((sub) => {
-        const statuses = {
-          payed: 'Fizetve',
-          ordered: 'Megrendelve',
-          shipped: 'Kiszállítva'
-        }
-        const productTypes = {
-          one_time: 'Egyszeri',
-          subscription: 'Előfizetéses'
-        }
-
-        sub.status = statuses[sub.status]
-        sub.type = productTypes[sub.type]
-
-        return sub
-      })
-      return result
-    }
-  },
-  async mounted () {
-    this.purchases = await this.$strapi.find('purchases')
-    this.subscriptions = this.purchases.filter(
-      purchase => purchase.type === 'subscription'
-    )
-    this.oneTimeProducts = this.purchases.filter(
-      purchase => purchase.type === 'one_time'
-    )
-  },
+  computed: {},
+  async mounted () {},
   methods: {}
 }
 </script>
