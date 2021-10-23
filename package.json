@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "dev-local": "API_URL=http://localhost:1337 nuxt",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
