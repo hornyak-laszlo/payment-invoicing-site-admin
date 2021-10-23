@@ -43,7 +43,7 @@
               <span> <strong>Előfizetések</strong> </span>
             </template>
             <data-table
-              :fields="fields"
+              :fields="subFields"
               :collection="collection"
               :custom-data-fn="subscriptionPurchases"
             />
@@ -109,45 +109,47 @@ export default {
           title: 'Vásárlás típusa'
         }
       ],
-      purchases: [{ products: [] }],
-      type: '',
-      columns: [
-        {
-          field: 'id',
-          label: 'ID',
-          sortable: true,
-          numeric: true,
-          width: '30'
-        },
+      subFields: [
         {
           field: 'lastName',
-          label: 'Vezetéknév'
+          title: 'Vezetéknév'
         },
         {
           field: 'firstName',
-          label: 'Keresztnév'
+          title: 'Keresztnév'
         },
         {
-          field: 'status',
-          label: 'Vásárlás státusza'
+          customFn: (data) => {
+            const periods = {
+              active: 'Aktív',
+              inactive: 'Inaktív',
+              cancelled: 'Lemondva'
+            }
+            return periods[data.subscriptionStatus]
+          },
+          field: 'subscriptionStatus',
+          title: 'Előfizetés státusza'
         },
         {
           field: 'sumOfPurchase',
-          label: 'Vásárlás értéke'
+          title: 'Előfizetés értéke'
         },
         {
+          customFn: (data) => {
+            const periods = {
+              weekly: 'Heti',
+              monthly: 'Havi',
+              yearly: 'Éves'
+            }
+            return periods[data.products[0].period]
+          },
           field: 'period',
-          label: 'Gyakoriság'
-        },
-        {
-          field: 'subscriptionStatus',
-          label: 'Előfizetés státusza'
-        },
-        {
-          field: 'type',
-          label: 'Vásárlás típusa'
+          title: 'Gyakoriság'
         }
       ],
+      purchases: [{ products: [] }],
+      type: '',
+
       oneTimePurchases: async () => {
         const purchases = await this.$strapi.find('purchases')
         const subscriptions = purchases.filter(
