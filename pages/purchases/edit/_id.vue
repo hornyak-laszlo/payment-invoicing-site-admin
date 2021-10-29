@@ -100,6 +100,13 @@
             >
               <b-input v-model="purchase.companyName" />
             </b-field>
+
+            <b-field
+              label="Adószám"
+              message="Vásárló adószáma"
+            >
+              <b-input v-model="purchase.taxNumber" />
+            </b-field>
             <b-field label="Számlázási cím" />
             <b-field grouped>
               <b-field
