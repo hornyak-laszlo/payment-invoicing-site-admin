@@ -510,6 +510,50 @@
                 Mentés
               </b-button>
             </b-field>
+            <hr>
+            <b-field label="Vásárláshoz tartozó számlák listája" />
+            <b-table
+              :striped="true"
+              :hoverable="true"
+              default-sort="id"
+              :data="purchase.invoices"
+              :mobile-cards="true"
+            >
+              <template slot-scope="props">
+                <b-table-column
+                  label="ID"
+                  field="id"
+                >
+                  {{ props.row.id }}
+                </b-table-column>
+                <b-table-column
+                  label="Kiállítva"
+                  field="created_at"
+                >
+                  {{ props.row.created_at | dateParse('YYYY-MM-DD') }}
+                </b-table-column>
+
+                <b-table-column label="Vásárlás összege">
+                  {{ sumOfPurchase }}
+                </b-table-column>
+
+                <b-table-column
+                  custom-key="actions"
+                  class="is-actions-cell"
+                >
+                  <div class="buttons is-right">
+                    <div class="button is-small">
+                      <b-icon
+                        pack="fas"
+                        icon="download"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </div>
+                  </div>
+                </b-table-column>
+              </template>
+            </b-table>
           </card-component>
         </form>
       </ValidationObserver>
@@ -585,7 +629,8 @@ export default {
         invoiceZip: '',
         invoiceStreetNo: '',
         products: [],
-        status: ''
+        status: '',
+        invoices: []
       }
     },
 
