@@ -634,7 +634,6 @@ export default {
   async mounted () {
     await this.getData()
     this.allProducts = await this.$strapi.find('products')
-    console.log(this.purchase.products)
   },
 
   methods: {
