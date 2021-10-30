@@ -498,6 +498,29 @@
                 <strong>{{ sumOfPurchase }} Ft</strong>
               </b-field>
             </b-field>
+            <b-field
+              v-if="purchase.type === 'subscription'"
+              style="marginLeft: 1.5em"
+              label="Előfizetés státusza"
+              expanded
+            >
+              <b-select
+                v-model="purchase.subscriptionStatus"
+                style="marginRight: 1em"
+                required
+                expanded
+              >
+                <option value="active">
+                  Aktív
+                </option>
+                <option value="inactive">
+                  Inaktív
+                </option>
+                <option value="cancelled">
+                  Lemondva
+                </option>
+              </b-select>
+            </b-field>
             <hr>
             <b-field>
               <b-button
@@ -510,9 +533,13 @@
                 Mentés
               </b-button>
             </b-field>
-            <hr>
-            <b-field label="Vásárláshoz tartozó számlák listája" />
+            <hr v-if="purchase.invoices.length !== 0">
+            <b-field
+              v-if="purchase.invoices.length !== 0"
+              label="Vásárláshoz tartozó számlák listája"
+            />
             <b-table
+              v-if="purchase.invoices.length !== 0"
               :striped="true"
               :hoverable="true"
               default-sort="id"
@@ -530,7 +557,7 @@
                   label="Kiállítva"
                   field="created_at"
                 >
-                  {{ props.row.created_at | dateParse('YYYY-MM-DD') }}
+                  {{ props.row.created_at }}
                 </b-table-column>
 
                 <b-table-column label="Vásárlás összege">
@@ -542,14 +569,18 @@
                   class="is-actions-cell"
                 >
                   <div class="buttons is-right">
-                    <div class="button is-small">
+                    <a
+                      :href="props.row.pdfLink"
+                      target="_blank"
+                      class="button is-small"
+                    >
                       <b-icon
                         pack="fas"
                         icon="download"
                         size="is-small"
                         type="is-primary"
                       />
-                    </div>
+                    </a>
                   </div>
                 </b-table-column>
               </template>
@@ -630,6 +661,7 @@ export default {
         invoiceStreetNo: '',
         products: [],
         status: '',
+        subscriptionStatus: '',
         invoices: []
       }
     },
