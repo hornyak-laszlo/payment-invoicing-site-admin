@@ -19,91 +19,94 @@
       default-sort="id"
       :data="data"
     >
-      <template slot-scope="props">
-        <b-table-column
-          label="Id"
-          field="id"
-          sortable
-        >
-          {{ props.row.id }}
-        </b-table-column>
-        <b-table-column
-          v-for="field in fields"
-          :key="field.field"
-          :label="field.title"
-          :field="field.field"
-          sortable
-        >
-          {{ props.row[field.field] }}
-        </b-table-column>
-        <b-table-column
-          label="Létrehozva"
-          field="created_at"
-          sortable
-        >
-          <small
-            class="has-text-grey is-abbr-like"
-            :title="props.row.created_at"
-          >{{ props.row.created_at }}</small>
-        </b-table-column>
-        <b-table-column
-          label="Módosítva"
-          field="updated_at"
-          sortable
-        >
-          <small
-            class="has-text-grey is-abbr-like"
-            :title="props.row.updated_at"
-          >{{ props.row.updated_at }}</small>
-        </b-table-column>
-        <b-table-column
-          custom-key="actions"
-          class="is-actions-cell"
-          style="display: flex;justify-content: space-around;"
-        >
-          <div class="buttons is-right">
-            <div class="t-button-wrapper">
-              <nuxt-link
-                v-if="readOnly"
-                :to="getViewLink(props.row)"
-                class="button is-small"
-              >
-                <b-icon
-                  pack="fas"
-                  icon="eye"
-                  size="is-small"
-                  type="is-primary"
-                />
-              </nuxt-link>
-              <nuxt-link
-                v-if="!readOnly"
-                :to="getEditLink(props.row)"
-                class="button is-small"
-              >
-                <b-icon
-                  pack="fas"
-                  icon="eye"
-                  size="is-small"
-                  type="is-primary"
-                />
-              </nuxt-link>
-              <b-button
-                v-if="!readOnly"
-                class="button is-small"
-                type="button"
-                @click.prevent="trashModal(props.row)"
-              >
-                <b-icon
-                  pack="fas"
-                  icon="trash-alt"
-                  size="is-small"
-                  type="is-danger"
-                />
-              </b-button>
-            </div>
+      <b-table-column
+        v-slot="props"
+        label="Id"
+        field="id"
+        sortable
+      >
+        {{ props.row.id }}
+      </b-table-column>
+      <b-table-column
+        v-for="field in fields"
+        v-slot="props"
+        :key="field.field"
+        :label="field.title"
+        :field="field.field"
+        sortable
+      >
+        {{ props.row[field.field] }}
+      </b-table-column>
+      <b-table-column
+        v-slot="props"
+        label="Létrehozva"
+        field="created_at"
+        sortable
+      >
+        <small
+          class="has-text-grey is-abbr-like"
+          :title="props.row.created_at"
+        >{{ props.row.created_at }}</small>
+      </b-table-column>
+      <b-table-column
+        v-slot="props"
+        label="Módosítva"
+        field="updated_at"
+        sortable
+      >
+        <small
+          class="has-text-grey is-abbr-like"
+          :title="props.row.updated_at"
+        >{{ props.row.updated_at }}</small>
+      </b-table-column>
+      <b-table-column
+        v-slot="props"
+        custom-key="actions"
+        class="is-actions-cell"
+        style="display: flex;justify-content: space-around;"
+      >
+        <div class="buttons is-right">
+          <div class="t-button-wrapper">
+            <nuxt-link
+              v-if="readOnly"
+              :to="getViewLink(props.row)"
+              class="button is-small"
+            >
+              <b-icon
+                pack="fas"
+                icon="eye"
+                size="is-small"
+                type="is-primary"
+              />
+            </nuxt-link>
+            <nuxt-link
+              v-if="!readOnly"
+              :to="getEditLink(props.row)"
+              class="button is-small"
+            >
+              <b-icon
+                pack="fas"
+                icon="eye"
+                size="is-small"
+                type="is-primary"
+              />
+            </nuxt-link>
+            <b-button
+              v-if="!readOnly"
+              class="button is-small"
+              type="button"
+              @click.prevent="trashModal(props.row)"
+            >
+              <b-icon
+                pack="fas"
+                icon="trash-alt"
+                size="is-small"
+                type="is-danger"
+              />
+            </b-button>
           </div>
-        </b-table-column>
-      </template>
+        </div>
+      </b-table-column>
 
       <section
         slot="empty"
@@ -138,7 +141,7 @@
 
 <script>
 import ModalBox from '@/components/common/ModalBox'
-import { convertToHungarianTime } from '../utils/dateHelpers'
+import { convertToHungarianTime } from '@/utils/dateHelpers'
 
 export default {
   name: 'DataTable',

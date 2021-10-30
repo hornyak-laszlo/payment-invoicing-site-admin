@@ -435,47 +435,50 @@
               :data="purchase.products"
               :mobile-cards="true"
             >
-              <template slot-scope="props">
-                <b-table-column
-                  label="Termék"
-                  field="name"
-                >
-                  {{ props.row.name }}
-                </b-table-column>
-                <b-table-column
-                  label="Ár"
-                  field="grossPrice"
-                >
-                  {{ props.row.grossPrice }} Ft
-                </b-table-column>
-                <b-table-column
-                  label="Mennyiség"
-                  field="quantity"
-                >
-                  {{ props.row.quantity }}
-                </b-table-column>
-                <b-table-column
-                  label="Összesen"
-                  field="quantity"
-                >
-                  {{ props.row.quantity * props.row.grossPrice }} Ft
-                </b-table-column>
-                <b-table-column
-                  custom-key="actions"
-                  class="is-actions-cell"
-                >
-                  <div class="buttons is-right">
-                    <b-button
-                      outlined
-                      size="is-small"
-                      type="is-danger"
-                      icon-pack="fas"
-                      icon-left="trash-alt"
-                      @click="deleteProduct(props.row.productId)"
-                    />
-                  </div>
-                </b-table-column>
-              </template>
+              <b-table-column
+                v-slot="props"
+                label="Termék"
+                field="name"
+              >
+                {{ props.row.name }}
+              </b-table-column>
+              <b-table-column
+                v-slot="props"
+                label="Ár"
+                field="grossPrice"
+              >
+                {{ props.row.grossPrice }} Ft
+              </b-table-column>
+              <b-table-column
+                v-slot="props"
+                label="Mennyiség"
+                field="quantity"
+              >
+                {{ props.row.quantity }}
+              </b-table-column>
+              <b-table-column
+                v-slot="props"
+                label="Összesen"
+                field="quantity"
+              >
+                {{ props.row.quantity * props.row.grossPrice }} Ft
+              </b-table-column>
+              <b-table-column
+                v-slot="props"
+                custom-key="actions"
+                class="is-actions-cell"
+              >
+                <div class="buttons is-right">
+                  <b-button
+                    outlined
+                    size="is-small"
+                    type="is-danger"
+                    icon-pack="fas"
+                    icon-left="trash-alt"
+                    @click="deleteProduct(props.row.productId)"
+                  />
+                </div>
+              </b-table-column>
             </b-table>
             <b-field grouped>
               <b-field

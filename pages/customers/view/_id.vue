@@ -195,54 +195,57 @@
           default-sort="id"
           :data="purchases"
         >
-          <template slot-scope="props">
-            <b-table-column
-              label="Id"
-              field="id"
-              sortable
-            >
-              {{ props.row.id }}
-            </b-table-column>
-            <b-table-column
-              label="Státusza"
-              field="status"
-              sortable
-            >
-              {{ props.row.status }}
-            </b-table-column>
-            <b-table-column
-              label="Rendelés összege"
-              field="sumOfPurchase"
-              sortable
-            >
-              {{ props.row.sumOfPurchase }}
-            </b-table-column>
-            <b-table-column
-              label="Létrehozva"
-              field="created_at"
-              sortable
-            >
-              {{ props.row.created_at }}
-            </b-table-column>
-            <b-table-column
-              custom-key="actions"
-              class="is-actions-cell"
-            >
-              <div class="buttons is-right">
-                <nuxt-link
-                  :to="`/purchases/edit/${props.row.id}`"
-                  class="button is-small"
-                >
-                  <b-icon
-                    pack="fas"
-                    icon="eye"
-                    size="is-small"
-                    type="is-primary"
-                  />
-                </nuxt-link>
-              </div>
-            </b-table-column>
-          </template>
+          <b-table-column
+            v-slot="props"
+            label="Id"
+            field="id"
+            sortable
+          >
+            {{ props.row.id }}
+          </b-table-column>
+          <b-table-column
+            v-slot="props"
+            label="Státusza"
+            field="status"
+            sortable
+          >
+            {{ props.row.status }}
+          </b-table-column>
+          <b-table-column
+            v-slot="props"
+            label="Rendelés összege"
+            field="sumOfPurchase"
+            sortable
+          >
+            {{ props.row.sumOfPurchase }}
+          </b-table-column>
+          <b-table-column
+            v-slot="props"
+            label="Létrehozva"
+            field="created_at"
+            sortable
+          >
+            {{ props.row.created_at }}
+          </b-table-column>
+          <b-table-column
+            v-slot="props"
+            custom-key="actions"
+            class="is-actions-cell"
+          >
+            <div class="buttons is-right">
+              <nuxt-link
+                :to="`/purchases/edit/${props.row.id}`"
+                class="button is-small"
+              >
+                <b-icon
+                  pack="fas"
+                  icon="eye"
+                  size="is-small"
+                  type="is-primary"
+                />
+              </nuxt-link>
+            </div>
+          </b-table-column>
 
           <section
             slot="empty"

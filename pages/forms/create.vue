@@ -257,39 +257,40 @@
             :data="form.products"
             :mobile-cards="true"
           >
-            <template slot-scope="props">
-              <b-table-column
-                label="Termék"
-                field="name"
-              >
-                {{ props.row.name }}
-              </b-table-column>
-              <b-table-column
-                label="Ár"
-                field="grossPrice"
-              >
-                {{ props.row.grossPrice }} Ft
-              </b-table-column>
+            <b-table-column
+              v-slot="props"
+              label="Termék"
+              field="name"
+            >
+              {{ props.row.name }}
+            </b-table-column>
+            <b-table-column
+              v-slot="props"
+              label="Ár"
+              field="grossPrice"
+            >
+              {{ props.row.grossPrice }} Ft
+            </b-table-column>
 
-              <b-table-column
-                custom-key="actions"
-                class="is-actions-cell"
-              >
-                <div class="buttons is-right">
-                  <b-button
+            <b-table-column
+              v-slot="props"
+              custom-key="actions"
+              class="is-actions-cell"
+            >
+              <div class="buttons is-right">
+                <b-button
+                  size="is-small"
+                  @click="deleteProduct(props.row.id)"
+                >
+                  <b-icon
+                    pack="fas"
+                    icon="trash-alt"
                     size="is-small"
-                    @click="deleteProduct(props.row.id)"
-                  >
-                    <b-icon
-                      pack="fas"
-                      icon="trash-alt"
-                      size="is-small"
-                      type="is-danger"
-                    />
-                  </b-button>
-                </div>
-              </b-table-column>
-            </template>
+                    type="is-danger"
+                  />
+                </b-button>
+              </div>
+            </b-table-column>
           </b-table>
 
           <hr>
