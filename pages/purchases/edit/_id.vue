@@ -549,44 +549,45 @@
               :data="purchase.invoices"
               :mobile-cards="true"
             >
-              <template slot-scope="props">
-                <b-table-column
-                  label="ID"
-                  field="id"
-                >
-                  {{ props.row.id }}
-                </b-table-column>
-                <b-table-column
-                  label="Kiállítva"
-                  field="created_at"
-                >
-                  {{ props.row.created_at }}
-                </b-table-column>
+              <b-table-column
+                v-slot="props"
+                label="ID"
+                field="id"
+              >
+                {{ props.row.id }}
+              </b-table-column>
+              <b-table-column
+                v-slot="props"
+                label="Kiállítva"
+                field="created_at"
+              >
+                {{ props.row.created_at }}
+              </b-table-column>
 
-                <b-table-column label="Vásárlás összege">
-                  {{ sumOfPurchase }}
-                </b-table-column>
+              <b-table-column label="Vásárlás összege">
+                {{ sumOfPurchase }}
+              </b-table-column>
 
-                <b-table-column
-                  custom-key="actions"
-                  class="is-actions-cell"
-                >
-                  <div class="buttons is-right">
-                    <a
-                      :href="props.row.pdfLink"
-                      target="_blank"
-                      class="button is-small"
-                    >
-                      <b-icon
-                        pack="fas"
-                        icon="download"
-                        size="is-small"
-                        type="is-primary"
-                      />
-                    </a>
-                  </div>
-                </b-table-column>
-              </template>
+              <b-table-column
+                v-slot="props"
+                custom-key="actions"
+                class="is-actions-cell"
+              >
+                <div class="buttons is-right">
+                  <a
+                    :href="props.row.pdfLink"
+                    target="_blank"
+                    class="button is-small"
+                  >
+                    <b-icon
+                      pack="fas"
+                      icon="download"
+                      size="is-small"
+                      type="is-primary"
+                    />
+                  </a>
+                </div>
+              </b-table-column>
             </b-table>
           </card-component>
         </form>
