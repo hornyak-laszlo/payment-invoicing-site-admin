@@ -533,13 +533,13 @@
                 Mentés
               </b-button>
             </b-field>
-            <hr v-if="purchase.invoices.length !== 0">
+            <hr v-if="purchase.invoices.length">
             <b-field
-              v-if="purchase.invoices.length !== 0"
+              v-if="purchase.invoices.length"
               label="Vásárláshoz tartozó számlák listája"
             />
             <b-table
-              v-if="purchase.invoices.length !== 0"
+              v-if="purchase.invoices.length"
               :striped="true"
               :hoverable="true"
               default-sort="id"
