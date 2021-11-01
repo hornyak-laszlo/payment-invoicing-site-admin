@@ -501,6 +501,29 @@
                 <strong>{{ sumOfPurchase }} Ft</strong>
               </b-field>
             </b-field>
+            <b-field
+              v-if="purchase.type === 'subscription'"
+              style="marginLeft: 1.5em"
+              label="Előfizetés státusza"
+              expanded
+            >
+              <b-select
+                v-model="purchase.subscriptionStatus"
+                style="marginRight: 1em"
+                required
+                expanded
+              >
+                <option value="active">
+                  Aktív
+                </option>
+                <option value="inactive">
+                  Inaktív
+                </option>
+                <option value="cancelled">
+                  Lemondva
+                </option>
+              </b-select>
+            </b-field>
             <hr>
             <b-field>
               <b-button
@@ -513,6 +536,58 @@
                 Mentés
               </b-button>
             </b-field>
+            <hr v-if="purchase.invoices.length">
+            <b-field
+              v-if="purchase.invoices.length"
+              label="Vásárláshoz tartozó számlák listája"
+            />
+            <b-table
+              v-if="purchase.invoices.length"
+              :striped="true"
+              :hoverable="true"
+              default-sort="id"
+              :data="purchase.invoices"
+              :mobile-cards="true"
+            >
+              <template slot-scope="props">
+                <b-table-column
+                  label="ID"
+                  field="id"
+                >
+                  {{ props.row.id }}
+                </b-table-column>
+                <b-table-column
+                  label="Kiállítva"
+                  field="created_at"
+                >
+                  {{ props.row.created_at }}
+                </b-table-column>
+
+                <b-table-column label="Vásárlás összege">
+                  {{ sumOfPurchase }}
+                </b-table-column>
+
+                <b-table-column
+                  custom-key="actions"
+                  class="is-actions-cell"
+                >
+                  <div class="buttons is-right">
+                    <a
+                      :href="props.row.pdfLink"
+                      target="_blank"
+                      class="button is-small"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="download"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </a>
+                  </div>
+                </b-table-column>
+              </template>
+            </b-table>
           </card-component>
         </form>
       </ValidationObserver>
@@ -562,7 +637,6 @@ export default {
   async mounted () {
     await this.getData()
     this.allProducts = await this.$strapi.find('products')
-    console.log(this.purchase.products)
   },
 
   methods: {
@@ -588,7 +662,9 @@ export default {
         invoiceZip: '',
         invoiceStreetNo: '',
         products: [],
-        status: ''
+        status: '',
+        subscriptionStatus: '',
+        invoices: []
       }
     },
 
