@@ -16,7 +16,7 @@
           icon="file-invoice"
           class="tile is-child"
         >
-          <ValidationObserver v-slot="{ invalid }">
+          <ValidationObserver>
             <form @submit.prevent="submit">
               <b-field label="Állapot">
                 <b-switch
@@ -42,25 +42,17 @@
                 </b-field>
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
-              <b-button
-                v-if="company.billingoIntegrated"
-                type="is-primary"
-                :loading="isLoading"
-                expanded
-                :disabled="invalid"
-                native-type="submit"
-              >
-                Mentés
-              </b-button>
             </form>
           </ValidationObserver>
         </card-component>
+      </tiles>
+      <tiles>
         <card-component
           title="Szamlazz.hu"
           icon="file-invoice"
           class="tile is-child"
         >
-          <ValidationObserver v-slot="{ invalid }">
+          <ValidationObserver>
             <form @submit.prevent="submit">
               <b-field label="Állapot">
                 <b-switch
@@ -86,16 +78,6 @@
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
-              <b-button
-                v-if="company.szamlazzhuIntegrated"
-                type="is-primary"
-                :loading="isLoading"
-                expanded
-                :disabled="invalid"
-                native-type="submit"
-              >
-                Mentés
-              </b-button>
             </form>
           </ValidationObserver>
         </card-component>
@@ -106,7 +88,7 @@
           icon="money-check-alt"
           class="tile is-child"
         >
-          <ValidationObserver v-slot="{ invalid }">
+          <ValidationObserver>
             <form @submit.prevent="submit">
               <b-field label="Állapot">
                 <b-switch
@@ -142,19 +124,11 @@
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
-              <b-button
-                v-if="company.simplePayIntegrated"
-                type="is-primary"
-                :loading="isLoading"
-                expanded
-                :disabled="invalid"
-                native-type="submit"
-              >
-                Mentés
-              </b-button>
             </form>
           </ValidationObserver>
         </card-component>
+      </tiles>
+      <tiles>
         <card-component
           title="Stripe"
           icon="cc-stripe"
@@ -218,8 +192,8 @@
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
+              <hr>
               <b-button
-                v-if="company.stripeIntegrated"
                 type="is-primary"
                 :loading="isLoading"
                 expanded
@@ -272,11 +246,12 @@ export default {
       title: 'Integrációk'
     }
   },
-  computed: {
-  },
+  computed: {},
   async mounted () {
     try {
-      this.company = await this.$strapi.$http.$get('/companies/own/integrations')
+      this.company = await this.$strapi.$http.$get(
+        '/companies/own/integrations'
+      )
     } catch (err) {
       this.$buefy.toast.open({
         message: 'Nem sikerült betölteni az integrációs adatokat',
@@ -289,7 +264,10 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.$http.$put('/companies/own/integrations', this.company)
+        await this.$strapi.$http.$put(
+          '/companies/own/integrations',
+          this.company
+        )
 
         this.isLoading = false
         this.$buefy.snackbar.open({
