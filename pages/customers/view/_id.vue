@@ -104,7 +104,8 @@
                 type="number"
               />
             </b-field>
-
+          </b-field>
+          <b-field grouped>
             <b-field
               label="Város"
               message="A legutóbbi számlán szereplő város"
@@ -159,7 +160,8 @@
                 type="number"
               />
             </b-field>
-
+          </b-field>
+          <b-field grouped>
             <b-field
               label="Város"
               message="A legutóbbi számlán szereplő város"
@@ -281,13 +283,11 @@
 </template>
 
 <script>
-
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 import { convertToHungarianTime } from '@/utils/dateHelpers'
 
 export default {
-
   components: {
     HeroBar,
     CardComponent
@@ -323,11 +323,13 @@ export default {
       title: 'Vásárló megtekintése'
     }
   },
-  computed: {
-  },
+  computed: {},
   async mounted () {
     try {
-      const customer = await this.$strapi.findOne('customers', this.$route.params.id)
+      const customer = await this.$strapi.findOne(
+        'customers',
+        this.$route.params.id
+      )
       customer.purchases.forEach((p) => {
         p.status = this.statuses[p.status] || 'Nincs státusza'
         p.created_at = convertToHungarianTime(p.created_at)
@@ -345,8 +347,7 @@ export default {
       })
     }
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
