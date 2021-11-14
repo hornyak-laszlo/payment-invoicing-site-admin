@@ -246,25 +246,27 @@
                 class="is-actions-cell"
               >
                 <div class="buttons is-right">
-                  <nuxt-link
-                    :to="`/products/edit/${props.row.id}`"
-                    class="button is-small"
-                  >
-                    <b-icon
-                      pack="fas"
-                      icon="eye"
+                  <div class="t-button-wrapper">
+                    <nuxt-link
+                      :to="`/products/edit/${props.row.id}`"
+                      class="button is-small"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="eye"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </nuxt-link>
+                    <b-button
+                      outlined
                       size="is-small"
-                      type="is-primary"
+                      type="is-danger"
+                      icon-pack="fas"
+                      icon-left="trash-alt"
+                      @click="deleteProduct(props.row.id)"
                     />
-                  </nuxt-link>
-                  <b-button
-                    outlined
-                    size="is-small"
-                    type="is-danger"
-                    icon-pack="fas"
-                    icon-left="trash-alt"
-                    @click="deleteProduct(props.row.id)"
-                  />
+                  </div>
                 </div>
               </b-table-column>
             </b-table>
