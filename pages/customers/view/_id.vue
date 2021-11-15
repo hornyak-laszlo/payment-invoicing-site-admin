@@ -235,17 +235,19 @@
             class="is-actions-cell"
           >
             <div class="buttons is-right">
-              <nuxt-link
-                :to="`/purchases/edit/${props.row.id}`"
-                class="button is-small"
-              >
-                <b-icon
-                  pack="fas"
-                  icon="eye"
-                  size="is-small"
-                  type="is-primary"
-                />
-              </nuxt-link>
+              <div class="t-button-wrapper">
+                <nuxt-link
+                  :to="`/purchases/edit/${props.row.id}`"
+                  class="button is-small"
+                >
+                  <b-icon
+                    pack="fas"
+                    icon="eye"
+                    size="is-small"
+                    type="is-primary"
+                  />
+                </nuxt-link>
+              </div>
             </div>
           </b-table-column>
 

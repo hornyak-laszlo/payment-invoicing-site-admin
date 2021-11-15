@@ -580,18 +580,20 @@
                 class="is-actions-cell"
               >
                 <div class="buttons is-right">
-                  <a
-                    :href="props.row.pdfLink"
-                    target="_blank"
-                    class="button is-small"
-                  >
-                    <b-icon
-                      pack="fas"
-                      icon="download"
-                      size="is-small"
-                      type="is-primary"
-                    />
-                  </a>
+                  <div class="t-button-wrapper">
+                    <a
+                      :href="props.row.pdfLink"
+                      target="_blank"
+                      class="button is-small"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="download"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </a>
+                  </div>
                 </div>
               </b-table-column>
             </b-table>
