@@ -144,6 +144,8 @@
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
+            </b-field>
+            <b-field grouped>
               <b-field
                 label="Város"
                 expanded
@@ -200,6 +202,8 @@
                   type="number"
                 />
               </b-field>
+            </b-field>
+            <b-field grouped>
               <b-field
                 expanded
                 label="Város"
@@ -469,25 +473,27 @@
                 class="is-actions-cell"
               >
                 <div class="buttons is-right">
-                  <nuxt-link
-                    :to="`/products/edit/${props.row.productId}`"
-                    class="button is-small"
-                  >
-                    <b-icon
-                      pack="fas"
-                      icon="eye"
+                  <div class="t-button-wrapper">
+                    <nuxt-link
+                      :to="`/products/edit/${props.row.productId}`"
+                      class="button is-small"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="eye"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                    </nuxt-link>
+                    <b-button
+                      outlined
                       size="is-small"
-                      type="is-primary"
+                      type="is-danger"
+                      icon-pack="fas"
+                      icon-left="trash-alt"
+                      @click="deleteProduct(props.row.productId)"
                     />
-                  </nuxt-link>
-                  <b-button
-                    outlined
-                    size="is-small"
-                    type="is-danger"
-                    icon-pack="fas"
-                    icon-left="trash-alt"
-                    @click="deleteProduct(props.row.productId)"
-                  />
+                  </div>
                 </div>
               </b-table-column>
             </b-table>

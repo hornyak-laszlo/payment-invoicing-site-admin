@@ -95,6 +95,20 @@ td {
   }
 }
 
+@media screen and (max-width: 400px) {
+  .b-table .table-wrapper {
+    padding: 0;
+  }
+
+  .card-content {
+    padding: 0.5rem;
+  }
+
+  .section {
+    padding: 3rem 0.5rem;
+  }
+}
+
 @media screen and (min-width: 1599px) {
   .flex-container {
     display: grid;
