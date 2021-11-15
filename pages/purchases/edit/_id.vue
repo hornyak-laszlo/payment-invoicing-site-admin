@@ -144,6 +144,8 @@
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
+            </b-field>
+            <b-field grouped>
               <b-field
                 label="Város"
                 expanded
@@ -200,6 +202,8 @@
                   type="number"
                 />
               </b-field>
+            </b-field>
+            <b-field grouped>
               <b-field
                 expanded
                 label="Város"
