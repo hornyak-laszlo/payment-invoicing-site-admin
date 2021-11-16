@@ -347,11 +347,11 @@
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex'
 import CardComponent from '@/components/common/CardComponent'
 import HeroBar from '@/components/common/HeroBar'
 import CreateCompanyModal from '@/components/CreateCompanyModal.vue'
 /* import Tiles from '@/components/common/Tiles' */
-import { mapMutations, mapGetters } from 'vuex'
 
 export default {
   name: 'Company',

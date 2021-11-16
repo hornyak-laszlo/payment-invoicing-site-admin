@@ -20,10 +20,10 @@
 
 <script>
 // @ is an alias to /src
+import { mapGetters } from 'vuex'
 import NavBar from '@/components/navbar/NavBar'
 import AsideMenu from '@/components/sidebar/AsideMenu'
 import FooterBar from '@/components/footer/FooterBar'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
