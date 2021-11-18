@@ -101,9 +101,6 @@
                   ref="editor"
                   v-model="form.successText"
                   :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @ready="onEditorReady($event)"
                 />
               </client-only>
             </b-field>
@@ -426,16 +423,6 @@ export default {
         simplePayEnabled: null,
         bankTransferEnabled: true
       }
-    },
-
-    onEditorBlur (editor) {
-      console.log('editor blur!', editor)
-    },
-    onEditorFocus (editor) {
-      console.log('editor focus!', editor)
-    },
-    onEditorReady (editor) {
-      console.log('editor ready!', editor)
     },
 
     deleteProduct (id) {
