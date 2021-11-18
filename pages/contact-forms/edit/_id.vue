@@ -94,9 +94,6 @@
                 ref="editor"
                 v-model="contactForm.promotionText"
                 :options="editorOption"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @ready="onEditorReady($event)"
               />
             </client-only>
           </b-field>
