@@ -168,7 +168,6 @@
 </template>
 
 <script>
-
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
@@ -193,11 +192,10 @@ export default {
   },
   head () {
     return {
-      title: 'Kontakt hozzáadása'
+      title: 'DeelPay kontakt hozzáadása'
     }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     async submit () {
       try {

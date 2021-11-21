@@ -37,32 +37,34 @@ export default {
   data () {
     return {
       collection: 'customers',
-      fields: [{
-        field: 'lastPurchaseName',
-        title: 'Név'
-      }, {
-        field: 'email',
-        title: 'Email cím'
-      }, {
-        field: 'sumOfPurchases',
-        title: 'Összes vásárlás összege'
-      }, {
-        customFn: data => convertToHungarianTime(data.lastPurchaseDate),
-        field: 'lastPurchaseDate',
-        title: 'Legutóbbi vásárlás'
-      }]
+      fields: [
+        {
+          field: 'lastPurchaseName',
+          title: 'Név'
+        },
+        {
+          field: 'email',
+          title: 'Email cím'
+        },
+        {
+          field: 'sumOfPurchases',
+          title: 'Összes vásárlás összege'
+        },
+        {
+          customFn: data => convertToHungarianTime(data.lastPurchaseDate),
+          field: 'lastPurchaseDate',
+          title: 'Legutóbbi vásárlás'
+        }
+      ]
     }
   },
   head () {
     return {
-      title: 'Vásárlók'
+      title: 'DeelPay vásárlók'
     }
   },
-  computed: {
-  },
-  mounted () {
-  },
-  methods: {
-  }
+  computed: {},
+  mounted () {},
+  methods: {}
 }
 </script>

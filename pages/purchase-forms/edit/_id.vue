@@ -39,18 +39,9 @@
                 expanded
               >
                 <b-input
-                  v-model="purchaseForm.link"
+                  :value="slugLink"
                   required
-                />
-              </b-field>
-              <b-field
-                label="Sikeres link"
-                message="Sikeres kapcsolatfevétel linkje"
-                expanded
-              >
-                <b-input
-                  v-model="purchaseForm.successLink"
-                  required
+                  readonly
                 />
               </b-field>
             </b-field>
@@ -326,6 +317,7 @@
 </template>
 
 <script>
+import slugify from 'slugify'
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
@@ -370,7 +362,7 @@ export default {
   },
   head () {
     return {
-      title: 'Vásárlás űrlap szerkesztése'
+      title: 'DeelPay vásárlás űrlap szerkesztése'
     }
   },
   computed: {
@@ -379,6 +371,11 @@ export default {
     },
     oneTimeProducts () {
       return this.allProducts.filter(product => product.type === 'one_time')
+    },
+    slugLink () {
+      return slugify(this.purchaseForm.name, {
+        lower: true
+      })
     }
 
     /* selectedProductIDs: {

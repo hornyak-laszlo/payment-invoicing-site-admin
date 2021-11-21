@@ -168,12 +168,10 @@
 </template>
 
 <script>
-
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
 export default {
-
   components: {
     HeroBar,
     CardComponent
@@ -187,12 +185,10 @@ export default {
   },
   head () {
     return {
-      title: 'Kontakt szerkesztése'
+      title: 'DeelPay kontakt szerkesztése'
     }
   },
-  computed: {
-
-  },
+  computed: {},
   async mounted () {
     this.contact = await this.getData()
     /* console.log(this.product.taxRate.name) */
@@ -207,13 +203,15 @@ export default {
         isNewsletterSubscribed: true,
         isPrivacyPolicyAccepted: true,
         email: ''
-
       }
     },
     async getData () {
       if (this.$route.params.id) {
         try {
-          const res = await this.$strapi.findOne(this.collection, this.$route.params.id)
+          const res = await this.$strapi.findOne(
+            this.collection,
+            this.$route.params.id
+          )
           return res
         } catch (err) {
           this.$buefy.toast.open({
@@ -228,7 +226,11 @@ export default {
       try {
         this.isLoading = true
 
-        await this.$strapi.update(this.collection, parseInt(this.$route.params.id), this.contact)
+        await this.$strapi.update(
+          this.collection,
+          parseInt(this.$route.params.id),
+          this.contact
+        )
 
         this.isLoading = false
 

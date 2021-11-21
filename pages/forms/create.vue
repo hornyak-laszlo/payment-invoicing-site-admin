@@ -54,8 +54,9 @@
                 expanded
               >
                 <b-input
-                  v-model="form.link"
+                  :value="slugLink"
                   required
+                  readonly
                 />
               </b-field>
             </b-field>
@@ -335,6 +336,7 @@
 </template>
 
 <script>
+import slugify from 'slugify'
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
@@ -381,7 +383,7 @@ export default {
   },
   head () {
     return {
-      title: 'Űrlap hozzáadása'
+      title: 'DeelPay űrlap hozzáadása'
     }
   },
   computed: {
@@ -390,6 +392,11 @@ export default {
     },
     oneTimeProducts () {
       return this.allProducts.filter(product => product.type === 'one_time')
+    },
+    slugLink () {
+      return slugify(this.form.name, {
+        lower: true
+      })
     }
   },
   async mounted () {

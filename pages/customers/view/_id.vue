@@ -322,7 +322,7 @@ export default {
   },
   head () {
     return {
-      title: 'Vásárló megtekintése'
+      title: 'DeelPay vásárló megtekintése'
     }
   },
   computed: {},
