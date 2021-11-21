@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 // eslint-disable-next-line
-import { required, min, email, alpha_num, confirmed } from 'vee-validate/dist/rules'
+import { required, min, email, alpha_num, confirmed, regex } from 'vee-validate/dist/rules'
 
 Vue.component('ValidationProvider', ValidationProvider)
 Vue.component('ValidationObserver', ValidationObserver)
@@ -28,4 +28,8 @@ extend('alpha_num', {
 extend('confirmed', {
   ...confirmed,
   message: 'A két jelszó nem egyezik'
+})
+extend('regex', {
+  ...regex,
+  message: 'A {_field_} csak érvényes URL lehet'
 })

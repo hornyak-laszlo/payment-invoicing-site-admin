@@ -55,15 +55,51 @@
               </b-field>
             </b-field>
             <b-field
-              label="Sikeres szöveg"
-              message="Sikeres kapcsolatfevétel szövege"
-            >
-              <b-input
-                v-model="purchaseForm.successText"
-                type="textarea"
-                required
-              />
+              label="Köszönő link vagy szöveg"
+              message="Köszönet az űrlap kitöltése után"
+            />
+            <b-field>
+              <b-radio
+                v-model="thanksType"
+                native-value="link"
+                size="is-medium"
+                style="font-size: 1rem"
+              >
+                Linket adok meg
+              </b-radio>
+              <b-radio
+                v-model="thanksType"
+                native-value="text"
+                size="is-medium"
+                style="font-size: 1rem"
+              >
+                Szöveget adok meg
+              </b-radio>
             </b-field>
+            <b-field v-if="thanksType === 'link'">
+              <ValidationProvider
+                v-slot="{errors}"
+                name="link"
+                :rules="{ regex: /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[\-;:&=\+\$,\w]+@)?[A-Za-z0-9\.\-]+|(?:www\.|[\-;:&=\+\$,\w]+@)[A-Za-z0-9\.\-]+)((?:\/[\+~%\/\.\w\-_]*)?\??(?:[\-\+=&;%@\.\w_]*)#?(?:[\.\!\/\\\w]*))?)/ }"
+              >
+                <b-input
+                  v-model="
+                    purchaseForm.successLink"
+                  required
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+            <b-field v-if="thanksType === 'text'">
+              <client-only>
+                <quill-editor
+                  ref="editor"
+                  v-model="purchaseForm.successText"
+                  :options="editorOption"
+                />
+              </client-only>
+            </b-field>
+
             <b-field label="Űrlap promociós tartalom">
               <client-only>
                 <quill-editor
@@ -309,6 +345,7 @@ export default {
       plusProductId: 0,
       selectedProductID: 0,
       plusProduct: [],
+      thanksType: '',
       editorOption: {
         theme: 'snow',
         modules: {

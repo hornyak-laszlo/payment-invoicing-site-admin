@@ -93,7 +93,6 @@ export default {
   },
   data () {
     return {
-
       defaultChart: {
         chartData: null,
         extraOptions: chartConfig.chartOptionsMain
@@ -103,40 +102,46 @@ export default {
       customerCount: 0,
       contactCount: 0,
       collection: 'purchases',
-      fields: [{
-        field: 'lastName',
-        title: 'Vezetéknév'
-      }, {
-        field: 'firstName',
-        title: 'Keresztnév'
-      }, {
-        customFn: (data) => {
-          const statuses = {
-            payed: 'Fizetve',
-            ordered: 'Megrendelve',
-            shipped: 'Kiszállítva'
-          }
-          return statuses[data.status]
+      fields: [
+        {
+          field: 'lastName',
+          title: 'Vezetéknév'
         },
-        field: 'status',
-        title: 'Vásárlás státusza'
-      }, {
-        field: 'sumOfPurchase',
-        title: 'Vásárlás értéke'
-      }]
+        {
+          field: 'firstName',
+          title: 'Keresztnév'
+        },
+        {
+          customFn: (data) => {
+            const statuses = {
+              payed: 'Fizetve',
+              ordered: 'Megrendelve',
+              shipped: 'Kiszállítva'
+            }
+            return statuses[data.status]
+          },
+          field: 'status',
+          title: 'Vásárlás státusza'
+        },
+        {
+          field: 'sumOfPurchase',
+          title: 'Vásárlás értéke'
+        }
+      ]
       /* monthlySum: [] */
     }
   },
   head () {
     return {
-      title: 'Dashboard — Admin Null Nuxt.js Bulma'
+      title: 'Deel - Dashboard'
     }
   },
   computed: {
     sumByMonth () {
-      return this.dummyData.oneTimePayments.map((payment, index) => payment + this.dummyData.subscriptionPayments[index])
+      return this.dummyData.oneTimePayments.map(
+        (payment, index) => payment + this.dummyData.subscriptionPayments[index]
+      )
     }
-
   },
 
   async mounted () {
