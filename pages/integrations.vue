@@ -243,7 +243,7 @@ export default {
   },
   head () {
     return {
-      title: 'Integrációk'
+      title: 'DeelPay integrációk'
     }
   },
   computed: {},

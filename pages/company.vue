@@ -388,7 +388,7 @@ export default {
   },
   head () {
     return {
-      title: 'Cégadatok'
+      title: 'DeelPay cégadatok'
     }
   },
   computed: {

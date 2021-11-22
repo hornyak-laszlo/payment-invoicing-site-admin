@@ -181,7 +181,7 @@ export default {
   },
   head () {
     return {
-      title: 'Termék hozzáadása'
+      title: 'DeelPay termék hozzáadása'
     }
   },
   computed: {

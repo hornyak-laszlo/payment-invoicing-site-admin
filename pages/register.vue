@@ -130,11 +130,10 @@ export default {
   },
   head () {
     return {
-      title: 'Regisztráció'
+      title: 'DeelPay regisztráció'
     }
   },
-  computed: {
-  },
+  computed: {},
   methods: {
     async submit () {
       this.isLoading = true

@@ -43,21 +43,28 @@ export default {
   },
   data () {
     return {
-      fields: [{
-        field: 'name',
-        title: 'Név'
-      }, {
-        field: 'link',
-        title: 'Link'
-      }],
+      fields: [
+        {
+          field: 'name',
+          title: 'Név'
+        },
+        {
+          field: 'link',
+          title: 'Link'
+        }
+      ],
       customCollectionFn: (row) => {
         return row.type
       },
       customDataFn: async () => {
         const contactFormsData = await this.$strapi.find('contact-forms')
         const purchaseFormsData = await this.$strapi.find('purchase-forms')
-        contactFormsData.forEach((data) => { data.type = 'contact-forms' })
-        purchaseFormsData.forEach((data) => { data.type = 'purchase-forms' })
+        contactFormsData.forEach((data) => {
+          data.type = 'contact-forms'
+        })
+        purchaseFormsData.forEach((data) => {
+          data.type = 'purchase-forms'
+        })
 
         return [...contactFormsData, ...purchaseFormsData]
       }
@@ -65,15 +72,11 @@ export default {
   },
   head () {
     return {
-      title: 'Űrlapok'
+      title: 'DeelPay űrlapok'
     }
   },
-  computed: {
-  },
-  mounted () {
-  },
-  methods: {
-
-  }
+  computed: {},
+  mounted () {},
+  methods: {}
 }
 </script>
