@@ -14,22 +14,38 @@
               <div class="card-content">
                 <form @submit.prevent="submit">
                   <b-field label="Jelszó">
-                    <b-input v-model="password" type="password" required />
+                    <b-input
+                      v-model="password"
+                      type="password"
+                      required
+                    />
                   </b-field>
                   <b-field label="Jelszó megerősítése">
-                    <b-input v-model="passwordConfirmation" type="password" required />
+                    <b-input
+                      v-model="passwordConfirmation"
+                      type="password"
+                      required
+                    />
                   </b-field>
                   <hr>
                   <div class="field">
                     <div class="field-body">
                       <div class="field columns">
                         <div class="column is-half">
-                          <button type="submit" class="button is-fullwidth is-primary" :class="{'is-loading': isLoading}">
+                          <button
+                            type="submit"
+                            class="button is-fullwidth is-primary"
+                            :class="{'is-loading': isLoading}"
+                          >
                             Mentés
                           </button>
                         </div>
                         <div class="column is-half">
-                          <nuxt-link to="/login" class="button is-fullwidth is-outlined is-primary-passive" :class="{'is-loading': isLoading}">
+                          <nuxt-link
+                            to="/login"
+                            class="button is-fullwidth is-outlined is-primary-passive"
+                            :class="{'is-loading': isLoading}"
+                          >
                             Vissza
                           </nuxt-link>
                         </div>
@@ -54,6 +70,11 @@ export default {
       isLoading: false,
       password: '',
       passwordConfirmation: ''
+    }
+  },
+  head () {
+    return {
+      title: 'DeelPay jelszó visszaállítás'
     }
   },
   methods: {

@@ -74,6 +74,11 @@ export default {
       password: ''
     }
   },
+  head () {
+    return {
+      title: 'DeelPay login'
+    }
+  },
   methods: {
     ...mapMutations(['setUser']),
     async submit () {
@@ -98,13 +103,15 @@ export default {
           actionText: null,
           type: 'has-text-white has-background-primary',
           duration: 2000
-
         })
       } catch (err) {
         this.isLoading = false
 
-        const error = (err && err.message) ? err.message : ''
-        const message = (error === 'Identifier or password invalid.') ? 'Hibás email cím vagy jelszó' : 'Hiba történt'
+        const error = err && err.message ? err.message : ''
+        const message =
+          error === 'Identifier or password invalid.'
+            ? 'Hibás email cím vagy jelszó'
+            : 'Hiba történt'
 
         this.$buefy.toast.open({
           message,

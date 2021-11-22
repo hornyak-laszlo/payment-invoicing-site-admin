@@ -133,7 +133,7 @@ export default {
   },
   head () {
     return {
-      title: 'Deel - Dashboard'
+      title: 'DeelPay fizetési űrlap'
     }
   },
   computed: {

@@ -34,8 +34,9 @@
               message="Link ahol elérhető lesz az űrlap"
             >
               <b-input
-                v-model="contactForm.link"
+                :value="slugLink"
                 required
+                readonly
               />
             </b-field>
           </b-field>
@@ -121,6 +122,7 @@
 </template>
 
 <script>
+import slugify from 'slugify'
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
@@ -157,7 +159,14 @@ export default {
   },
   head () {
     return {
-      title: 'Kontakt űrlap szerkesztése'
+      title: 'DeelPay kontakt űrlap szerkesztése'
+    }
+  },
+  computed: {
+    slugLink () {
+      return slugify(this.contactForm.name, {
+        lower: true
+      })
     }
   },
   async mounted () {
@@ -168,7 +177,7 @@ export default {
       return {
         id: '',
         name: '',
-        link: '',
+
         successLink: '',
         successText: '',
         promotionText: '',
@@ -193,6 +202,7 @@ export default {
         }
       }
     },
+
     async submit () {
       try {
         this.isLoading = true

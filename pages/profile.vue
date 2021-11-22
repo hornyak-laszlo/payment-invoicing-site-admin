@@ -93,10 +93,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import CardComponent from '@/components/common/CardComponent'
 import HeroBar from '@/components/common/HeroBar'
 import Tiles from '@/components/common/Tiles'
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Profile',
@@ -115,7 +115,7 @@ export default {
   },
   head () {
     return {
-      title: 'Profil'
+      title: 'DeelPay profil'
     }
   },
   computed: {

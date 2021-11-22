@@ -166,7 +166,7 @@ export default {
   },
   head () {
     return {
-      title: 'Vásárlások'
+      title: 'DeelPay vásárlások'
     }
   }
 }

@@ -14,19 +14,31 @@
               <div class="card-content">
                 <form @submit.prevent="submit">
                   <b-field label="Email cím">
-                    <b-input v-model="email" type="email" required />
+                    <b-input
+                      v-model="email"
+                      type="email"
+                      required
+                    />
                   </b-field>
                   <hr>
                   <div class="field">
                     <div class="field-body">
                       <div class="field columns">
                         <div class="column is-half">
-                          <button type="submit" class="button is-fullwidth is-primary" :class="{'is-loading': isLoading}">
+                          <button
+                            type="submit"
+                            class="button is-fullwidth is-primary"
+                            :class="{'is-loading': isLoading}"
+                          >
                             Jelszó visszaállítása
                           </button>
                         </div>
                         <div class="column is-half">
-                          <nuxt-link to="/login" class="button is-fullwidth is-outlined is-primary-passive" :class="{'is-loading': isLoading}">
+                          <nuxt-link
+                            to="/login"
+                            class="button is-fullwidth is-outlined is-primary-passive"
+                            :class="{'is-loading': isLoading}"
+                          >
                             Vissza
                           </nuxt-link>
                         </div>
@@ -52,6 +64,11 @@ export default {
       email: ''
     }
   },
+  head () {
+    return {
+      title: 'DeelPay jelszó visszaállítása'
+    }
+  },
   methods: {
     async submit () {
       this.isLoading = true
@@ -62,7 +79,8 @@ export default {
         this.isLoading = false
 
         this.$buefy.toast.open({
-          message: 'A jelszavad visszaállításához szükséges linket elküldtük az email címedre',
+          message:
+            'A jelszavad visszaállításához szükséges linket elküldtük az email címedre',
           type: 'is-success',
           queue: false
         })
@@ -72,7 +90,8 @@ export default {
         this.isLoading = false
 
         this.$buefy.toast.open({
-          message: 'A jelszavad visszaállításához szükséges linket elküldtük az email címedre',
+          message:
+            'A jelszavad visszaállításához szükséges linket elküldtük az email címedre',
           type: 'is-success',
           queue: false
         })

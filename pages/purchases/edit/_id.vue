@@ -627,7 +627,7 @@ export default {
   },
   head () {
     return {
-      title: 'Vásárlás szerkesztése'
+      title: 'DeelPay vásárlás szerkesztése'
     }
   },
   computed: {

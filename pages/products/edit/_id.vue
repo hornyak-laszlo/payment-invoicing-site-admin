@@ -174,7 +174,7 @@ export default {
   },
   head () {
     return {
-      title: 'Termék szerkesztése'
+      title: 'DeelPay termék szerkesztése'
     }
   },
   computed: {
@@ -205,7 +205,10 @@ export default {
     async getData () {
       if (this.$route.params.id) {
         try {
-          const res = await this.$strapi.findOne('products', this.$route.params.id)
+          const res = await this.$strapi.findOne(
+            'products',
+            this.$route.params.id
+          )
           return res
         } catch (err) {
           this.$buefy.toast.open({
@@ -223,7 +226,11 @@ export default {
           delete this.product.period
         }
 
-        await this.$strapi.update('products', parseInt(this.$route.params.id), this.product)
+        await this.$strapi.update(
+          'products',
+          parseInt(this.$route.params.id),
+          this.product
+        )
 
         this.isLoading = false
         /* this.$buefy.toast.open({

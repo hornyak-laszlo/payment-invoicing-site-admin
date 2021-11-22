@@ -141,11 +141,17 @@ export default {
         theme: 'snow',
         modules: {
           toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }], [{ font: [] }], ['bold', 'italic', 'underline', 'strike'],
-            ['blockquote', 'code-block'], [{ align: [] }], ['link', 'image'],
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+            [{ font: [] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            ['blockquote', 'code-block'],
+            [{ align: [] }],
+            ['link', 'image'],
             [{ list: 'ordered' }, { list: 'bullet' }],
-            [{ script: 'sub' }, { script: 'super' }], [{ indent: '-1' }, { indent: '+1' }],
-            [{ color: [] }, { background: [] }], ['clean']
+            [{ script: 'sub' }, { script: 'super' }],
+            [{ indent: '-1' }, { indent: '+1' }],
+            [{ color: [] }, { background: [] }],
+            ['clean']
           ]
         }
       }
@@ -153,16 +159,21 @@ export default {
   },
   head () {
     return {
-      title: 'Jogi dokumentumok'
+      title: 'DeelPay jogi dokumentumok'
     }
   },
-  computed: {
-  },
+  computed: {},
   async mounted () {
     try {
       this.documents = await this.$strapi.$http.$get('/companies/own/documents')
     } catch (err) {
-      if (err && err.response.data && err.response.data.message && err.response.data.message === 'Your account does not belong to any company!') {
+      if (
+        err &&
+        err.response.data &&
+        err.response.data.message &&
+        err.response.data.message ===
+          'Your account does not belong to any company!'
+      ) {
         this.companyDataFound = false
       } else {
         this.$buefy.toast.open({
@@ -188,7 +199,10 @@ export default {
       try {
         this.isLoading = true
 
-        const companyUpd = await this.$strapi.$http.$put('/companies/own/documents', this.documents)
+        const companyUpd = await this.$strapi.$http.$put(
+          '/companies/own/documents',
+          this.documents
+        )
         this.documents = companyUpd
 
         this.isLoading = false

@@ -32,17 +32,14 @@ export default {
   },
   layout: 'unauthorized',
   data () {
-    return {
-    }
+    return {}
   },
   head () {
     return {
-      title: 'Megerősítés'
+      title: 'DeelPay megerősítés'
     }
   },
-  computed: {
-  },
-  methods: {
-  }
+  computed: {},
+  methods: {}
 }
 </script>

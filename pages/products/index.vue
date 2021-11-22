@@ -43,25 +43,25 @@ export default {
   data () {
     return {
       collection: 'products',
-      fields: [{
-        field: 'name',
-        title: 'Név'
-      }, {
-        field: 'grossPrice',
-        title: 'Bruttó ár'
-      }]
+      fields: [
+        {
+          field: 'name',
+          title: 'Név'
+        },
+        {
+          field: 'grossPrice',
+          title: 'Bruttó ár'
+        }
+      ]
     }
   },
   head () {
     return {
-      title: 'Termékek'
+      title: 'DeelPay termékek'
     }
   },
-  computed: {
-  },
-  mounted () {
-  },
-  methods: {
-  }
+  computed: {},
+  mounted () {},
+  methods: {}
 }
 </script>

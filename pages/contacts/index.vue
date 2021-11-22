@@ -42,34 +42,37 @@ export default {
   data () {
     return {
       collection: 'contacts',
-      fields: [{
-        field: 'companyName',
-        title: 'Cégnév'
-      }, {
-        field: 'lastName',
-        title: 'Vezetéknév'
-      }, {
-        field: 'firstName',
-        title: 'Keresztnév'
-      }, {
-        field: 'email',
-        title: 'Email cím'
-      }, {
-        field: 'phoneNumber',
-        title: 'Telefonszám'
-      }]
+      fields: [
+        {
+          field: 'companyName',
+          title: 'Cégnév'
+        },
+        {
+          field: 'lastName',
+          title: 'Vezetéknév'
+        },
+        {
+          field: 'firstName',
+          title: 'Keresztnév'
+        },
+        {
+          field: 'email',
+          title: 'Email cím'
+        },
+        {
+          field: 'phoneNumber',
+          title: 'Telefonszám'
+        }
+      ]
     }
   },
   head () {
     return {
-      title: 'Kontaktok'
+      title: 'DeelPay kontaktok'
     }
   },
-  computed: {
-  },
-  mounted () {
-  },
-  methods: {
-  }
+  computed: {},
+  mounted () {},
+  methods: {}
 }
 </script>
