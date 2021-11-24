@@ -82,6 +82,22 @@
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
             </b-field>
+            <b-field
+              label="URL prefix"
+              message="Az azonosító ami az űrlap neve előtt megjelenik a címsorban"
+            >
+              <b-input v-model="company.urlPrefix" />
+            </b-field>
+
+            <b-field
+              label="URL prefix előnézet"
+              message="Ez fog a címsorban megjelenni"
+            >
+              <b-input
+                :value="slugPrefix"
+                readonly
+              />
+            </b-field>
 
             <b-field label="Székhely" />
             <b-field grouped>
@@ -347,6 +363,7 @@
 </template>
 
 <script>
+import slugify from 'slugify'
 import { mapMutations, mapGetters } from 'vuex'
 import CardComponent from '@/components/common/CardComponent'
 import HeroBar from '@/components/common/HeroBar'
@@ -381,7 +398,8 @@ export default {
         companyRegistrationNumber: '',
         registrationNumber: '',
         swift: '',
-        iban: ''
+        iban: '',
+        urlPrefix: ''
       },
       isLoading: false
     }
@@ -402,6 +420,13 @@ export default {
       set (value) {
         this.$store.commit('setLogo', value)
       }
+    },
+    slugPrefix () {
+      const link = slugify(this.company.urlPrefix, {
+        lower: true
+      })
+
+      return `/${link}`
     }
   },
   async mounted () {
