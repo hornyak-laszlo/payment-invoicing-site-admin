@@ -164,9 +164,10 @@ export default {
   },
   computed: {
     slugLink () {
-      return slugify(this.contactForm.name, {
+      const link = slugify(this.contactForm.name, {
         lower: true
       })
+      return `/${link}`
     }
   },
   async mounted () {

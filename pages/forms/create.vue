@@ -394,9 +394,10 @@ export default {
       return this.allProducts.filter(product => product.type === 'one_time')
     },
     slugLink () {
-      return slugify(this.form.name, {
+      const link = slugify(this.form.name, {
         lower: true
       })
+      return `/${link}`
     }
   },
   async mounted () {
