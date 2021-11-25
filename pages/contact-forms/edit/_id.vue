@@ -47,7 +47,7 @@
 
           <b-field>
             <b-radio
-              v-model="thanksType"
+              v-model="contactForm.thanksType"
               native-value="link"
               size="is-medium"
               style="font-size: 1rem"
@@ -55,7 +55,7 @@
               Linket adok meg
             </b-radio>
             <b-radio
-              v-model="thanksType"
+              v-model="contactForm.thanksType"
               native-value="text"
               size="is-medium"
               style="font-size: 1rem"
@@ -64,7 +64,7 @@
             </b-radio>
           </b-field>
 
-          <b-field v-if="thanksType === 'link'">
+          <b-field v-if="contactForm.thanksType === 'link'">
             <ValidationProvider
               v-slot="{errors}"
               name="link"
@@ -79,7 +79,7 @@
             </ValidationProvider>
           </b-field>
 
-          <b-field v-if="thanksType === 'text'">
+          <b-field v-if="contactForm.thanksType === 'text'">
             <client-only>
               <quill-editor
                 ref="editor"
@@ -135,7 +135,7 @@ export default {
   data () {
     return {
       isLoading: false,
-      thanksType: '',
+
       contactForm: this.getClearFormObject(),
       editorOption: {
         theme: 'snow',
@@ -178,7 +178,7 @@ export default {
       return {
         id: '',
         name: '',
-
+        thanksType: '',
         successLink: '',
         successText: '',
         promotionText: '',

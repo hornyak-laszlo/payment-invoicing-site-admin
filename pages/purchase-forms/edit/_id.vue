@@ -51,7 +51,7 @@
             />
             <b-field>
               <b-radio
-                v-model="thanksType"
+                v-model="purchaseForm.thanksType"
                 native-value="link"
                 size="is-medium"
                 style="font-size: 1rem"
@@ -59,7 +59,7 @@
                 Linket adok meg
               </b-radio>
               <b-radio
-                v-model="thanksType"
+                v-model="purchaseForm.thanksType"
                 native-value="text"
                 size="is-medium"
                 style="font-size: 1rem"
@@ -67,7 +67,7 @@
                 Szöveget adok meg
               </b-radio>
             </b-field>
-            <b-field v-if="thanksType === 'link'">
+            <b-field v-if="purchaseForm.thanksType === 'link'">
               <ValidationProvider
                 v-slot="{errors}"
                 name="link"
@@ -81,7 +81,7 @@
                 <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
               </ValidationProvider>
             </b-field>
-            <b-field v-if="thanksType === 'text'">
+            <b-field v-if="purchaseForm.thanksType === 'text'">
               <client-only>
                 <quill-editor
                   ref="editor"
@@ -337,7 +337,7 @@ export default {
       plusProductId: 0,
       selectedProductID: 0,
       plusProduct: [],
-      thanksType: '',
+
       editorOption: {
         theme: 'snow',
         modules: {
@@ -423,7 +423,8 @@ export default {
         newsletterCheckbox: null,
         stripeEnabled: null,
         simplePayEnabled: null,
-        bankTransferEnabled: null
+        bankTransferEnabled: null,
+        thanksType: ''
       }
     },
 
