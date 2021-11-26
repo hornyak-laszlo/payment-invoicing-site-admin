@@ -1,71 +1,80 @@
 <template>
-  <section class="section hero is-fullheight is-error-section">
-    <div class="hero-body">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-three-fifths">
-            <div class="card has-card-header-background">
-              <header class="card-header">
-                <p class="card-header-title">
-                  <span class="icon"><i class="mdi mdi-lock default" /></span>
-                  <span>Belépés</span>
-                </p>
-              </header>
-              <div class="card-content">
-                <form @submit.prevent="submit">
-                  <b-field label="Email cím">
-                    <b-input
-                      v-model="email"
-                      type="email"
-                      required
-                    />
-                  </b-field>
-                  <b-field label="Jelszó">
-                    <b-input
-                      v-model="password"
-                      type="password"
-                      required
-                    />
-                  </b-field>
-                  <hr>
-                  <div class="field">
-                    <div class="field-body">
-                      <div class="field columns">
-                        <div class="column is-half">
-                          <button
-                            type="submit"
-                            class="button is-fullwidth is-primary"
-                            :class="{'is-loading': isLoading}"
-                          >
-                            Bejelentkezés
-                          </button>
-                        </div>
-                        <div class="column is-half">
-                          <nuxt-link
-                            to="/forgot-password"
-                            class="button is-fullwidth is-outlined is-primary-passive"
-                            :class="{'is-loading': isLoading}"
-                          >
-                            Elfelejtett a jelszó
-                          </nuxt-link>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
+  <section
+    class="columns is-vcentered"
+    style="height: 100vh"
+  >
+    <div class="column is-4 is-offset-one-third">
+      <card-component
+        title="Belépés"
+        icon="user-lock"
+        class="title is-child"
+      >
+        <ValidationObserver v-slot="{ invalid }">
+          <form @submit.prevent="submit">
+            <b-field label="Email cím">
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="email"
+                rules="required|email"
+              >
+                <b-input
+                  v-model="email"
+                  type="text"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+
+            <b-field label="Jelszó">
+              <ValidationProvider
+                v-slot="{ errors }"
+                name="jelszó"
+                rules="required"
+              >
+                <b-input
+                  v-model="password"
+                  type="password"
+                />
+                <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
+              </ValidationProvider>
+            </b-field>
+
+            <hr>
+
+            <div>
+              <button
+                type="submit"
+                class="button is-primary is-fullwidth"
+                :class="{'is-loading': isLoading}"
+                :disabled="invalid"
+              >
+                Bejelentkezés
+              </button>
+              <div class="mt-4">
+                <nuxt-link
+                  to="/register"
+                  class="button is-fullwidth is-outlined is-primary-passive"
+                  :class="{'is-loading': isLoading}"
+                >
+                  Fiók létrehozása
+                </nuxt-link>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </form>
+        </ValidationObserver>
+      </card-component>
     </div>
   </section>
 </template>
 
 <script>
 import { mapMutations } from 'vuex'
+import CardComponent from '@/components/common/CardComponent'
 
 export default {
+  components: {
+    CardComponent
+  },
   layout: 'unauthorized',
   data () {
     return {
