@@ -59,6 +59,15 @@
                   Fiók létrehozása
                 </nuxt-link>
               </div>
+              <div class="mt-4 has-text-centered">
+                <nuxt-link
+                  to="/forgot-password"
+                  class="is-size-6"
+                  :class="{'is-loading': isLoading}"
+                >
+                  Elfelejtett jelszó
+                </nuxt-link>
+              </div>
             </div>
           </form>
         </ValidationObserver>
