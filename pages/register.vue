@@ -3,7 +3,7 @@
     class="columns is-vcentered"
     style="height: 100vh"
   >
-    <div class="column is-half is-offset-one-quarter">
+    <div class="column is-4 is-offset-one-third">
       <card-component
         title="Regisztráció"
         icon="user-lock"
@@ -89,19 +89,24 @@
             </b-field>
 
             <hr>
-            <div class="field">
-              <div class="field-body">
-                <div class="field columns">
-                  <button
-                    type="submit"
-                    class="button is-primary is-fullwidth"
-                    :class="{'is-loading': isLoading}"
-                    :disabled="invalid"
-                  >
-                    Regisztráció
-                  </button>
-                </div>
-              </div>
+
+            <div>
+              <button
+                type="submit"
+                class="button is-primary is-fullwidth"
+                :class="{'is-loading': isLoading}"
+                :disabled="invalid"
+              >
+                Regisztráció
+              </button>
+            </div>
+            <div class="has-text-centered">
+              <nuxt-link
+                to="/login"
+                class="is-size-6"
+              >
+                Van fiókom, belépek
+              </nuxt-link>
             </div>
           </form>
         </ValidationObserver>
