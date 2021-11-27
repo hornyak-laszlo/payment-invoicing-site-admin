@@ -92,14 +92,14 @@
             <form @submit.prevent="submit">
               <b-field label="Állapot">
                 <b-switch
-                  v-model="company.simplePayIntegrated"
+                  v-model="company.otpSimplePayIntegrated"
                   type="is-success"
                 >
-                  {{ company.simplePayIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
+                  {{ company.otpSimplePayIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
                 </b-switch>
               </b-field>
               <b-field
-                v-if="company.simplePayIntegrated"
+                v-if="company.otpSimplePayIntegrated"
                 label="Privát kulcs"
               >
                 <ValidationProvider
@@ -107,12 +107,15 @@
                   name="SimplePay privát kulcs"
                   rules="required|min:5"
                 >
-                  <b-input v-model="company.simplePayPrivateKey" />
+                  <b-input
+                    v-model="company.otpSimplePayPrivateKey"
+                    type="password"
+                  />
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
               <b-field
-                v-if="company.simplePayIntegrated"
+                v-if="company.otpSimplePayIntegrated"
                 label="Publikus kulcs"
               >
                 <ValidationProvider
@@ -120,7 +123,7 @@
                   name="SimplePay publikus kulcs"
                   rules="required|min:5"
                 >
-                  <b-input v-model="company.simplePayPublicKey" />
+                  <b-input v-model="company.otpSimplePayPublicKey" />
                   <span class="has-text-danger is-size-7">{{ errors[0] }}</span>
                 </ValidationProvider>
               </b-field>
@@ -229,9 +232,9 @@ export default {
         billingoApiKey: '',
         szamlazzhuIntegrated: false,
         szamlazzhuAuthToken: '',
-        simplePayIntegrated: false,
-        simplePayPublicKey: '',
-        simplePayPrivateKey: '',
+        otpSimplePayIntegrated: false,
+        otpSimplePayPublicKey: '',
+        otpSimplePayPrivateKey: '',
         stripeIntegrated: false,
         stripePublicKey: '',
         stripePrivateKey: '',
