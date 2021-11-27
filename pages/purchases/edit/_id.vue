@@ -582,9 +582,9 @@
                 <div class="buttons is-right">
                   <div class="t-button-wrapper">
                     <a
-                      :href="props.row.pdfLink"
                       target="_blank"
                       class="button is-small"
+                      @click="downloadInvoice(props.row)"
                     >
                       <b-icon
                         pack="fas"
@@ -605,6 +605,7 @@
 </template>
 
 <script>
+import download from 'downloadjs'
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
@@ -649,6 +650,18 @@ export default {
   },
 
   methods: {
+    async downloadInvoice (invoice) {
+      const fileName = `${invoice.szamlazzInvoiceId}.pdf`
+      const token = JSON.parse(sessionStorage.strapi_jwt).token
+      const response = await this.$axios.$get(`/invoices/szamlazz/${invoice.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        responseType: 'blob'
+      })
+
+      download(response, fileName, response.type)
+    },
     getClearFormObject () {
       return {
         id: '',
