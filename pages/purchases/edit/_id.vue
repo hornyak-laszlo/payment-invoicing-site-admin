@@ -582,9 +582,9 @@
                 <div class="buttons is-right">
                   <div class="t-button-wrapper">
                     <a
-                      :href="props.row.pdfLink"
                       target="_blank"
                       class="button is-small"
+                      @click="downloadInvoice(props.row, 'szamlazz')"
                     >
                       <b-icon
                         pack="fas"
@@ -592,6 +592,22 @@
                         size="is-small"
                         type="is-primary"
                       />
+                      <span>SZ</span>
+                    </a>
+                  </div>
+                  <div class="t-button-wrapper">
+                    <a
+                      target="_blank"
+                      class="button is-small"
+                      @click="downloadInvoice(props.row, 'billingo')"
+                    >
+                      <b-icon
+                        pack="fas"
+                        icon="download"
+                        size="is-small"
+                        type="is-primary"
+                      />
+                      <span>BI</span>
                     </a>
                   </div>
                 </div>
@@ -605,6 +621,7 @@
 </template>
 
 <script>
+import download from 'downloadjs'
 import HeroBar from '@/components/common/HeroBar'
 import CardComponent from '@/components/common/CardComponent'
 
@@ -649,6 +666,18 @@ export default {
   },
 
   methods: {
+    async downloadInvoice (invoice, type) {
+      const fileName = type === 'szamlazz' ? `${invoice.szamlazzInvoiceId}.pdf` : `${invoice.billingoInvoiceId}.pdf`
+      const token = JSON.parse(sessionStorage.strapi_jwt).token
+      const response = await this.$axios.$get(`/invoices/${type}/${invoice.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+        responseType: 'blob'
+      })
+
+      download(response, fileName, response.type)
+    },
     getClearFormObject () {
       return {
         id: '',
