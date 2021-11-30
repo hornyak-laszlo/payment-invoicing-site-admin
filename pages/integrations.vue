@@ -264,27 +264,43 @@ export default {
   },
   methods: {
     async submit () {
-      try {
-        this.isLoading = true
-
-        await this.$strapi.$http.$put(
-          '/companies/own/integrations',
-          this.company
-        )
-
-        this.isLoading = false
-        this.$buefy.snackbar.open({
-          message: 'Sikeresen mentve',
-          queue: false
-        })
-        this.$router.push('/integrations')
-      } catch (err) {
-        this.isLoading = false
+      if (
+        this.company.szamlazzhuIntegrated &&
+        this.company.billingoIntegrated
+      ) {
         this.$buefy.toast.open({
-          message: `Error: ${err.message}`,
+          message:
+            'A Számlázázz.hu és a Billingo integráció nem lehet egyszerre bekapcsolva!',
           type: 'is-danger',
-          queue: false
+          size: 'is-big',
+          queue: false,
+          duration: 4000,
+          pauseOnHover: true,
+          position: 'is-bottom'
         })
+      } else {
+        try {
+          this.isLoading = true
+
+          await this.$strapi.$http.$put(
+            '/companies/own/integrations',
+            this.company
+          )
+
+          this.isLoading = false
+          this.$buefy.snackbar.open({
+            message: 'Sikeresen mentve',
+            queue: false
+          })
+          this.$router.push('/integrations')
+        } catch (err) {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${err.message}`,
+            type: 'is-danger',
+            queue: false
+          })
+        }
       }
     }
   }
