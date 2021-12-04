@@ -21,7 +21,9 @@
               <b-field label="Állapot">
                 <b-switch
                   v-model="company.billingoIntegrated"
+                  :disabled="szamlazzActive"
                   type="is-success"
+                  @click.native="billingoCheck"
                 >
                   {{ company.billingoIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
                 </b-switch>
@@ -57,7 +59,9 @@
               <b-field label="Állapot">
                 <b-switch
                   v-model="company.szamlazzhuIntegrated"
+                  :disabled="billingoActive"
                   type="is-success"
+                  @click.native="szamlazzCheck"
                 >
                   {{ company.szamlazzhuIntegrated ? 'Integrálva' : 'Nincs integrálva' }}
                 </b-switch>
@@ -249,7 +253,14 @@ export default {
       title: 'DeelPay integrációk'
     }
   },
-  computed: {},
+  computed: {
+    szamlazzActive () {
+      return this.company.szamlazzhuIntegrated
+    },
+    billingoActive () {
+      return this.company.billingoIntegrated
+    }
+  },
   async mounted () {
     try {
       this.company = await this.$strapi.$http.$get(
@@ -263,28 +274,66 @@ export default {
     }
   },
   methods: {
-    async submit () {
-      try {
-        this.isLoading = true
-
-        await this.$strapi.$http.$put(
-          '/companies/own/integrations',
-          this.company
-        )
-
-        this.isLoading = false
-        this.$buefy.snackbar.open({
-          message: 'Sikeresen mentve',
-          queue: false
-        })
-        this.$router.push('/integrations')
-      } catch (err) {
-        this.isLoading = false
+    billingoCheck () {
+      if (this.company.szamlazzhuIntegrated) {
         this.$buefy.toast.open({
-          message: `Error: ${err.message}`,
+          message: 'A billingo és a számlázz.hu közül csak egyet akitválhat!',
           type: 'is-danger',
-          queue: false
+          duration: 3000,
+          pauseOnHover: true
         })
+        this.company.billingoIntegrated = false
+      }
+    },
+    szamlazzCheck () {
+      if (this.company.billingoIntegrated) {
+        this.$buefy.toast.open({
+          message: 'A billingo és a számlázz.hu közül csak egyet akitválhat!',
+          type: 'is-danger',
+          duration: 3000,
+          pauseOnHover: true
+        })
+        this.company.szamlazzhuIntegrated = false
+      }
+    },
+    async submit () {
+      if (
+        this.company.szamlazzhuIntegrated &&
+        this.company.billingoIntegrated
+      ) {
+        this.$buefy.toast.open({
+          message:
+            'A Számlázázz.hu és a Billingo integráció nem lehet egyszerre bekapcsolva!',
+          type: 'is-danger',
+          size: 'is-big',
+          queue: false,
+          duration: 4000,
+          pauseOnHover: true,
+          position: 'is-bottom'
+        })
+      } else {
+        try {
+          this.isLoading = true
+
+          await this.$strapi.$http.$put(
+            '/companies/own/integrations',
+            this.company
+          )
+
+          this.isLoading = false
+          this.$buefy.snackbar.open({
+            message: 'Sikeresen mentve',
+            queue: false
+          })
+          this.$router.push('/integrations')
+        } catch (err) {
+          this.isLoading = false
+          this.$buefy.toast.open({
+            message: `Error: ${err.message}`,
+            type: 'is-danger',
+            queue: false
+          })
+        }
       }
     }
   }
